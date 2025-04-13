@@ -1,0 +1,13 @@
+<section>
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+            <mat-label>filter by city</mat-label>
+            <input matInput placeholder="??" #filter>
+        </mat-form-field>
+        <button mat-raised-button type="button" class="primary" (click)="filterResults(filter.value)">Search</button>
+    </form>
+</section>
+<section class="results">
+    <app-sticker-location *ngFor="let stickerDetail of filteredList"
+        [stickerDetail]="stickerDetail"></app-sticker-location>
+</section>

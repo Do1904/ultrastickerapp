@@ -1,0 +1,40 @@
+@@startuml ultrasratio
+
+entity "User" as User {
+  id
+  --
+  name
+  email
+  password
+  created_at
+  updated_at
+}
+
+entity "Sticker" as Sticker {
+  id
+  --
+  user_id<<FK>>
+  club
+  address
+  league
+  is_clean
+  country
+  created_at
+  updated_at
+}
+
+entity "Like" as Like {
+  id
+  --
+  user_id<<FK>>
+  sticker_id<<FK>>
+  created_at
+}
+
+User ||--o{ Sticker : "has"
+User ||--o{ Like : "likes"
+Sticker ||--o{ Like : "liked by"
+
+
+
+@@enduml

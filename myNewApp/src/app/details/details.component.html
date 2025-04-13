@@ -1,0 +1,35 @@
+<article>
+    <img class="listing-photo" [src]="stickerDetail?.sticker" alt="Exterior photo of {{stickerDetail?.club}}" />
+    <section class="listing-description">
+        <h2 class="listing-heading">{{stickerDetail?.club}}</h2>
+        <div *ngIf="!isCheerSentByLoginUser; else alreadyCheered">
+            <span>Cheers: {{ cheers }}</span><button mat-button (click)="sendCheers(stickerDetail?.id)">Cheers!</button>
+        </div>
+        <ng-template #alreadyCheered>
+            <span>Cheers: {{ cheers }}</span><button mat-button (click)="deleteCheers(stickerDetail?.id)">Delete
+                Cheers!</button>
+        </ng-template>
+        <p class="listing-location">{{stickerDetail?.address}}, {{stickerDetail?.country}}</p>
+    </section>
+    <section class="listing-features">
+        <h2 class="section-heading">About this Sticker</h2>
+        <ul>
+            <li>Club: {{stickerDetail?.club}}</li>
+            <li>League: {{stickerDetail?.league}}</li>
+            <li>IsClean: {{stickerDetail?.isClean}}</li>
+        </ul>
+    </section>
+    <section class="listing-apply">
+        <h2 class="section-heading">Leave comments here!</h2>
+        <form class="comment-form" [formGroup]="commentForm" (submit)="submitComment()">
+            <mat-form-field class="comment-full-width">
+                <mat-label for="comment">Leave a comment</mat-label>
+                <textarea formControlName="comment" matInput placeholder="Ex. It makes me feel..."></textarea>
+            </mat-form-field>
+            <button mat-raised-button type="submit" class="primary">Submit</button>
+        </form>
+        <div *ngIf="stickerDetail?.userId === loginUserId">
+            <button mat-button (click)="deleteSticker(stickerDetail?.id)">Delete</button>
+        </div>
+    </section>
+</article>

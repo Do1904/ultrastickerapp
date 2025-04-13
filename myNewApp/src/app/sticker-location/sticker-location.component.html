@@ -1,0 +1,7 @@
+<section class="listing">
+    <img class="listing-photo" [src]="stickerDetail.sticker" alt="Exterior photo of {{stickerDetail.club}}"
+        (error)="onImgError($event)">
+    <h2 class="listing-heading">{{ stickerDetail.club }}</h2>
+    <p class="listing-location">{{ stickerDetail.address}}, {{stickerDetail.country}}</p>
+    <a [routerLink]="['/details', stickerDetail.id]">Learn More</a>
+</section>

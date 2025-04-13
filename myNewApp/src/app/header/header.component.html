@@ -1,0 +1,36 @@
+<header>
+    <a [routerLink]="['/']">
+        <header class="brand-name">
+            <h2>ULTRARATIO</h2>
+        </header>
+    </a>
+    <a [routerLink]="['/allStickers']">
+        <header class="brand-name">
+            <h1>Sticker</h1>
+        </header>
+    </a>
+    <a [routerLink]="['/putSticker']">
+        <header class="brand-name">
+            <h1>put new one!</h1>
+        </header>
+    </a>
+</header>
+
+<style>
+    header {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #333;
+        padding: 0.1rem;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .brand-name {
+        text-align: center;
+    }
+</style>

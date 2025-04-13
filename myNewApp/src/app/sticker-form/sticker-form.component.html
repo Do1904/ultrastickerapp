@@ -1,0 +1,39 @@
+<p>Put new Sticker!!</p>
+<form #form=ngForm (ngSubmit)="onSubmit(form)">
+    <div>
+        <mat-form-field class="example-full-width">
+            <mat-label>クラブチームは？</mat-label>
+            <input matInput placeholder="??" type="text" name="club" [(ngModel)]="stickerDetail.club">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="example-full-width">
+            <mat-label>所属しているリーグは？</mat-label>
+            <input matInput placeholder="??" type="text" name="league" [(ngModel)]="stickerDetail.league">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="example-full-width">
+            <mat-label>見つけた街はどこ？</mat-label>
+            <input matInput placeholder="??" type="text" name="address" [(ngModel)]="stickerDetail.address">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="example-full-width">
+            <mat-label>それはどこの国？</mat-label>
+            <input matInput placeholder="??" type="text" name="country" [(ngModel)]="stickerDetail.country">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="example-full-width">
+            <mat-label>綺麗だった？</mat-label>
+            <input matInput placeholder="??" type="text" name="isClean" [(ngModel)]="stickerDetail.isClean">
+        </mat-form-field>
+    </div>
+    <input type="file" id="uploadFile" (change)="fileChoosen($event, fileUpload.files)" class="file-input" #fileUpload>
+    <div class="file-upload">
+        {{fileName || "No file uploaded yet."}}
+        <!-- <button type="button" mat-mini-fab (click)="putNewSticker(club.value, fileUpload.files)">upload</button> -->
+        <button type="submit">Submit</button>
+    </div>
+</form>
