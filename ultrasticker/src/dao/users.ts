@@ -6,4 +6,28 @@ async function getUsers() {
     return await selectQuery(query, []);
 }
 
-export { getUsers };
+async function getUserByIds(userIds: number[]) {
+    const query = `
+        SELECT
+            id,
+            username,
+            email,
+            password,
+            nickname,
+            profile_picture AS profilePicture,
+            role,
+            auth_provider AS authProvider,
+            last_login_at AS lastLoginAt,
+            is_active AS isActive,
+            created_at AS createdAt,
+            updated_at AS updatedAt,
+            favclub
+        FROM
+            users 
+        WHERE id IN (?)
+    `;
+
+    return await selectQuery(query, [userIds]);
+}
+
+export { getUsers, getUserByIds };

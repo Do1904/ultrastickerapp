@@ -12,7 +12,7 @@ async function countQuery(query: string, params: any[]): Promise<number> {
     }
 }
 
-async function selectQuery<T>(query: string, params: any[]): Promise<Partial<T>[]> {
+async function selectQuery<T>(query: string, params: any[]): Promise<T[]> {
     try {
         const [results] = await pool.execute(query, params);
         return results as T[];

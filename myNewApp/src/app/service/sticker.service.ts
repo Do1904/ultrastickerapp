@@ -35,7 +35,18 @@ export class StickerService {
     }
   }
 
-  submitComment(comment: string) {
-    console.log(`Comment received: comment: ${comment}`);
+  postComment = async (stickerId: number, userId: number, comment: string) => {
+    try {
+      const body = {
+        stickerId: stickerId,
+        userId: userId,
+        comment: comment
+      }
+      const response = await axios.post(`${this.dataUrl}/comment`, body);
+      return response.data;
+    } catch (error) {
+      console.error('Error uploading sticker:', error);
+      throw error;
+    }
   }
 }

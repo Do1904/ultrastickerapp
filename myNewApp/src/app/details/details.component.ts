@@ -9,6 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CheersService } from '../service/cheers.service';
+import { User } from '../model/user';
 
 
 @Component({
@@ -32,6 +33,8 @@ export class DetailsComponent implements OnInit {
   putstickerService = inject(PutstickerService);
 
   public stickerDetail: StickerDetail | undefined;
+  public users: User[] = [];
+  public comments: Comment[] = [];
   public loginUserId = 1
 
   // cheers総数
@@ -49,22 +52,36 @@ export class DetailsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.stickerDetailId = Number(this.route.snapshot.params['id']);
-    this.stickerDetail = await this.getStickerInit(this.stickerDetailId);
+    await this.getStickerInit(this.stickerDetailId);
 
     await this.getCheersStatusByStickerId(this.stickerDetailId);
   }
 
-  submitComment() {
-    this.stickerService.submitComment(
-      this.commentForm.value.comment ?? 'hi',
-    );
+  postComment = async () => {
+    const stickerId = this.stickerDetailId;
+    try {
+      const comment = this.commentForm.value.comment;
+      if (!comment) {
+        alert('Please enter a comment');
+        return;
+      }
+      const userId = this.loginUserId;
+      await this.stickerService.postComment(stickerId, userId, comment);
+      alert('You posted a comment!!');
+    } catch (error) {
+      console.error('There was an error!', error);
+      alert(error);
+    }
   }
 
-  getStickerInit = async (id: number | undefined): Promise<StickerDetail | undefined> => {
+  getStickerInit = async (id: number | undefined): Promise<any | undefined> => {
     try {
       if (id !== undefined) {
         const response = await this.stickerService.getStickerById(id);
-        return response;
+        console.info(response);
+        this.stickerDetail = response.sticker;
+        this.comments = response.comments;
+        this.users = response.visiters;
       }
     } catch (error) {
       console.error('There was an error!', error);

@@ -1,6 +1,4 @@
-import type { RowDataPacket } from 'mysql2/promise';
-
-export interface ICommentModel extends RowDataPacket {
+export interface Comment {
     id: number;
     comment: string;
     userId: number;

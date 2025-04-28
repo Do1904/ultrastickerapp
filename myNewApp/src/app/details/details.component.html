@@ -21,7 +21,7 @@
     </section>
     <section class="listing-apply">
         <h2 class="section-heading">Leave comments here!</h2>
-        <form class="comment-form" [formGroup]="commentForm" (submit)="submitComment()">
+        <form class="comment-form" [formGroup]="commentForm" (submit)="postComment()">
             <mat-form-field class="comment-full-width">
                 <mat-label for="comment">Leave a comment</mat-label>
                 <textarea formControlName="comment" matInput placeholder="Ex. It makes me feel..."></textarea>
