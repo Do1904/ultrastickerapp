@@ -3,7 +3,6 @@ export interface Comment {
     comment: string;
     userId: number;
     stickerId: number;
-    replyFlag: boolean;
     firstFlag: boolean;
     replyingCommentId: number | null;
     status: number;

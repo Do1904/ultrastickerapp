@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { CheersService } from '../service/cheers.service';
 import { User } from '../model/user';
+import { CommentService } from '../service/comments.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class DetailsComponent implements OnInit {
   stickerService = inject(StickerService);
   cheersService = inject(CheersService);
   putstickerService = inject(PutstickerService);
+  commentService = inject(CommentService)
 
   public stickerDetail: StickerDetail | undefined;
   public users: User[] = [];
@@ -57,7 +59,7 @@ export class DetailsComponent implements OnInit {
     await this.getCheersStatusByStickerId(this.stickerDetailId);
   }
 
-  postComment = async () => {
+  postComment = async (firstFlag: boolean, replyingCommentId: number | null) => {
     const stickerId = this.stickerDetailId;
     try {
       const comment = this.commentForm.value.comment;
@@ -65,8 +67,7 @@ export class DetailsComponent implements OnInit {
         alert('Please enter a comment');
         return;
       }
-      const userId = this.loginUserId;
-      await this.stickerService.postComment(stickerId, userId, comment);
+      await this.commentService.postComment(stickerId, comment, firstFlag, replyingCommentId);
       alert('You posted a comment!!');
     } catch (error) {
       console.error('There was an error!', error);
@@ -78,7 +79,7 @@ export class DetailsComponent implements OnInit {
     try {
       if (id !== undefined) {
         const response = await this.stickerService.getStickerById(id);
-        console.info(response);
+        console.info(response)
         this.stickerDetail = response.sticker;
         this.comments = response.comments;
         this.users = response.visiters;

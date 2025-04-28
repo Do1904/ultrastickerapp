@@ -1,4 +1,4 @@
-import { selectQuery } from "../db/queryUtils.js";
+import { insertQuery, selectQuery } from "../db/queryUtils.js";
 import { ICommentModel } from "../models/commentModel.js";
 
 async function getCommentsByStickerId(stickerId: number): Promise<ICommentModel[]> {
@@ -8,7 +8,6 @@ async function getCommentsByStickerId(stickerId: number): Promise<ICommentModel[
         comment,
         user_id AS userId,
         sticker_id AS stickerId,
-        reply_flag AS replyFlag,
         first_flag AS firstFlag,
         replying_comment_id AS replyingCommentId,
         status,
@@ -25,4 +24,37 @@ async function getCommentsByStickerId(stickerId: number): Promise<ICommentModel[
     return result || [];
 }
 
-export { getCommentsByStickerId };
+async function postComment(
+    comment: string,
+    userId: number,
+    stickerId: number,
+    firstFlag: boolean,
+    replyingCommentId: number,
+): Promise<void> {
+    const query = `
+    INSERT INTO comments (
+        comment,
+        user_id,
+        sticker_id,
+        first_flag,
+        replying_comment_id,
+        status,
+        likes_count,
+        is_edited
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    const values = [
+        comment,
+        userId,
+        stickerId,
+        firstFlag,
+        replyingCommentId,
+        1,
+        0,
+        false
+    ];
+
+    await insertQuery(query, values);
+}
+
+export { getCommentsByStickerId, postComment };
