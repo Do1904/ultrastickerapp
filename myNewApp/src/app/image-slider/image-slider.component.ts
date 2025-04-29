@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-image-slider',
@@ -21,7 +21,6 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
-
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.startAutoSlide();
@@ -29,14 +28,24 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    clearInterval(this.intervalId);
   }
 
   startAutoSlide() {
     this.intervalId = setInterval(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.slides.length;
-    }, 4000); // 4秒ごとに次へ
+      this.nextSlide();
+    }, 4000);
+  }
+
+  nextSlide() {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+  }
+
+  prevSlide() {
+    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+  }
+
+  goToSlide(index: number) {
+    this.currentIndex = index;
   }
 }

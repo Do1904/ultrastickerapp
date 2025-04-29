@@ -1,11 +1,21 @@
-<div class="container">
-    <div class="slider">
-        <div class="slide" [style.backgroundImage]="'url(' + slides[currentIndex].url + ')'">
+<div class="slider-container">
+    <div class="slider-image">
+        <img *ngFor="let slide of slides; let i = index" [src]="slide.url" [alt]="slide.title"
+            [class.active]="i === currentIndex" />
+
+        <div class="slider-dots">
+            <div *ngFor="let slide of slides; let i = index" class="dot" [class.active]="i === currentIndex"
+                (click)="goToSlide(i)">
+            </div>
         </div>
     </div>
 
-    <div class="description">
+    <div class="slider-text">
         <h2>{{ slides[currentIndex].title }}</h2>
-        <p>ここに画像の説明文や詳細情報が入ります。</p>
     </div>
 </div>
+
+
+<!-- <div class="slider-dots">
+    <span *ngFor="let slide of slides; let i = index" [class.active]="i === currentIndex" (click)="goToSlide(i)"></span>
+</div> -->
