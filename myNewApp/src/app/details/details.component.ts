@@ -70,6 +70,21 @@ export class DetailsComponent implements OnInit {
       }
       await this.commentService.postComment(stickerId, comment, firstFlag, replyingCommentId);
       alert('You posted a comment!!');
+      this.commentForm.reset();
+      await this.getCommentByStickerId(this.stickerDetailId);
+    } catch (error) {
+      console.error('There was an error!', error);
+      alert(error);
+    }
+  }
+
+  getCommentByStickerId = async (stickerId: number | undefined): Promise<any | undefined> => {
+    try {
+      if (stickerId !== undefined) {
+        const response = await this.commentService.getCommentsByStickerId(stickerId);
+        this.comments = response.comments;
+        this.users = response.visiters;
+      }
     } catch (error) {
       console.error('There was an error!', error);
       alert(error);

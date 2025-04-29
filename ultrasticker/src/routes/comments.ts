@@ -22,4 +22,35 @@ router.post('/postComment', async (req, res) => {
     }
 });
 
+router.get('/comments/:stickerId', async (req, res) => {
+    const stickerId = req.params.stickerId;
+
+    if (!stickerId) {
+        res.status(400).json({ error: 'Sticker ID is required.' });
+        return;
+    }
+
+    try {
+        const comments = await db.comments.getCommentsByStickerId(Number(stickerId));
+
+        // このページで表示するユーザのIDを取得する
+        const allVisiterIds: number[] = [];
+        if (comments.length !== 0) {
+            allVisiterIds.push(...new Set(comments.map(comment => comment.userId)));
+        }
+
+        const visiters = await db.users.getUserByIds(allVisiterIds);
+
+        const resBody = {
+            comments: comments,
+            visiters: visiters,
+        }
+
+        res.status(200).json(resBody);
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 export default router;

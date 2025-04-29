@@ -24,4 +24,14 @@ export class CommentService {
             throw error;
         }
     }
+
+    getCommentsByStickerId = async (stickerId: number) => {
+        try {
+            const response = await axios.get(`${this.dataUrl}/comments/${stickerId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+            throw error;
+        }
+    }
 }
