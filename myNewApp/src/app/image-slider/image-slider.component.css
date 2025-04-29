@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.slider {
+    width: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slide {
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+}
+
+.description {
+    width: 50%;
+    padding: 40px;
+    background: #f9f9f9;
+}
