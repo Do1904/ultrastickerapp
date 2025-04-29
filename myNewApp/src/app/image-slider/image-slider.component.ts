@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
@@ -12,8 +12,10 @@ import { Inject, PLATFORM_ID } from '@angular/core';
 })
 export class ImageSliderComponent implements OnInit, OnDestroy {
   slides = [
-    { url: '/assets/slides/darmstadtSalzburg.jpg', title: '画像1の説明' },
-    { url: '/assets/slides/hsvKovenhavn.jpg', title: '画像2の説明' },
+    { url: '/assets/slides/schalkeEbisu.jpg', title: 'Ultrasステッカーを探そう' },
+    { url: '/assets/slides/hsvKovenhavn.jpg', title: 'こんなところにも' },
+    { url: '/assets/slides/herthaBali.jpg', title: '縄張り争い' },
+    { url: '/assets/slides/rübecksalzburg.jpg', title: 'たくさん集まってる' },
   ];
 
   currentIndex = 0;

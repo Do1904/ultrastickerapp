@@ -2,11 +2,7 @@
   --content-padding: 0px;
 }
 
-header {
-  display: block;
-  height: 40px;
-  padding: var(--content-padding);
-}
+
 
 .content {
   padding: var(--content-padding);
