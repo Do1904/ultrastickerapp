@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CheersService } from '../service/cheers.service';
 import { User } from '../model/user';
 import { CommentService } from '../service/comments.service';
+import { Comment } from '../model/comment';
 
 
 @Component({
