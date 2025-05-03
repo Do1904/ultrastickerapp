@@ -12,7 +12,6 @@
         <p class="listing-location">{{stickerDetail?.address}}, {{stickerDetail?.country}}</p>
     </section>
     <section class="listing-features">
-        <h2 class="section-heading">About this Sticker</h2>
         <ul>
             <li>Club: {{stickerDetail?.club}}</li>
             <li>League: {{stickerDetail?.league}}</li>
@@ -23,7 +22,6 @@
         </div>
     </section>
     <section class="listing-apply">
-        <h2 class="section-heading">Leave comments here!</h2>
         <form class="comment-form" [formGroup]="commentForm" (submit)="postComment(true, null)">
             <mat-form-field class="comment-full-width">
                 <mat-label for="comment">Leave a comment</mat-label>
@@ -32,11 +30,38 @@
             <button mat-raised-button type="submit" class="primary">Submit</button>
         </form>
         <section class="comment-list">
-            <h2 class="section-heading">Comments</h2>
-            <div *ngFor="let comment of comments">
-                <p><strong>{{comment.userId}}:</strong> {{comment.comment}}</p>
-                <!-- <button mat-button (click)="deleteComment(comment.id)">Delete</button> -->
+            <div class="comment" *ngFor="let comment of comments">
+                <div class="comment-box">
+                    <p class="comment-header">
+                        <strong>{{ comment.userId }}</strong>・<span class="timestamp">{{ comment.createdAt |
+                            date:'short' }}</span>
+                    </p>
+                    <p class="comment-content">{{ comment.comment }}</p>
+
+                    <div class="comment-actions">
+                        <button mat-button (click)="postComment(false, comment.id)">Reply</button>
+                        <button mat-button *ngIf="comment.userId === loginUserId"
+                            (click)="deleteComment(comment.id)">Delete</button>
+                    </div>
+                </div>
+
+                <div class="reply" *ngFor="let reply of comment.replies">
+                    <div class="comment-box reply-box">
+                        <p class="comment-header">
+                            <strong>{{ reply.userId }}</strong>・<span class="timestamp">{{ reply.createdAt |
+                                date:'short' }}</span>
+                        </p>
+                        <p class="comment-content">{{ reply.comment }}</p>
+
+                        <div class="comment-actions">
+                            <button mat-button (click)="postComment(false, comment.id)">Reply</button>
+                            <button mat-button *ngIf="reply.userId === loginUserId"
+                                (click)="deleteComment(reply.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </section>
     </section>
 </article>

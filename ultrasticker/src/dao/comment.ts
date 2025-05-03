@@ -30,7 +30,7 @@ async function postComment(
     stickerId: number,
     firstFlag: boolean,
     replyingCommentId: number,
-): Promise<void> {
+): Promise<any> {
     const query = `
     INSERT INTO comments (
         comment,
@@ -54,7 +54,30 @@ async function postComment(
         false
     ];
 
-    await insertQuery(query, values);
+    return insertQuery(query, values);
 }
 
-export { getCommentsByStickerId, postComment };
+async function getCommentById(commentId: number): Promise<ICommentModel | null> {
+    const query = `
+    SELECT
+        id,
+        comment,
+        user_id AS userId,
+        sticker_id AS stickerId,
+        first_flag AS firstFlag,
+        replying_comment_id AS replyingCommentId,
+        status,
+        likes_count AS likesCount,
+        is_edited AS isEdited,
+        created_at AS createdAt,
+        updated_at AS updatedAt
+    FROM 
+        comments 
+    WHERE 
+        id = ?;`;
+
+    const result = await selectQuery<ICommentModel>(query, [commentId]);
+    return result ? result[0] : null;
+}
+
+export { getCommentsByStickerId, postComment, getCommentById };

@@ -68,10 +68,21 @@ export class DetailsComponent implements OnInit {
         alert('Please enter a comment');
         return;
       }
-      await this.commentService.postComment(stickerId, comment, firstFlag, replyingCommentId);
-      alert('You posted a comment!!');
+      const insertedResult = await this.commentService.postComment(stickerId, comment, firstFlag, replyingCommentId);
+
+      const insertedComment = insertedResult.insertedComment;
+
+      // 登録したコメントをコメント一覧に追加
+      if (insertedComment.firstFlag) {
+        this.comments.push(insertedComment);
+      } else {
+        const parentComment = this.comments.find(comment => comment.id === replyingCommentId);
+        if (parentComment) {
+          parentComment.replies?.push(insertedComment);
+        }
+      }
+
       this.commentForm.reset();
-      await this.getCommentByStickerId(this.stickerDetailId);
     } catch (error) {
       console.error('There was an error!', error);
       alert(error);
@@ -159,6 +170,20 @@ export class DetailsComponent implements OnInit {
       console.error('There was an error!', error);
       alert(error);
     }
+  }
+
+  deleteComment = async (commentId: number | undefined) => {
+    try {
+      if (commentId !== undefined) {
+        // await this.commentService.deleteComment(commentId);
+        alert('You deleted comment!!');
+      }
+    } catch (error) {
+      console.error('There was an error!', error);
+      alert(error);
+    }
+
+    await this.getCommentByStickerId(this.stickerDetailId);
   }
 
 }

@@ -8,6 +8,7 @@ export interface Comment {
     status: number;
     likesCount: number;
     isEdited: boolean;
+    replies?: Comment[]; // 新しいカラムを追加
     createdAt: string; // or Date
     updatedAt: string; // or Date
 }

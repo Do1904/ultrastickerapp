@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db/index.js';
+import { ICommentModel } from '../models/commentModel.js';
 
 const router = express.Router();
 
@@ -14,8 +15,17 @@ router.post('/postComment', async (req, res) => {
     }
 
     try {
-        await db.comments.postComment(comment, userId, stickerId, firstFlag, replyingCommentId);
-        res.status(200).json({ message: 'Comment posted successfully' });
+        const insertResult = await db.comments.postComment(comment, userId, stickerId, firstFlag, replyingCommentId);
+        const insertedComment = await db.comments.getCommentById(insertResult.insertId);
+        if (!insertedComment) {
+            res.status(404).json({ error: 'Comment not found.' });
+            return;
+        } else {
+            if (firstFlag) {
+                insertedComment.replies = [] as ICommentModel[];
+            }
+            res.status(200).json({ insertedComment: insertedComment });
+        }
     } catch (error) {
         console.error('Error posting comment:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -41,8 +51,26 @@ router.get('/comments/:stickerId', async (req, res) => {
 
         const visiters = await db.users.getUserByIds(allVisiterIds);
 
+        const firstComments = comments.filter(comment => comment.firstFlag).map(comment => ({
+            ...comment,
+            replies: [] as ICommentModel[],
+        }));
+
+        // firstFlagがfalseのコメントを取得
+        const replyingComments = comments.filter(comment => !comment.firstFlag);
+
+        // replyingCommentIdを基にrepliesに追加
+        replyingComments.forEach(reply => {
+            const parentComment = firstComments.find(
+                firstComment => firstComment.id === reply.replyingCommentId
+            );
+            if (parentComment) {
+                parentComment.replies.push(reply); // repliesにコメントIDを追加
+            }
+        });
+
         const resBody = {
-            comments: comments,
+            comments: firstComments,
             visiters: visiters,
         }
 

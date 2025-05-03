@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db/index.js';
+import { ICommentModel } from '../models/commentModel.js';
 
 const router = express.Router();
 
@@ -29,9 +30,27 @@ router.get('/sticker/:id', async (req, res) => {
 
     const visiters = await db.users.getUserByIds(allVisiterIds);
 
+    const firstComments = comments.filter(comment => comment.firstFlag).map(comment => ({
+        ...comment,
+        replies: [] as ICommentModel[],
+    }));
+
+    // firstFlagがfalseのコメントを取得
+    const replyingComments = comments.filter(comment => !comment.firstFlag);
+
+    // replyingCommentIdを基にrepliesに追加
+    replyingComments.forEach(reply => {
+        const parentComment = firstComments.find(
+            firstComment => firstComment.id === reply.replyingCommentId
+        );
+        if (parentComment) {
+            parentComment.replies.push(reply); // repliesにコメントIDを追加
+        }
+    });
+
     const resBody = {
         sticker: sticker[0],
-        comments: comments,
+        comments: firstComments,
         visiters: visiters,
     }
 

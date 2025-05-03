@@ -7,6 +7,7 @@ async function getUsers() {
 }
 
 async function getUserByIds(userIds: number[]) {
+    const placeholders = userIds.map(() => '?').join(',');
     const query = `
         SELECT
             id,
@@ -24,10 +25,10 @@ async function getUserByIds(userIds: number[]) {
             favclub
         FROM
             users 
-        WHERE id IN (?)
+        WHERE id IN (${placeholders});
     `;
 
-    return await selectQuery(query, [userIds]);
+    return await selectQuery(query, userIds);
 }
 
 export { getUsers, getUserByIds };
