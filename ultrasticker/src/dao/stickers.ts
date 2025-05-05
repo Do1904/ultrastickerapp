@@ -1,4 +1,4 @@
-import { selectQuery, insertQuery } from "../db/queryUtils.js";
+import { selectQuery, executeQuery } from "../db/queryUtils.js";
 import { IStickerModel } from "../models/stickerModel.js";
 
 async function getStickers() {
@@ -57,21 +57,21 @@ async function putNewSticker(userId: number, filePath: string, club: string, lea
 
     const values = [userId, filePath, club, league, address, country, true];
 
-    return await insertQuery(query, values);
+    return await executeQuery(query, values);
 }
 
 async function updateStickerbyId(club: string, league: string, address: string, county: string, isClean: boolean, stickerId: number) {
     const query = `UPDATE stickers SET club = ?, league = ?, address = ?, country = ?, is_clean = ? WHERE id = ?`;
     const values = [club, league, address, county, isClean, stickerId];
 
-    return await insertQuery(query, values);
+    return await executeQuery(query, values);
 }
 
 async function deleteStickerbyId(stickerId: number, userId: number) {
     const query = `DELETE FROM stickers WHERE id = ? AND user_id = ?`;
     const values = [stickerId, userId];
 
-    return await insertQuery(query, values);
+    return await executeQuery(query, values);
 }
 
 export { getStickers, getStickerById, getStickerLike, putNewSticker, updateStickerbyId, deleteStickerbyId };

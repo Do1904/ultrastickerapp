@@ -34,4 +34,14 @@ export class CommentService {
             throw error;
         }
     }
+
+    deleteComment = async (commentId: number) => {
+        try {
+            const response = await axios.post(`${this.dataUrl}/deleteComment`, { commentId: commentId });
+            return response.data;
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+            throw error;
+        }
+    }
 }

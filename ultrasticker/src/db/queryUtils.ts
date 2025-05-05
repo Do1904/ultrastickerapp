@@ -22,7 +22,7 @@ async function selectQuery<T>(query: string, params: any[]): Promise<T[]> {
     }
 }
 
-async function insertQuery(query: string, params: any[]): Promise<ResultSetHeader> {
+async function executeQuery(query: string, params: any[]): Promise<ResultSetHeader> {
     try {
         const [result] = await pool.execute(query, params);
         return result as ResultSetHeader;
@@ -32,4 +32,4 @@ async function insertQuery(query: string, params: any[]): Promise<ResultSetHeade
     }
 }
 
-export { selectQuery, insertQuery, countQuery };
+export { selectQuery, executeQuery, countQuery };

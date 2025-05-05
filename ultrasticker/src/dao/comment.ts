@@ -1,4 +1,4 @@
-import { insertQuery, selectQuery } from "../db/queryUtils.js";
+import { executeQuery, selectQuery } from "../db/queryUtils.js";
 import { ICommentModel } from "../models/commentModel.js";
 
 async function getCommentsByStickerId(stickerId: number): Promise<ICommentModel[]> {
@@ -54,7 +54,7 @@ async function postComment(
         false
     ];
 
-    return insertQuery(query, values);
+    return executeQuery(query, values);
 }
 
 async function getCommentById(commentId: number): Promise<ICommentModel | null> {
@@ -80,4 +80,9 @@ async function getCommentById(commentId: number): Promise<ICommentModel | null> 
     return result ? result[0] : null;
 }
 
-export { getCommentsByStickerId, postComment, getCommentById };
+async function deleteCommentById(commentId: number): Promise<void> {
+    const query = `DELETE FROM comments WHERE id = ?;`;
+    await executeQuery(query, [commentId]);
+}
+
+export { getCommentsByStickerId, postComment, getCommentById, deleteCommentById };

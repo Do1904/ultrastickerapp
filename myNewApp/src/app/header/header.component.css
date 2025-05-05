@@ -2,3 +2,19 @@ header {
     display: block;
     height: 50px;
 }
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url('/assets/ravenna.png');
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.brand-name {
+    text-align: center;
+}

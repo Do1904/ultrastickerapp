@@ -15,4 +15,5 @@ body {
     /* 縦幅を全画面に設定 */
     box-sizing: border-box;
     /* ボックスモデルを統一 */
+    background-color: rgb(242, 242, 242);
 }

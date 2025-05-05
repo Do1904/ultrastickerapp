@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -28,7 +28,7 @@ import { Comment } from '../model/comment';
   styleUrl: './details.component.css'
 })
 
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, AfterViewInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   stickerService = inject(StickerService);
   cheersService = inject(CheersService);
@@ -51,7 +51,8 @@ export class DetailsComponent implements OnInit {
     comment: new FormControl(''),
   });
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private Sticker: any) { }
+
 
   async ngOnInit(): Promise<void> {
     this.stickerDetailId = Number(this.route.snapshot.params['id']);
@@ -60,46 +61,8 @@ export class DetailsComponent implements OnInit {
     await this.getCheersStatusByStickerId(this.stickerDetailId);
   }
 
-  postComment = async (firstFlag: boolean, replyingCommentId: number | null) => {
-    const stickerId = this.stickerDetailId;
-    try {
-      const comment = this.commentForm.value.comment;
-      if (!comment) {
-        alert('Please enter a comment');
-        return;
-      }
-      const insertedResult = await this.commentService.postComment(stickerId, comment, firstFlag, replyingCommentId);
-
-      const insertedComment = insertedResult.insertedComment;
-
-      // 登録したコメントをコメント一覧に追加
-      if (insertedComment.firstFlag) {
-        this.comments.push(insertedComment);
-      } else {
-        const parentComment = this.comments.find(comment => comment.id === replyingCommentId);
-        if (parentComment) {
-          parentComment.replies?.push(insertedComment);
-        }
-      }
-
-      this.commentForm.reset();
-    } catch (error) {
-      console.error('There was an error!', error);
-      alert(error);
-    }
-  }
-
-  getCommentByStickerId = async (stickerId: number | undefined): Promise<any | undefined> => {
-    try {
-      if (stickerId !== undefined) {
-        const response = await this.commentService.getCommentsByStickerId(stickerId);
-        this.comments = response.comments;
-        this.users = response.visiters;
-      }
-    } catch (error) {
-      console.error('There was an error!', error);
-      alert(error);
-    }
+  ngAfterViewInit(): void {
+    this.Sticker.init('.sticker');
   }
 
   getStickerInit = async (id: number | undefined): Promise<any | undefined> => {
@@ -172,18 +135,67 @@ export class DetailsComponent implements OnInit {
     }
   }
 
-  deleteComment = async (commentId: number | undefined) => {
+  postComment = async (firstFlag: boolean, replyingCommentId: number | null) => {
+    const stickerId = this.stickerDetailId;
     try {
-      if (commentId !== undefined) {
-        // await this.commentService.deleteComment(commentId);
-        alert('You deleted comment!!');
+      const comment = this.commentForm.value.comment;
+      if (!comment) {
+        alert('Please enter a comment');
+        return;
+      }
+      const insertedResult = await this.commentService.postComment(stickerId, comment, firstFlag, replyingCommentId);
+
+      const insertedComment = insertedResult.insertedComment;
+
+      // 登録したコメントをコメント一覧に追加
+      if (insertedComment.firstFlag) {
+        this.comments.push(insertedComment);
+      } else {
+        const parentComment = this.comments.find(comment => comment.id === replyingCommentId);
+        if (parentComment) {
+          parentComment.replies?.push(insertedComment);
+        }
+      }
+
+      this.commentForm.reset();
+    } catch (error) {
+      console.error('There was an error!', error);
+      alert(error);
+    }
+  }
+
+  getCommentByStickerId = async (stickerId: number | undefined): Promise<any | undefined> => {
+    try {
+      if (stickerId !== undefined) {
+        const response = await this.commentService.getCommentsByStickerId(stickerId);
+        this.comments = response.comments;
+        this.users = response.visiters;
       }
     } catch (error) {
       console.error('There was an error!', error);
       alert(error);
     }
+  }
 
-    await this.getCommentByStickerId(this.stickerDetailId);
+  deleteComment = async (commentId: number | undefined, isFirst: boolean, replyingCommentId: number | null) => {
+    try {
+      if (commentId !== undefined) {
+        await this.commentService.deleteComment(commentId);
+        alert('You deleted comment!!');
+        if (isFirst) {
+          this.comments = this.comments.filter(comment => comment.id !== commentId);
+        } else {
+          // 親コメントのrepliesから削除
+          const parentComment = this.comments.find(comment => comment.id === replyingCommentId);
+          if (parentComment) {
+            parentComment.replies = parentComment.replies?.filter(reply => reply.id !== commentId);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('There was an error!', error);
+      alert(error);
+    }
   }
 
 }

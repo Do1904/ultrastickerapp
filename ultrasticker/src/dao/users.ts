@@ -7,6 +7,10 @@ async function getUsers() {
 }
 
 async function getUserByIds(userIds: number[]) {
+    if (userIds.length === 0) {
+        return []; // 👈 空配列なら即返す
+    }
+
     const placeholders = userIds.map(() => '?').join(',');
     const query = `
         SELECT

@@ -1,17 +1,17 @@
-import { countQuery, insertQuery, selectQuery } from '../db/queryUtils.js';
+import { countQuery, executeQuery, selectQuery } from '../db/queryUtils.js';
 
 async function sendCheers(userId: number, stickerId: number) {
     const query = `INSERT INTO cheers (user_id, sticker_id) VALUES (?, ?);`;
     const values = [userId, stickerId];
 
-    return await insertQuery(query, values);
+    return await executeQuery(query, values);
 }
 
 async function deleteCheers(userId: number, stickerId: number) {
     const query = `DELETE FROM cheers WHERE user_id = ? AND sticker_id = ?;`;
     const values = [userId, stickerId];
 
-    return await insertQuery(query, values);
+    return await executeQuery(query, values);
 }
 
 async function getCheersCountSentByLoginUserToThisSticker(stickerId: number, userId: number): Promise<number> {

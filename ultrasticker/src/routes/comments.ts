@@ -81,4 +81,21 @@ router.get('/comments/:stickerId', async (req, res) => {
     }
 });
 
+router.post('/deleteComment', async (req, res) => {
+    const { commentId } = req.body;
+
+    if (!commentId) {
+        res.status(400).json({ error: 'Comment ID is required.' });
+        return;
+    }
+
+    try {
+        await db.comments.deleteCommentById(commentId);
+        res.status(200).json({ message: 'Comment deleted successfully.' });
+    } catch (error) {
+        console.error('Error deleting comment:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 export default router;
