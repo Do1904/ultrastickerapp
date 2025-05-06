@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   templateUrl: 'sticker-location.component.html',
-  styleUrl: './sticker-location.component.css'
+  styleUrls: ['./sticker-location.component.css', '../../sticker.css'],
 })
 export class StickerLocationComponent {
   @Input() stickerDetail!: StickerDetail;

@@ -7,6 +7,23 @@ html, body {
   font-family: sans-serif;
 }
 
+#headerSelections {
+  background: #ffffff;
+  height: 20px;
+  width: 45px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
 #stickers {
   background: #2c3e50;
   height: 100%;
@@ -23,354 +40,355 @@ html, body {
   padding: 50px;
   box-sizing: border-box;
 }
-#stickers .sticker {
+
+.sticker {
   flex: 0 0 auto;
-  margin: 50px;
+  margin: 10px;
   -webkit-tap-highlight-color: transparent;
 }
-#stickers .sticker * {
+.sticker * {
   backface-visibility: hidden;
   pointer-events: none;
 }
-#stickers .sticker .sticker-container {
+.sticker .sticker-container {
   position: relative;
   transform-style: preserve-3d;
 }
-#stickers .sticker .sticker-wrapper {
+.sticker .sticker-wrapper {
   position: absolute;
   top: 0;
   left: 0;
 }
-#stickers .sticker .sticker-clip {
+.sticker .sticker-clip {
   position: absolute;
   left: 0;
   top: 0;
   overflow: hidden;
 }
-#stickers .sticker .sticker-front, #stickers .sticker-back {
+.sticker .sticker-front, .sticker-back {
   position: absolute;
   overflow: hidden;
   pointer-events: all;
 }
-#stickers .sticker .sticker-front {
+.sticker .sticker-front {
   z-index: 1;
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
-#stickers .sticker .sticker-back {
+.sticker .sticker-back {
   z-index: 2;
 }
-#stickers .sticker .sticker-clip {
+.sticker .sticker-clip {
   transition: 500ms ease-in-out transform;
 }
-#stickers .sticker .sticker-front, #stickers .sticker .sticker-back {
+.sticker .sticker-front, .sticker .sticker-back {
   transition: 500ms ease-in-out transform;
 }
-#stickers .sticker-1 {
+.sticker-1 {
   width: 250px;
   height: 200px;
 }
-#stickers .sticker-1 .sticker-container {
+.sticker-1 .sticker-container {
   width: 321.2252146587px;
   height: 321.2252146587px;
   top: -60.6126073294px;
   left: -35.6126073294px;
   transform: rotate(0deg);
 }
-#stickers .sticker-1 .sticker-wrapper {
+.sticker-1 .sticker-wrapper {
   width: 321.2252146587px;
   height: 321.2252146587px;
   transform: rotate(45deg);
 }
-#stickers .sticker-1 .sticker-clip {
+.sticker-1 .sticker-clip {
   width: 321.2252146587px;
   height: 321.2252146587px;
 }
-#stickers .sticker-1 .sticker-front, #stickers .sticker-1 .sticker-back {
+.sticker-1 .sticker-front, .sticker-1 .sticker-back {
   left: 35.6126073294px;
   top: 60.6126073294px;
   width: 250px;
   height: 200px;
   border-radius: 0;
 }
-#stickers .sticker-1 .sticker-clip {
+.sticker-1 .sticker-clip {
   transform: translateX(0.9934265761px);
 }
-#stickers .sticker-1 .sticker-front {
+.sticker-1 .sticker-front {
   transform: rotate(-45deg) translateX(-0.7024586686px) translateY(-0.7024586686px);
 }
-#stickers .sticker-1 .sticker-back {
+.sticker-1 .sticker-back {
   transform: rotate(225deg) translateX(226.4380656538px) translateY(-226.4380683485px);
 }
-#stickers .sticker-1:hover .sticker-clip {
+.sticker-1:hover .sticker-clip {
   transform: translateX(160.6126073294px);
 }
-#stickers .sticker-1:hover .sticker-front {
+.sticker-1:hover .sticker-front {
   transform: rotate(-45deg) translateX(-113.5702637866px) translateY(-113.5702637866px);
 }
-#stickers .sticker-1:hover .sticker-back {
+.sticker-1:hover .sticker-back {
   transform: rotate(225deg) translateX(113.5702621561px) translateY(-113.5702635077px);
 }
-#stickers .sticker-1 .sticker-front {
+.sticker-1 .sticker-front {
   background-color: #2ecc71;
 }
-#stickers .sticker-1 .sticker-back {
+.sticker-1 .sticker-back {
   background-color: #27ae60;
 }
-#stickers .sticker-2 {
-  width: 150px;
-  height: 100px;
+.sticker-2 {
+  width: 400px;
+  height: 250px;
 }
-#stickers .sticker-2 .sticker-container {
-  width: 180.2817635663px;
-  height: 180.2817635663px;
-  top: -40.1408817831px;
-  left: -15.1408817831px;
+.sticker-2 .sticker-container {
+  width: 484.1379683267px;
+  height: 484.1379683267px;
+  top: -117.0689841634px;
+  left: -42.0689841634px;
   transform: rotate(0deg);
 }
-#stickers .sticker-2 .sticker-wrapper {
-  width: 180.2817635663px;
-  height: 180.2817635663px;
+.sticker-2 .sticker-wrapper {
+  width: 484.1379683267px;
+  height: 484.1379683267px;
   transform: rotate(60deg);
 }
-#stickers .sticker-2 .sticker-clip {
-  width: 180.2817635663px;
-  height: 180.2817635663px;
+.sticker-2 .sticker-clip {
+  width: 484.1379683267px;
+  height: 484.1379683267px;
 }
-#stickers .sticker-2 .sticker-front, #stickers .sticker-2 .sticker-back {
-  left: 15.1408817831px;
-  top: 40.1408817831px;
-  width: 150px;
-  height: 100px;
-  border-radius: 20px;
+.sticker-2 .sticker-front, .sticker-2 .sticker-back {
+  left: 42.0689841634px;
+  top: 117.0689841634px;
+  width: 400px;
+  height: 250px;
+  border-radius: 10px;
 }
-#stickers .sticker-2 .sticker-clip {
-  transform: translateX(16.5488110638px);
+.sticker-2 .sticker-clip {
+  transform: translateX(31.9853193897px);
 }
-#stickers .sticker-2 .sticker-front {
-  transform: rotate(-60deg) translateX(-8.2744055319px) translateY(-14.3316907837px);
+.sticker-2 .sticker-front {
+  transform: rotate(-60deg) translateX(-15.9926596948px) translateY(-27.7000991396px);
 }
-#stickers .sticker-2 .sticker-back {
-  transform: rotate(240deg) translateX(81.8664694016px) translateY(-141.7968950532px);
+.sticker-2 .sticker-back {
+  transform: rotate(240deg) translateX(226.076305553px) translateY(-391.5756769145px);
 }
-#stickers .sticker-2:hover .sticker-clip {
-  transform: translateX(75.4224676393px);
+.sticker-2:hover .sticker-clip {
+  transform: translateX(116.0187852992px);
 }
-#stickers .sticker-2:hover .sticker-front {
-  transform: rotate(-60deg) translateX(-37.7112338196px) translateY(-65.3177729917px);
+.sticker-2:hover .sticker-front {
+  transform: rotate(-60deg) translateX(-58.0093926496px) translateY(-100.4752153853px);
 }
-#stickers .sticker-2:hover .sticker-back {
-  transform: rotate(240deg) translateX(52.4296435768px) translateY(-90.8108132948px);
+.sticker-2:hover .sticker-back {
+  transform: rotate(240deg) translateX(184.0595761138px) translateY(-318.8005613107px);
 }
-#stickers .sticker-2 .sticker-front {
-  background-color: #3498db;
+.sticker-2 .sticker-front {
+  background-color: #ffffff;
 }
-#stickers .sticker-2 .sticker-back {
-  background-color: #2980b9;
+.sticker-2 .sticker-back {
+  background-color: #666666;
 }
-#stickers .sticker-3 {
-  width: 300px;
-  height: 330px;
+.sticker-3 {
+  width: 90px;
+  height: 30px;
 }
-#stickers .sticker-3 .sticker-container {
-  width: 455.1113558237px;
-  height: 455.1113558237px;
-  top: -62.5556779119px;
-  left: -77.5556779119px;
+.sticker-3 .sticker-container {
+  width: 94.8683298849px;
+  height: 94.8683298849px;
+  top: -32.4341649425px;
+  left: -2.4341649425px;
   transform: rotate(0deg);
 }
-#stickers .sticker-3 .sticker-wrapper {
-  width: 455.1113558237px;
-  height: 455.1113558237px;
+.sticker-3 .sticker-wrapper {
+  width: 94.8683298849px;
+  height: 94.8683298849px;
   transform: rotate(120deg);
 }
-#stickers .sticker-3 .sticker-clip {
-  width: 455.1113558237px;
-  height: 455.1113558237px;
+.sticker-3 .sticker-clip {
+  width: 94.8683298849px;
+  height: 94.8683298849px;
 }
-#stickers .sticker-3 .sticker-front, #stickers .sticker-3 .sticker-back {
-  left: 77.5556779119px;
-  top: 62.5556779119px;
-  width: 300px;
-  height: 330px;
+.sticker-3 .sticker-front, .sticker-3 .sticker-back {
+  left: 2.4341649425px;
+  top: 32.4341649425px;
+  width: 90px;
+  height: 30px;
   border-radius: 0px;
 }
-#stickers .sticker-3 .sticker-clip {
-  transform: translateX(5.1384198038px);
+.sticker-3 .sticker-clip {
+  transform: translateX(11.951725961px);
 }
-#stickers .sticker-3 .sticker-front {
-  transform: rotate(-120deg) translateX(2.5692099019px) translateY(-4.4500020854px);
+.sticker-3 .sticker-front {
+  transform: rotate(-120deg) translateX(5.9758629805px) translateY(-10.3504983013px);
 }
-#stickers .sticker-3 .sticker-back {
-  transform: rotate(300deg) translateX(-224.9889752072px) translateY(-389.6874206367px);
+.sticker-3 .sticker-back {
+  transform: rotate(300deg) translateX(-41.4587639637px) translateY(-71.807779812px);
 }
-#stickers .sticker-3:hover .sticker-clip {
-  transform: translateX(94.105323047px);
+.sticker-3:hover .sticker-clip {
+  transform: translateX(26.1447015536px);
 }
-#stickers .sticker-3:hover .sticker-front {
-  transform: rotate(-120deg) translateX(47.0526615235px) translateY(-81.4976003901px);
+.sticker-3:hover .sticker-front {
+  transform: rotate(-120deg) translateX(13.0723507768px) translateY(-22.6419757198px);
 }
-#stickers .sticker-3:hover .sticker-back {
-  transform: rotate(300deg) translateX(-180.5050278723px) translateY(-312.6399356179px);
+.sticker-3:hover .sticker-back {
+  transform: rotate(300deg) translateX(-34.3621970858px) translateY(-59.5163204661px);
 }
-#stickers .sticker-3 .sticker-front {
-  background-color: #9b59b6;
+.sticker-3 .sticker-front {
+  background-color: #c6c6c6;
 }
-#stickers .sticker-3 .sticker-back {
-  background-color: #8e44ad;
+.sticker-3 .sticker-back {
+  background-color: #ffffff;
 }
-#stickers .sticker-4 {
+.sticker-4 {
   width: 120px;
   height: 120px;
 }
-#stickers .sticker-4 .sticker-container {
+.sticker-4 .sticker-container {
   width: 169.7075756307px;
   height: 169.7075756307px;
   top: -24.8537878154px;
   left: -24.8537878154px;
   transform: rotate(0deg);
 }
-#stickers .sticker-4 .sticker-wrapper {
+.sticker-4 .sticker-wrapper {
   width: 169.7075756307px;
   height: 169.7075756307px;
   transform: rotate(120deg);
 }
-#stickers .sticker-4 .sticker-clip {
+.sticker-4 .sticker-clip {
   width: 169.7075756307px;
   height: 169.7075756307px;
 }
-#stickers .sticker-4 .sticker-front, #stickers .sticker-4 .sticker-back {
+.sticker-4 .sticker-front, .sticker-4 .sticker-back {
   left: 24.8537878154px;
   top: 24.8537878154px;
   width: 120px;
   height: 120px;
   border-radius: 60px;
 }
-#stickers .sticker-4 .sticker-clip {
+.sticker-4 .sticker-clip {
   transform: translateX(24.4325038789px);
 }
-#stickers .sticker-4 .sticker-front {
+.sticker-4 .sticker-front {
   transform: rotate(-120deg) translateX(12.2162519394px) translateY(-21.1591690372px);
 }
-#stickers .sticker-4 .sticker-back {
+.sticker-4 .sticker-back {
   transform: rotate(300deg) translateX(-72.6383453319px) translateY(-125.811717688px);
 }
-#stickers .sticker-4:hover .sticker-clip {
+.sticker-4:hover .sticker-clip {
   transform: translateX(121.1065581772px);
 }
-#stickers .sticker-4:hover .sticker-front {
+.sticker-4:hover .sticker-front {
   transform: rotate(-120deg) translateX(60.5532790886px) translateY(-104.8813559464px);
 }
-#stickers .sticker-4:hover .sticker-back {
+.sticker-4:hover .sticker-back {
   transform: rotate(300deg) translateX(-24.300779526px) translateY(-42.0896538785px);
 }
-#stickers .sticker-4 .sticker-front {
+.sticker-4 .sticker-front {
   background-color: #e74c3c;
 }
-#stickers .sticker-4 .sticker-back {
+.sticker-4 .sticker-back {
   background-color: #c0392b;
 }
-#stickers .sticker-5 {
+.sticker-5 {
   width: 100px;
   height: 150px;
 }
-#stickers .sticker-5 .sticker-container {
+.sticker-5 .sticker-container {
   width: 180.2817635663px;
   height: 180.2817635663px;
   top: -15.1408817831px;
   left: -40.1408817831px;
   transform: rotate(0deg);
 }
-#stickers .sticker-5 .sticker-wrapper {
+.sticker-5 .sticker-wrapper {
   width: 180.2817635663px;
   height: 180.2817635663px;
   transform: rotate(-20deg);
 }
-#stickers .sticker-5 .sticker-clip {
+.sticker-5 .sticker-clip {
   width: 180.2817635663px;
   height: 180.2817635663px;
 }
-#stickers .sticker-5 .sticker-front, #stickers .sticker-5 .sticker-back {
+.sticker-5 .sticker-front, .sticker-5 .sticker-back {
   left: 40.1408817831px;
   top: 15.1408817831px;
   width: 100px;
   height: 150px;
   border-radius: 0px;
 }
-#stickers .sticker-5 .sticker-clip {
+.sticker-5 .sticker-clip {
   transform: translateX(17.5520543164px);
 }
-#stickers .sticker-5 .sticker-front {
+.sticker-5 .sticker-front {
   transform: rotate(20deg) translateX(-16.4935359208px) translateY(6.003156133px);
 }
-#stickers .sticker-5 .sticker-back {
+.sticker-5 .sticker-back {
   transform: rotate(160deg) translateX(152.9159069638px) translateY(55.6568384811px);
 }
-#stickers .sticker-5:hover .sticker-clip {
+.sticker-5:hover .sticker-clip {
   transform: translateX(90.1408817831px);
 }
-#stickers .sticker-5:hover .sticker-front {
+.sticker-5:hover .sticker-front {
   transform: rotate(20deg) translateX(-84.7047214427px) translateY(30.829997307px);
 }
-#stickers .sticker-5:hover .sticker-back {
+.sticker-5:hover .sticker-back {
   transform: rotate(160deg) translateX(84.7047214422px) translateY(30.829997307px);
 }
-#stickers .sticker-5 .sticker-front {
+.sticker-5 .sticker-front {
   background-color: #1abc9c;
 }
-#stickers .sticker-5 .sticker-back {
+.sticker-5 .sticker-back {
   background-color: #16a085;
 }
-#stickers .sticker-6 {
+.sticker-6 {
   width: 100px;
   height: 150px;
 }
-#stickers .sticker-6 .sticker-container {
+.sticker-6 .sticker-container {
   width: 180.2817635663px;
   height: 180.2817635663px;
   top: -15.1408817831px;
   left: -40.1408817831px;
   transform: rotate(0deg);
 }
-#stickers .sticker-6 .sticker-wrapper {
+.sticker-6 .sticker-wrapper {
   width: 180.2817635663px;
   height: 180.2817635663px;
   transform: rotate(10deg);
 }
-#stickers .sticker-6 .sticker-clip {
+.sticker-6 .sticker-clip {
   width: 180.2817635663px;
   height: 180.2817635663px;
 }
-#stickers .sticker-6 .sticker-front, #stickers .sticker-6 .sticker-back {
+.sticker-6 .sticker-front, .sticker-6 .sticker-back {
   left: 40.1408817831px;
   top: 15.1408817831px;
   width: 100px;
   height: 150px;
   border-radius: 50px;
 }
-#stickers .sticker-6 .sticker-clip {
+.sticker-6 .sticker-clip {
   transform: translateX(35.0187308105px);
 }
-#stickers .sticker-6 .sticker-front {
+.sticker-6 .sticker-front {
   transform: rotate(-10deg) translateX(-34.4867176029px) translateY(-6.0809387895px);
 }
-#stickers .sticker-6 .sticker-back {
+.sticker-6 .sticker-back {
   transform: rotate(190deg) translateX(143.0561608479px) translateY(-25.2246609152px);
 }
-#stickers .sticker-6:hover .sticker-clip {
+.sticker-6:hover .sticker-clip {
   transform: translateX(123.2141723667px);
 }
-#stickers .sticker-6:hover .sticker-front {
+.sticker-6:hover .sticker-front {
   transform: rotate(-10deg) translateX(-121.3422722277px) translateY(-21.3959164942px);
 }
-#stickers .sticker-6:hover .sticker-back {
+.sticker-6:hover .sticker-back {
   transform: rotate(190deg) translateX(56.2006062449px) translateY(-9.9096832136px);
 }
-#stickers .sticker-6 .sticker-front {
+.sticker-6 .sticker-front {
   background-color: #f1c40f;
 }
-#stickers .sticker-6 .sticker-back {
+.sticker-6 .sticker-back {
   background-color: #f39c12;
 }
 

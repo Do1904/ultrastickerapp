@@ -6,7 +6,9 @@
         <div class="sticker-container">
             <div class="sticker-wrapper">
                 <div class="sticker-clip">
-                    <div class="sticker-front"></div>
+                    <div class="sticker-front">
+                        <img *ngFor="let slide of test; let i = index" [src]="slide.url" [alt]="slide.title" />
+                    </div>
                     <div class="sticker-back"></div>
                 </div>
             </div>

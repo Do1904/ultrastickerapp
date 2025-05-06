@@ -10,4 +10,7 @@ import { ImageSliderComponent } from '../image-slider/image-slider.component';
   styleUrls: ['./top.component.css', '../../sticker.css'],
 })
 export class TopComponent {
+  test = [
+    { url: '/assets/slides/schalkeEbisu.jpg', title: 'Ultrasステッカーを探そう' },
+  ];
 }
