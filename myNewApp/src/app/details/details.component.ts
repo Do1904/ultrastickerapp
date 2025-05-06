@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -25,10 +25,10 @@ import { Comment } from '../model/comment';
   ],
   templateUrl:
     'details.component.html',
-  styleUrl: './details.component.css'
+  styleUrls: ['./details.component.css', '../../sticker.css'],
 })
 
-export class DetailsComponent implements OnInit, AfterViewInit {
+export class DetailsComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   stickerService = inject(StickerService);
   cheersService = inject(CheersService);
@@ -51,7 +51,7 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     comment: new FormControl(''),
   });
 
-  constructor(private router: Router, private Sticker: any) { }
+  constructor(private router: Router) { }
 
 
   async ngOnInit(): Promise<void> {
@@ -59,10 +59,6 @@ export class DetailsComponent implements OnInit, AfterViewInit {
     await this.getStickerInit(this.stickerDetailId);
 
     await this.getCheersStatusByStickerId(this.stickerDetailId);
-  }
-
-  ngAfterViewInit(): void {
-    this.Sticker.init('.sticker');
   }
 
   getStickerInit = async (id: number | undefined): Promise<any | undefined> => {

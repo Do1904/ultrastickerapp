@@ -1,0 +1,294 @@
+@use 'sass:math'
+
+@function pow($number, $exp)
+  $value: 1
+  @if $exp > 0
+    @for $i from 1 through $exp
+      $value: $value * $number
+  @else if $exp < 0
+    @for $i from 1 through -$exp
+      $value: $value / $number
+  @return $value
+
+@function sqrt($r)
+  $x0: 1
+  $x1: $x0
+  @for $i from 1 through 10
+    $x1: $x0 - math.div(($x0 * $x0 - abs($r)), (2 * $x0))
+    $x0: $x1
+  @return $x1
+
+@function fact($number)
+  $value: 1
+  @if $number > 0
+    @for $i from 1 through $number
+      $value: $value * $i
+  @return $value
+
+@function sign($i)
+  $sign: if($i != 0, math.div($i, abs($i)), 1)
+  @return $sign
+
+@function pi()
+  @return 3.14159265359
+
+@function rad($angle)
+  $unit: math.unit($angle)
+  $unitless: math.div($angle, ($angle * 0 + 1))
+  @if $unit == deg
+    $unitless: math.div($unitless, 180) * pi()
+  @return $unitless
+
+@function sin($angle)
+  $sin: 0
+  $angle: rad($angle)
+  @for $i from 0 through 10
+    $sin: $sin + math.div(pow(-1, $i) * pow($angle, (2 * $i + 1)), fact(2 * $i + 1))
+  @return $sin
+
+@function cos($angle)
+  $cos: 0
+  $angle: rad($angle)
+  @for $i from 0 through 10
+    $cos: $cos + math.div(pow(-1, $i) * pow($angle, 2 * $i), fact(2 * $i))
+  @return $cos
+
+@function tan($angle)
+  @return math.div(sin($angle), cos($angle))
+
+$threshold: math.div(math.div(pi(), 180), 20)
+
+@function asin($z)
+  $sum: 0
+  $complement: false
+  $sign: sign($z)
+  $z: abs($z)
+  @if $z > 1
+    @warn 'illegal `#{$z}` value for function'
+    @return false
+  @if $z > sin(math.div(pi(), 4))
+    $complement: true
+    $z: sqrt(1 - pow($z, 2))
+  $term: $z
+  $i: 0
+  $k: 1
+  @while $term > $threshold
+    $sum: $sum + $term
+    $i: $i + 1
+    $k: $k * math.div((2 * $i - 1), (2 * $i))
+    $j: 2 * $i + 1
+    $term: math.div($k * pow($z, $j), $j)
+  @return $sign * (if($complement, math.div(pi(), 2) - $sum, $sum)) * 1rad
+
+@function acos($z)
+  @return math.div(pi(), 2) * 1rad - asin($z)
+
+@function atan($z)
+  @return asin(math.div($z, sqrt(1 + pow($z, 2))))
+
+// --- 以下ミックスインとレイアウトは計算部の変更のみ ---
+
+@mixin sticker-base()
+  -webkit-tap-highlight-color: transparent
+
+  *
+    backface-visibility: hidden
+    pointer-events: none
+
+  .sticker-container
+    position: relative
+    transform-style: preserve-3d
+
+  .sticker-wrapper
+    position: absolute
+    top: 0
+    left: 0
+
+  .sticker-clip
+    position: absolute
+    left: 0
+    top: 0
+    overflow: hidden
+
+  .sticker-front, &-back
+    position: absolute
+    overflow: hidden
+    pointer-events: all
+
+  .sticker-front
+    z-index: 1
+    background:
+      position: center
+      size: 100% 100%
+      repeat: no-repeat
+
+  .sticker-back
+    z-index: 2
+
+@mixin sticker-style($foreground-color, $background-color, $image: null)
+  .sticker-front
+    background:
+      color: $foreground-color
+      @if $image != null
+        image: url($image)
+
+  .sticker-back
+    background:
+      color: $background-color
+
+@mixin sticker-transition($speed, $easing)
+  .sticker-clip
+    transition: $speed $easing transform
+
+  .sticker-front, .sticker-back
+    transition: $speed $easing transform
+
+@mixin sticker-init($width, $height, $border-radius: 0px, $peel: 0.5, $peel-angle: 45deg, $rotation: 0, $shadow: false, $hover: true)
+  $smaller: $width
+  @if $height < $smaller
+    $smaller: $height
+  @if $border-radius > math.div($smaller, 2)
+    $border-radius: math.div($smaller, 2)
+
+  $size: sqrt(pow(math.div($width, 1px), 2) + pow(math.div($height, 1px), 2)) * 1px
+  $offset-top: math.div(($size - $height), 2)
+  $offset-left: math.div(($size - $width), 2)
+
+  width: $width
+  height: $height
+
+  .sticker-container
+    width: $size
+    height: $size
+    top: -$offset-top
+    left: -$offset-left
+    transform: rotate($rotation)
+
+  .sticker-wrapper
+    width: $size
+    height: $size
+    transform: rotate($peel-angle)
+
+  .sticker-clip
+    width: $size
+    height: $size
+
+  .sticker-front, .sticker-back
+    left: $offset-left
+    top: $offset-top
+    width: $width
+    height: $height
+    border-radius: $border-radius
+
+  $rotation-angle-fix: 90deg - $peel-angle
+  @if $peel-angle > 90
+    $rotation-angle-fix: $peel-angle - 90deg
+  @if $peel-angle < 0
+    $rotation-angle-fix: $peel-angle + 90deg
+  @if $peel-angle < -90
+    $rotation-angle-fix: 270deg - $peel-angle
+
+  $border-angle-fix: $peel-angle
+  @if $peel-angle > 90
+    $border-angle-fix: $peel-angle - 90deg
+  @if $peel-angle < 0
+    $border-angle-fix: $peel-angle - 90deg
+  @if $peel-angle < -90
+    $border-angle-fix: $peel-angle
+
+  $diagonal-angle: atan(math.div($height, $width))
+  $angle-fix: $rotation-angle-fix + $diagonal-angle
+  $angle-fix-back: $peel-angle + 180deg
+  $offset-diagonal-angle: math.div(($size - (sin($angle-fix) * $size)), 2)
+  $offset-border-radius: $border-radius * sqrt(2) - $border-radius
+  $offset-border-radius: $offset-border-radius * sin($border-angle-fix * 2)
+  $offset: $offset-diagonal-angle + $offset-border-radius
+  $offset-back: $offset - $size
+  $peel-translate: ($size - $offset * 2) * $peel
+
+  .sticker-clip
+    transform: translateX($offset)
+
+  .sticker-front
+    $x: -$offset * cos($peel-angle)
+    $y: -$offset * sin($peel-angle)
+    transform: rotate(-$peel-angle) translateX($x) translateY($y)
+
+  .sticker-back
+    $os: $offset-back
+    $x: $os * cos($angle-fix-back)
+    $y: $os * sin($angle-fix-back)
+    transform: rotate($angle-fix-back) translateX($x) translateY(-$y)
+
+  $activation: ':hover'
+  @if $hover == false
+    $activation: '.peeled'
+
+  &#{$activation}
+    .sticker-clip
+      transform: translateX($offset + $peel-translate)
+
+    .sticker-front
+      $x: (- $offset - $peel-translate) * cos($peel-angle)
+      $y: (- $offset - $peel-translate) * sin($peel-angle)
+      transform: rotate(- $peel-angle) translateX($x) translateY($y)
+
+    .sticker-back
+      $os: $offset-back + $peel-translate
+      $x: $os * cos($angle-fix-back)
+      $y: $os * sin($angle-fix-back)
+      transform: rotate($angle-fix-back) translateX($x) translateY(-$y)
+
+html, body
+  height: 100%
+  width: 100%
+  margin: 0
+  padding: 0
+  overflow: hidden
+  font-family: sans-serif
+
+#stickers
+  background: #2c3e50
+  height: 100%
+  width: 100%
+  overflow-x: hidden
+  overflow-y: auto
+  -webkit-overflow-scrolling: touch
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: space-around
+  align-items: center
+  align-content: flex-start
+  padding: 50px
+  box-sizing: border-box
+
+  .sticker
+    flex: 0 0 auto
+    margin: 50px
+    @include sticker-base()
+    @include sticker-transition(500ms, ease-in-out)
+
+    &-1
+      @include sticker-init(250px, 200px, 0, 0.5, 45deg, 0deg, true)
+      @include sticker-style(#2ecc71, #27ae60)
+
+    &-2
+      @include sticker-init(150px, 100px, 20px, 0.4, 60deg, 0deg, true)
+      @include sticker-style(#3498db, #2980b9)
+
+    &-3
+      @include sticker-init(300px, 330px, 0px, 0.2, 120deg, 0deg, true)
+      @include sticker-style(#9b59b6, #8e44ad)
+
+    &-4
+      @include sticker-init(120px, 120px, 60px, 0.8, 120deg, 0deg, true)
+      @include sticker-style(#e74c3c, #c0392b)
+
+    &-5
+      @include sticker-init(100px, 150px, 0px, 0.5, -20deg, 0deg, true)
+      @include sticker-style(#1abc9c, #16a085)
+
+    &-6
+      @include sticker-init(100px, 150px, 50px, 0.8, 10deg, 0deg, true)
+      @include sticker-style(#f1c40f, #f39c12)
