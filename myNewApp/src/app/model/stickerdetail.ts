@@ -8,6 +8,7 @@ export interface StickerDetail {
   sticker: string;
   isClean: boolean;
   userId: number;
+  class?: string;
 }
 
 export interface StickerDetailRequest {

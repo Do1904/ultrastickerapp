@@ -283,30 +283,87 @@ html, body
 
 .sticker
   flex: 0 0 auto
-  margin: 10px
+  margin: 10px auto
   @include sticker-base()
   @include sticker-transition(500ms, ease-in-out)
 
   &-1
-    @include sticker-init(250px, 200px, 0, 0.5, 45deg, 0deg, true)
+    @include sticker-init(50px, 40px, 0, 0.4, -45deg, 0deg, true)
     @include sticker-style(#2ecc71, #27ae60)
 
   &-2
-    @include sticker-init(400px, 250px, 10px, 0.2, 60deg, 0deg, true)
+    @include sticker-init(280px, 270px, 10px, 0.4, -35deg, 0deg, true)
     @include sticker-style(#ffffff, #666666)
 
   &-3
-    @include sticker-init(90px, 30px, 0px, 0.2, 120deg, 0deg, true)
+    @include sticker-init(270px, 290px, 0px, 0.4, -30deg, 0deg, true)
     @include sticker-style(#c6c6c6, #ffffff)
 
   &-4
-    @include sticker-init(120px, 120px, 60px, 0.8, 120deg, 0deg, true)
+    @include sticker-init(300px, 290px, 15px, 0.4, -30deg, 0deg, true)
     @include sticker-style(#e74c3c, #c0392b)
 
   &-5
-    @include sticker-init(100px, 150px, 0px, 0.5, -20deg, 0deg, true)
+    @include sticker-init(300px, 300px, 150px, 0.4, -20deg, 0deg, true)
     @include sticker-style(#1abc9c, #16a085)
 
   &-6
-    @include sticker-init(100px, 150px, 50px, 0.8, 10deg, 0deg, true)
+    @include sticker-init(266px, 278px, 20px, 0.4, -10deg, 0deg, true)
     @include sticker-style(#f1c40f, #f39c12)
+
+  &-top-1
+    @include sticker-init(200px, 200px, 100px, 0.9, 5deg, 0deg, true)
+    @include sticker-style(#ffffff, #353535)
+
+  &-top-warning
+    @include sticker-init(100px, 100px, 50px, 0.9, 5deg, 0deg, true)
+    @include sticker-style(#a50000, #710000)
+
+
+.road-background
+  background-image: url('/assets/brick-wall.png');
+  padding: 100px
+  margin: auto
+  text-align: center
+  color: white
+
+.warning-background
+  background-color: black
+  padding: 50px 20%
+  margin: auto
+  text-align: center
+  color: #cacaca
+  display: flex;
+  justify-content: space-between; /* 必要に応じて間隔を調整 */
+  align-items: center; /* 縦方向の中央揃え */
+
+.warning-background > div:last-child
+  flex: 2;
+  padding: 10px
+
+
+.sticker-text-front-large
+  color: black; 
+  text-align: center; 
+  height:200px;
+  line-height:200px;
+
+.sticker-text-back-large
+  color: white; 
+  text-align: center; 
+  height:200px;
+  line-height:200px;
+  transform: rotate(180deg);
+
+.sticker-text-front-warning
+  color: white; 
+  text-align: center; 
+  height:100px;
+  line-height:100px;
+
+.sticker-text-back-warning
+  color: white; 
+  text-align: center; 
+  height:100px;
+  line-height:100px;
+  transform: rotate(180deg);
