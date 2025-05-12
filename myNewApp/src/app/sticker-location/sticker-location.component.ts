@@ -25,7 +25,7 @@ export class StickerLocationComponent {
   }
 
   getRandomStickerClass(): string {
-    const num = Math.floor(Math.random() * 5) + 2; // 1〜6
+    const num = Math.floor(Math.random() * 2) + 1; // 1〜2
     return `sticker-${num}`;
   }
 }
