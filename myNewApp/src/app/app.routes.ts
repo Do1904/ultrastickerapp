@@ -4,6 +4,7 @@ import { DetailsComponent } from './details/details.component';
 import { StickerFormComponent } from './sticker-form/sticker-form.component';
 import { EditStickerComponent } from './edit-sticker/edit-sticker.component';
 import { TopComponent } from './top/top.component';
+import { MapComponent } from './map/map.component';
 
 
 export const routeConfig: Routes = [
@@ -31,6 +32,11 @@ export const routeConfig: Routes = [
     path: 'editSticker/:id',
     component: EditStickerComponent,
     title: 'edit Sticker'
+  },
+  {
+    path: 'map',
+    component: MapComponent,
+    title: 'map'
   }
 ];
 
