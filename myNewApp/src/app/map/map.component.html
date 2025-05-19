@@ -1,2 +1,9 @@
-<p>map works!</p>
-<div id="map" style="height: 500px;width: 100%;"></div>
+<div>
+    <input type="text" id="address" placeholder="住所を入力" />
+    <button (click)="onSearch()">検索</button>
+    <button (click)="testPin()">test</button>
+    <button (click)="testGetLocation()">testGetLocation</button>
+
+</div>
+
+<div id="map" style="height: 80vh;width: 100%;"></div>
