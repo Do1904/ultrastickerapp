@@ -9,6 +9,8 @@ export interface StickerDetail {
   isClean: boolean;
   userId: number;
   class?: string;
+  longitude?: number;
+  latitude?: number;
 }
 
 export interface StickerDetailRequest {
@@ -20,4 +22,6 @@ export interface StickerDetailRequest {
   sticker: string;
   isClean: boolean;
   userId: number;
+  longitude?: number;
+  latitude?: number;
 }

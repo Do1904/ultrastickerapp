@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import * as L from 'leaflet';
 import { LocationService } from '../service/location.service';
+import { MapService } from '../service/map.service';
+import { Pin } from '../model/pin';
 
 @Component({
   selector: 'app-map',
@@ -12,25 +14,43 @@ import { LocationService } from '../service/location.service';
 export class MapComponent implements OnInit, AfterViewInit {
   private map!: L.Map
   private L: any;
-
   public lat: any;
   public lng: any;
 
+  public pins: Pin[] = [];
+
   locationService: LocationService = inject(LocationService);
+  mapService: MapService = inject(MapService);
+
 
   constructor() { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    console.info('ngOnInit called');
+  }
+
+  async pinAll(pins: Pin[]): Promise<void> {
+    pins.forEach((pin: Pin) => {
+      this.addMarker(pin.latitude, pin.longitude, pin.club);
+    });
   }
 
   async ngAfterViewInit(): Promise<void> {
-    if (typeof window !== 'undefined') {
-      this.L = await import('leaflet');
+    console.info('ngAfterViewInit called');
+    this.L = await import('leaflet');
 
-      this.map = L.map('map').setView([35.681236, 139.767125], 13);
+    if (typeof window !== 'undefined') {
+      this.map = this.L.map('map').setView([35.681236, 139.767125], 13);
       this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
       }).addTo(this.map);
+
+      this.pins = await this.getPinsInit();
+      if (this.pins && this.pins.length > 0) {
+        await this.pinAll(this.pins);
+      } else {
+        console.warn('No pins found to display on the map.');
+      }
     }
   }
 
@@ -42,10 +62,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   async testGetLocation() {
-    const cordinate = await this.locationService.getCurrentLocation();
-    const pin = 'my home'; // ピンの名前
-    this.addMarker(cordinate.lat, cordinate.lng, pin); // マーカーを追加
-    this.moveToLocation(cordinate.lat, cordinate.lng); // 地図を移動
+    const coordinate = await this.getCurrentLocation();
+    const pin = 'current coordinate'; // ピンの名前
+    this.addMarker(coordinate.lat, coordinate.lng, pin); // マーカーを追加
+    this.moveToLocation(coordinate.lat, coordinate.lng); // 地図を移動
   }
 
   testPin(): void {
@@ -57,14 +77,35 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   addMarker(lat: number, lng: number, pin: string): void {
-    const marker = this.L.marker([lat, lng]); // markerオブジェクトを作成
-    marker.bindPopup(pin);
-    marker.addTo(this.map); // markerをLeaflet地図に追加
+    try {
+      const marker = new this.L.marker([lat, lng])
+        .bindPopup(pin);
+
+      marker.addTo(this.map);
+    } catch (error) {
+      console.error('Error adding marker:', error);
+    }
   }
 
   moveToLocation(lat: number, lng: number): void {
     this.map.flyTo([lat, lng]);
   }
+
+  getPinsInit = async () => {
+    try {
+      const response = await this.mapService.getAllPins();
+      return response;
+    } catch (error) {
+      console.error('Error uploading sticker:', error);
+      throw error;
+    }
+  }
+
+  async getCurrentLocation(): Promise<any> {
+    const coordinate = await this.locationService.getCurrentLocation();
+    return coordinate;
+  }
+
 
   // 住所を指定して地図を移動するメソッド
   async moveToAddress(address: string): Promise<void> {

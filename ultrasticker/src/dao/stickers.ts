@@ -11,7 +11,24 @@ async function getStickers() {
         stickers.address as address,
         stickers.country as country,
         stickers.is_clean as isClean,
-        stickers.user_id as userId
+        stickers.user_id as userId,
+        ST_X(stickers.coordinate) AS longitude,
+        ST_Y(stickers.coordinate) AS latitude
+    FROM stickers`;
+
+    return await selectQuery<IStickerModel[]>(query, []);
+}
+
+async function getStickersForMap() {
+    const query = `
+    SELECT 
+        stickers.id as id,
+        stickers.club as club,
+        stickers.league as league,
+        stickers.is_clean as isClean,
+        stickers.user_id as userId,
+        ST_X(stickers.coordinate) AS longitude,
+        ST_Y(stickers.coordinate) AS latitude
     FROM stickers`;
 
     return await selectQuery<IStickerModel[]>(query, []);
@@ -27,7 +44,9 @@ async function getStickerById(stickerId: number) {
         stickers.address as address,
         stickers.country as country,
         stickers.is_clean as isClean,
-        stickers.user_id as userId
+        stickers.user_id as userId,
+        ST_X(stickers.coordinate) AS longitude,
+        ST_Y(stickers.coordinate) AS latitude
     FROM stickers WHERE id = ?`;
 
     return await selectQuery<IStickerModel>(query, [stickerId]);
@@ -43,7 +62,9 @@ async function getStickerLike(club: string) {
         stickers.address as address,
         stickers.country as country,
         stickers.is_clean as isClean,
-        stickers.user_id as userId 
+        stickers.user_id as userId,
+        ST_X(stickers.coordinate) AS longitude,
+        ST_Y(stickers.coordinate) AS latitude
     FROM stickers WHERE club LIKE ?`;
 
     const clubWithWildcard = `%${club}%`;
@@ -74,4 +95,4 @@ async function deleteStickerbyId(stickerId: number, userId: number) {
     return await executeQuery(query, values);
 }
 
-export { getStickers, getStickerById, getStickerLike, putNewSticker, updateStickerbyId, deleteStickerbyId };
+export { getStickers, getStickersForMap, getStickerById, getStickerLike, putNewSticker, updateStickerbyId, deleteStickerbyId };

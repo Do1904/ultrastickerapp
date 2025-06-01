@@ -11,6 +11,7 @@ import stickersRouter from './src/routes/stickers.js';
 import putStickerRouter from './src/routes/putSticker.js';
 import sendCheersRouter from './src/routes/cheers.js';
 import commentsRouter from './src/routes/comments.js';
+import mapRouter from './src/routes/map.js';
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/stickers', stickersRouter);
 app.use('/putStickers', putStickerRouter);
 app.use('/cheers', sendCheersRouter);
 app.use('/comments', commentsRouter);
+app.use('/maps', mapRouter);
 
 // 証明書と秘密鍵を読み込む
 // const options = {
