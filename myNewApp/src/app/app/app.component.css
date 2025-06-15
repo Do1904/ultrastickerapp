@@ -7,3 +7,37 @@
 .content {
   padding: var(--content-padding);
 }
+
+
+/* app.component.css または styles.css でもOK */
+
+.header {
+  position: fixed;
+  top: -100px;
+  /* 最初は画面外に隠す */
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background-color: white;
+  transition: top 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header.visible {
+  top: 0;
+  /* スライドインで画面上部に表示 */
+}
+
+.menu-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+}

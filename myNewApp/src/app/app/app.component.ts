@@ -30,4 +30,10 @@ export class AppComponent implements OnInit {
       console.error('There was an error retrieving data:', error);
     });
   }
+
+  public isHeaderVisible = false;
+
+  toggleHeader() {
+    this.isHeaderVisible = !this.isHeaderVisible;
+  }
 }

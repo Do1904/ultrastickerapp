@@ -1,7 +1,9 @@
 <main>
-  <section class="header">
+  <section class="header" [class.visible]="isHeaderVisible">
     <app-header></app-header>
   </section>
+
+  <button class="menu-toggle" (click)="toggleHeader()">☰</button>
   <section class="content">
     <router-outlet></router-outlet>
   </section>
