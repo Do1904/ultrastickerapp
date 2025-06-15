@@ -1,4 +1,5 @@
 import { selectQuery, executeQuery } from "../db/queryUtils.js";
+import { PinModel } from "../models/PinModel.js";
 import { IStickerModel } from "../models/stickerModel.js";
 
 async function getStickers() {
@@ -27,11 +28,12 @@ async function getStickersForMap() {
         stickers.league as league,
         stickers.is_clean as isClean,
         stickers.user_id as userId,
+        stickers.sticker as sticker,
         ST_X(stickers.coordinate) AS longitude,
         ST_Y(stickers.coordinate) AS latitude
     FROM stickers`;
 
-    return await selectQuery<IStickerModel[]>(query, []);
+    return await selectQuery<PinModel[]>(query, []);
 }
 
 async function getStickerById(stickerId: number) {

@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db/index.js';
+import { PinModel } from '../models/PinModel.js';
 
 const router = express.Router();
 

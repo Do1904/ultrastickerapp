@@ -1,4 +1,4 @@
-export interface Pin {
+export interface PinModel {
     id: number;
     club: string;
     league: string;

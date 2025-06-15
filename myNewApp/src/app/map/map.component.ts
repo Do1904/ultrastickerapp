@@ -82,6 +82,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       <div style="text-align: center;">
         <h2>${pin.club}</h2>
         <p>${pin.league}</p>
+        <p>${pin.sticker}</p>
+        <p><a href="https://maps.google.com/maps?ll=${pin.latitude},${pin.longitude}&q=${pin.latitude},${pin.longitude}" target="_blank">Find this location on Google Map</a></p>
       </div>`; // ピンのポップアップ画面表示を設定
       this.addMarker(pin.latitude, pin.longitude, pinString);
     });
@@ -111,12 +113,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       throw error;
     }
   }
-
-  async getCurrentLocation(): Promise<any> {
-    const coordinate = await this.locationService.getCurrentLocation();
-    return coordinate;
-  }
-
 
   // 住所を指定して地図を移動するメソッド
   async moveToAddress(address: string): Promise<void> {
