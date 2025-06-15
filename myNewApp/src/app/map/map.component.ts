@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { LocationService } from '../service/location.service';
 import { MapService } from '../service/map.service';
 import { Pin } from '../model/pin';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -23,26 +24,22 @@ export class MapComponent implements OnInit, AfterViewInit {
   mapService: MapService = inject(MapService);
 
 
-  constructor() { }
+  constructor(private router: Router) { }
+  public selectedPin: Pin | null = null;
 
   async ngOnInit() {
-    console.info('ngOnInit called');
-  }
-
-  async pinAll(pins: Pin[]): Promise<void> {
-    pins.forEach((pin: Pin) => {
-      this.addMarker(pin.latitude, pin.longitude, pin.club);
-    });
   }
 
   async ngAfterViewInit(): Promise<void> {
-    console.info('ngAfterViewInit called');
-    this.L = await import('leaflet');
+    // this.L = await import('leaflet');
 
     if (typeof window !== 'undefined') {
+      const L = await import('leaflet'); // <-- ここをwindowガードの中に移す
+      this.L = L;
+
       this.map = this.L.map('map').setView([35.681236, 139.767125], 13);
       this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
+        attribution: '<a href="https://www.openstreetmap.org/copyright" target="_blank">©OpenStreetMap</a> contributors, Tiles: <a href="http://map.hotosm.org/" target="_blank">©HOT</a>'
       }).addTo(this.map);
 
       this.pins = await this.getPinsInit();
@@ -51,7 +48,21 @@ export class MapComponent implements OnInit, AfterViewInit {
       } else {
         console.warn('No pins found to display on the map.');
       }
+
+      this.map.on('click', this.onMapClick.bind(this)); // 地図クリックイベントの設定
     }
+  }
+
+  onMapClick(event: L.LeafletMouseEvent): void {
+    const lat = event.latlng.lat;
+    const lng = event.latlng.lng;
+    const pinString = `
+      <div style="text-align: center;">
+        <h2>Selected Location</h2>
+        <button mat-raised-button="elevated" >この位置でステッカーを登録する</button>
+      </div>`; // ピンのポップアップ画面表示を設定
+    this.addMarker(lat, lng, pinString); // マーカーを追加
+    this.moveToLocation(lat, lng); // 地図を移動
   }
 
   onSearch(): void {
@@ -61,19 +72,19 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async testGetLocation() {
-    const coordinate = await this.getCurrentLocation();
-    const pin = 'current coordinate'; // ピンの名前
-    this.addMarker(coordinate.lat, coordinate.lng, pin); // マーカーを追加
-    this.moveToLocation(coordinate.lat, coordinate.lng); // 地図を移動
+  showMarkerDetail(pin: Pin) {
+    this.selectedPin = pin;
   }
 
-  testPin(): void {
-    const latitude = 51.5526994559; // 緯度
-    const longitude = 7.06721973112; // 経度
-    const pin = 'Veltins Arena'; // ピンの名前
-    this.addMarker(latitude, longitude, pin); // マーカーを追加
-    this.moveToLocation(latitude, longitude); // 地図を移動
+  async pinAll(pins: Pin[]): Promise<void> {
+    pins.forEach((pin: Pin) => {
+      const pinString = `
+      <div style="text-align: center;">
+        <h2>${pin.club}</h2>
+        <p>${pin.league}</p>
+      </div>`; // ピンのポップアップ画面表示を設定
+      this.addMarker(pin.latitude, pin.longitude, pinString);
+    });
   }
 
   addMarker(lat: number, lng: number, pin: string): void {
@@ -133,4 +144,5 @@ export class MapComponent implements OnInit, AfterViewInit {
       console.error('エラーが発生しました:', error);
     }
   }
+
 }

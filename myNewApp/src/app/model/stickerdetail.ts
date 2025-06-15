@@ -1,3 +1,4 @@
+import { LatLngLiteral, Point } from "leaflet";
 
 export interface StickerDetail {
   id: number;
@@ -8,6 +9,7 @@ export interface StickerDetail {
   sticker: string;
   isClean: boolean;
   userId: number;
+  coordinate: LatLngLiteral;
   class?: string;
   longitude?: number;
   latitude?: number;
@@ -22,6 +24,7 @@ export interface StickerDetailRequest {
   sticker: string;
   isClean: boolean;
   userId: number;
+  coordinate: LatLngLiteral;
   longitude?: number;
   latitude?: number;
 }

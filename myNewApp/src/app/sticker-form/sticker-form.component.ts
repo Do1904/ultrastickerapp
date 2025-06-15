@@ -7,6 +7,8 @@ import { PutstickerService } from '../service/putsticker.service';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, NgForm } from '@angular/forms';
 import { StickerDetail } from '../model/stickerdetail';
+import { LocationService } from '../service/location.service';
+import { LatLngLiteral } from 'leaflet';
 
 
 @Component({
@@ -36,8 +38,20 @@ export class StickerFormComponent {
     country: '',
     sticker: '',
     isClean: true,
-    userId: 1
+    userId: 1,
+    coordinate: {
+      lat: 0,
+      lng: 0
+    },
   };
+
+  public currentCoordinate: LatLngLiteral = {
+    lat: 0,
+    lng: 0
+  };
+
+  locationService: LocationService = inject(LocationService);
+
 
   fileChoosen(event: any, fileList: FileList | null) {
     if (!fileList || fileList.length <= 0) {
@@ -50,7 +64,14 @@ export class StickerFormComponent {
     }
   }
 
+  async getCurrentLocation(): Promise<any> {
+    const coordinate = await this.locationService.getCurrentLocation();
+    this.currentCoordinate = coordinate;
+    console.info(this.currentCoordinate)
+  }
+
   onSubmit = async (form: NgForm): Promise<void> => {
+    console.info('onSubmit called');
     if (form.value) {
       const formValues: StickerDetail = {
         id: 0,
@@ -60,7 +81,11 @@ export class StickerFormComponent {
         country: form.value.country,
         isClean: form.value.isClean,
         sticker: "sticker",
-        userId: 1
+        userId: 1,
+        coordinate: {
+          lat: 0,
+          lng: 0
+        },
       };
       try {
         const response = this.putstickerService.uploadImage(this.sticker, formValues);

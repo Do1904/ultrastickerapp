@@ -25,6 +25,10 @@
         </mat-form-field>
     </div>
     <div>
+        <button mat-raised-button="elevated" type="button" (click)="getCurrentLocation()">Get Your Location</button>
+    </div>
+    <br>
+    <div>
         <mat-form-field class="example-full-width">
             <mat-label>綺麗だった？</mat-label>
             <input matInput placeholder="??" type="text" name="isClean" [(ngModel)]="stickerDetail.isClean">

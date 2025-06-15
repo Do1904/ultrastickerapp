@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LatLngLiteral } from 'leaflet';
 
 @Injectable({
     providedIn: 'root',
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class LocationService {
     constructor() { }
 
-    async getCurrentLocation(): Promise<{ lat: number; lng: number }> {
+    async getCurrentLocation(): Promise<LatLngLiteral> {
         if (!navigator.geolocation) {
             throw new Error('Geolocation is not supported by this browser.');
         }
