@@ -28,16 +28,15 @@
   /* スライドインで画面上部に表示 */
 }
 
-.menu-toggle {
+/* divでボタンを囲む：div自体を固定 */
+.menu-toggle-container {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  left: 15px;
   z-index: 1000;
-  background-color: #333;
-  color: white;
-  border: none;
-  padding: 10px 12px;
-  font-size: 18px;
-  border-radius: 4px;
-  cursor: pointer;
+  /* 任意で背景・角丸など */
+  background-color: rgba(255, 255, 255, 0);
+  padding: 4px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
 }

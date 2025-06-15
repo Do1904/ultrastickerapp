@@ -15,7 +15,7 @@ import { FooterComponent } from "../footer/footer.component"; // Import the user
     FooterComponent
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.css', '../../sticker.css'],
 })
 export class AppComponent implements OnInit {
   title = 'Stickers';

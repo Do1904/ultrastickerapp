@@ -391,6 +391,57 @@ html, body {
 .sticker-top-warning .sticker-back {
   background-color: #710000;
 }
+.sticker-header-button {
+  width: 70px;
+  height: 70px;
+}
+.sticker-header-button .sticker-container {
+  width: 98.9949495711px;
+  height: 98.9949495711px;
+  top: -14.4974747855px;
+  left: -14.4974747855px;
+  transform: rotate(0deg);
+}
+.sticker-header-button .sticker-wrapper {
+  width: 98.9949495711px;
+  height: 98.9949495711px;
+  transform: rotate(145deg);
+}
+.sticker-header-button .sticker-clip {
+  width: 98.9949495711px;
+  height: 98.9949495711px;
+}
+.sticker-header-button .sticker-front, .sticker-header-button .sticker-back {
+  left: 14.4974747855px;
+  top: 14.4974747855px;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+}
+.sticker-header-button .sticker-clip {
+  transform: translateX(14.3681251798px);
+}
+.sticker-header-button .sticker-front {
+  transform: rotate(-145deg) translateX(11.7696791136px) translateY(-8.2412180377px);
+}
+.sticker-header-button .sticker-back {
+  transform: rotate(325deg) translateX(-69.3249568322px) translateY(-48.5392783588px);
+}
+.sticker-header-button:hover .sticker-clip {
+  transform: translateX(42.4716048644px);
+}
+.sticker-header-button:hover .sticker-front {
+  transform: rotate(-145deg) translateX(34.7907019489px) translateY(-24.3607117642px);
+}
+.sticker-header-button:hover .sticker-back {
+  transform: rotate(325deg) translateX(-46.3030305106px) translateY(-32.4200084574px);
+}
+.sticker-header-button .sticker-front {
+  background-color: #323232;
+}
+.sticker-header-button .sticker-back {
+  background-color: #f2f1e9;
+}
 
 .sticker-text-front-large {
   color: black;
@@ -449,6 +500,22 @@ html, body {
   text-align: center;
   height: 100px;
   line-height: 100px;
+  transform: rotate(180deg);
+}
+
+.sticker-text-front-header-button {
+  font-size: 120%;
+  color: white;
+  text-align: center;
+  height: 70px;
+  line-height: 70px;
+}
+
+.sticker-text-back-header-button {
+  color: white;
+  text-align: center;
+  height: 100px;
+  line-height: 70px;
   transform: rotate(180deg);
 }
 

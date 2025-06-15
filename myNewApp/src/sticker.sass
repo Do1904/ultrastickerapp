@@ -311,6 +311,10 @@ html, body
     @include sticker-init(100px, 100px, 50px, 0.9, 5deg, 0deg, true)
     @include sticker-style(#a50000, #710000)
 
+  &-header-button
+    @include sticker-init(70px, 70px, 35px, 0.4, 145deg, 0deg, true)
+    @include sticker-style(#323232, #f2f1e9)
+
 
 .sticker-text-front-large
   color: black; 
@@ -362,4 +366,18 @@ html, body
   text-align: center; 
   height:100px;
   line-height:100px;
+  transform: rotate(180deg);
+
+.sticker-text-front-header-button
+  font-size: 120%;
+  color: white; 
+  text-align: center; 
+  height:70px;
+  line-height:70px;
+
+.sticker-text-back-header-button
+  color: white;
+  text-align: center; 
+  height:100px;
+  line-height:70px;
   transform: rotate(180deg);

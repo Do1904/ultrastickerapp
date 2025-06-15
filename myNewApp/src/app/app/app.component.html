@@ -3,7 +3,24 @@
     <app-header></app-header>
   </section>
 
-  <button class="menu-toggle" (click)="toggleHeader()">☰</button>
+  <div class="menu-toggle-container">
+    <a (click)="toggleHeader()">
+      <div class="sticker sticker-header-button">
+        <div class="sticker-container">
+          <div class="sticker-wrapper">
+            <div class="sticker-clip">
+              <div class="sticker-front">
+                <div class="sticker-text-front-header-button">☰</div>
+              </div>
+              <div class=" sticker-back">
+                <div class="sticker-text-back-header-button"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
   <section class="content">
     <router-outlet></router-outlet>
   </section>
