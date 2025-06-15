@@ -392,49 +392,49 @@ html, body {
   background-color: #710000;
 }
 .sticker-header-button {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
 }
 .sticker-header-button .sticker-container {
-  width: 98.9949495711px;
-  height: 98.9949495711px;
-  top: -14.4974747855px;
-  left: -14.4974747855px;
+  width: 70.7106781187px;
+  height: 70.7106781187px;
+  top: -10.3553390593px;
+  left: -10.3553390593px;
   transform: rotate(0deg);
 }
 .sticker-header-button .sticker-wrapper {
-  width: 98.9949495711px;
-  height: 98.9949495711px;
+  width: 70.7106781187px;
+  height: 70.7106781187px;
   transform: rotate(145deg);
 }
 .sticker-header-button .sticker-clip {
-  width: 98.9949495711px;
-  height: 98.9949495711px;
+  width: 70.7106781187px;
+  height: 70.7106781187px;
 }
 .sticker-header-button .sticker-front, .sticker-header-button .sticker-back {
-  left: 14.4974747855px;
-  top: 14.4974747855px;
-  width: 70px;
-  height: 70px;
-  border-radius: 35px;
+  left: 10.3553390593px;
+  top: 10.3553390593px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
 }
 .sticker-header-button .sticker-clip {
-  transform: translateX(14.3681251798px);
+  transform: translateX(10.2629465559px);
 }
 .sticker-header-button .sticker-front {
-  transform: rotate(-145deg) translateX(11.7696791136px) translateY(-8.2412180377px);
+  transform: rotate(-145deg) translateX(8.4069136517px) translateY(-5.886584312px);
 }
 .sticker-header-button .sticker-back {
-  transform: rotate(325deg) translateX(-69.3249568322px) translateY(-48.5392783588px);
+  transform: rotate(325deg) translateX(-49.5178261897px) translateY(-34.6709130301px);
 }
 .sticker-header-button:hover .sticker-clip {
-  transform: translateX(42.4716048644px);
+  transform: translateX(30.3368605587px);
 }
 .sticker-header-button:hover .sticker-front {
-  transform: rotate(-145deg) translateX(34.7907019489px) translateY(-24.3607117642px);
+  transform: rotate(-145deg) translateX(24.8505013439px) translateY(-17.4005083693px);
 }
 .sticker-header-button:hover .sticker-back {
-  transform: rotate(325deg) translateX(-46.3030305106px) translateY(-32.4200084574px);
+  transform: rotate(325deg) translateX(-33.0735931501px) translateY(-23.1571488479px);
 }
 .sticker-header-button .sticker-front {
   background-color: #323232;
@@ -504,18 +504,18 @@ html, body {
 }
 
 .sticker-text-front-header-button {
-  font-size: 120%;
+  font-size: 100%;
   color: white;
   text-align: center;
-  height: 70px;
-  line-height: 70px;
+  height: 50px;
+  line-height: 50px;
 }
 
 .sticker-text-back-header-button {
   color: white;
   text-align: center;
   height: 100px;
-  line-height: 70px;
+  line-height: 50px;
   transform: rotate(180deg);
 }
 

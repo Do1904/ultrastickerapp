@@ -1,18 +1,18 @@
 header {
     display: block;
-    height: 50px;
+    height: 110px;
 }
 
 header {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #272727;
+    /* background-color: #ffffff86; */
 }
 
 a {
     text-decoration: none;
-    color: white;
+    color: black;
 }
 
 .brand-name {
