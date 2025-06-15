@@ -19,13 +19,14 @@ export class MapComponent implements OnInit, AfterViewInit {
   public lng: any;
 
   public pins: Pin[] = [];
+  public selectedPin: Pin | null = null;
 
   locationService: LocationService = inject(LocationService);
   mapService: MapService = inject(MapService);
 
-
   constructor(private router: Router) { }
-  public selectedPin: Pin | null = null;
+
+
 
   async ngOnInit() {
   }
@@ -56,12 +57,26 @@ export class MapComponent implements OnInit, AfterViewInit {
   onMapClick(event: L.LeafletMouseEvent): void {
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
-    const pinString = `
+    const popupContent = `
       <div style="text-align: center;">
         <h2>Selected Location</h2>
         <button mat-raised-button="elevated" >この位置でステッカーを登録する</button>
       </div>`; // ピンのポップアップ画面表示を設定
-    this.addMarker(lat, lng, pinString); // マーカーを追加
+
+    const pin: Pin = {
+      latitude: lat,
+      longitude: lng,
+      club: 'Unknown',
+      league: 'Unknown',
+      isClean: true,
+      sticker: '',
+      userId: 1, // 仮のユーザーID
+      id: 0 // 仮のID
+    };
+
+    // ここは本来はベつのマーカーを表示する予定。pin も特に必要ないため今後は削除する予定
+
+    this.addMarker(lat, lng, popupContent, pin); // マーカーを追加
     this.moveToLocation(lat, lng); // 地図を移動
   }
 
@@ -73,26 +88,31 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   showMarkerDetail(pin: Pin) {
+    console.info('Selected Pin:', pin);
     this.selectedPin = pin;
+    // ここで詳細画面component表示などの処理を行う
   }
 
   async pinAll(pins: Pin[]): Promise<void> {
     pins.forEach((pin: Pin) => {
-      const pinString = `
+      const popupContent = `
       <div style="text-align: center;">
         <h2>${pin.club}</h2>
         <p>${pin.league}</p>
-        <p>${pin.sticker}</p>
         <p><a href="https://maps.google.com/maps?ll=${pin.latitude},${pin.longitude}&q=${pin.latitude},${pin.longitude}" target="_blank">Find this location on Google Map</a></p>
       </div>`; // ピンのポップアップ画面表示を設定
-      this.addMarker(pin.latitude, pin.longitude, pinString);
+      this.addMarker(pin.latitude, pin.longitude, popupContent, pin);
     });
   }
 
-  addMarker(lat: number, lng: number, pin: string): void {
+  addMarker(lat: number, lng: number, popUpContent: string, pin: Pin): void {
     try {
       const marker = new this.L.marker([lat, lng])
-        .bindPopup(pin);
+        .bindPopup(popUpContent);
+
+      marker.on('click', () => {
+        this.showMarkerDetail(pin);
+      });
 
       marker.addTo(this.map);
     } catch (error) {
