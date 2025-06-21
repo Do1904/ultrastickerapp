@@ -1,6 +1,7 @@
-<div>
-    <input type="text" id="address" placeholder="住所を入力" />
-    <button (click)="onSearch()">検索</button>
-</div>
+<div class="map-container">
+    <!-- Leaflet 地図 -->
+    <div id="map"></div>
 
-<div id="map" style="height: 80vh;width: 100%;"></div>
+    <!-- 詳細パネル -->
+    <app-marker-detail-panel *ngIf="showPanel" [data]="selectedPin" class="marker-panel"></app-marker-detail-panel>
+</div>

@@ -1,14 +1,16 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
 import { LocationService } from '../service/location.service';
 import { MapService } from '../service/map.service';
 import { Pin } from '../model/pin';
 import { Router } from '@angular/router';
+import { MarkerDetailPanelComponent } from './marker-detail-panel/marker-detail-panel.component';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [],
+  imports: [MarkerDetailPanelComponent, CommonModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
@@ -20,6 +22,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   public pins: Pin[] = [];
   public selectedPin: Pin | null = null;
+
+  showPanel = false;
 
   locationService: LocationService = inject(LocationService);
   mapService: MapService = inject(MapService);
@@ -38,10 +42,12 @@ export class MapComponent implements OnInit, AfterViewInit {
       const L = await import('leaflet'); // <-- ここをwindowガードの中に移す
       this.L = L;
 
-      this.map = this.L.map('map').setView([35.681236, 139.767125], 13);
+      this.map = this.L.map('map', { zoomControl: false }).setView([35.681236, 139.767125], 13);
       this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '<a href="https://www.openstreetmap.org/copyright" target="_blank">©OpenStreetMap</a> contributors, Tiles: <a href="http://map.hotosm.org/" target="_blank">©HOT</a>'
       }).addTo(this.map);
+
+      new L.Control.Zoom({ position: 'bottomright' }).addTo(this.map);
 
       this.pins = await this.getPinsInit();
       if (this.pins && this.pins.length > 0) {
@@ -91,6 +97,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     console.info('Selected Pin:', pin);
     this.selectedPin = pin;
     // ここで詳細画面component表示などの処理を行う
+    this.showPanel = true;
   }
 
   async pinAll(pins: Pin[]): Promise<void> {

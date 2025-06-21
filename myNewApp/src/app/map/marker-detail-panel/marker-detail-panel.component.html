@@ -1,1 +1,19 @@
-<p>marker-detail-panel works!</p>
+<div class="panel-content">
+    <a [routerLink]="['/details', data?.id]">
+        <div class="sticker sticker-3">
+            <div class="sticker-container">
+                <div class="sticker-wrapper">
+                    <div class="sticker-clip">
+                        <div class="sticker-front"><img class="listing-photo" [src]="data?.sticker"
+                                alt="Exterior photo of {{data?.club}}" (error)="onImgError($event)"></div>
+                        <div class="sticker-back" style="text-align: left; color: aliceblue; font-size: 90%;">
+                            &nbsp;&nbsp;{{ data?.club }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <p>userId: {{ data?.userId }}</p>
+
+</div>

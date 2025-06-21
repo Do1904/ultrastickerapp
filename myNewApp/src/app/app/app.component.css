@@ -13,12 +13,12 @@
 
 .header {
   position: fixed;
-  top: -70px;
+  top: -75px;
   /* 最初は画面外に隠す */
   left: 0;
   right: 0;
   z-index: 999;
-  background-color: #ffffffbd;
+  background-color: #ffffffe8;
   transition: top 0.3s ease;
   box-shadow: 0 2px 5px #1e1e1ed3;
 }

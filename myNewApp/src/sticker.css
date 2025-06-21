@@ -187,6 +187,57 @@ html, body {
 .sticker-2 .sticker-back {
   background-color: #666666;
 }
+.sticker-3 {
+  width: 200px;
+  height: 200px;
+}
+.sticker-3 .sticker-container {
+  width: 283.2484501372px;
+  height: 283.2484501372px;
+  top: -41.6242250686px;
+  left: -41.6242250686px;
+  transform: rotate(0deg);
+}
+.sticker-3 .sticker-wrapper {
+  width: 283.2484501372px;
+  height: 283.2484501372px;
+  transform: rotate(-35deg);
+}
+.sticker-3 .sticker-clip {
+  width: 283.2484501372px;
+  height: 283.2484501372px;
+}
+.sticker-3 .sticker-front, .sticker-3 .sticker-back {
+  left: 41.6242250686px;
+  top: 41.6242250686px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+}
+.sticker-3 .sticker-clip {
+  transform: translateX(6.0238308741px);
+}
+.sticker-3 .sticker-front {
+  transform: rotate(35deg) translateX(-4.934433375px) translateY(3.455127446px);
+}
+.sticker-3 .sticker-back {
+  transform: rotate(145deg) translateX(227.0891135964px) translateY(159.0095091857px);
+}
+.sticker-3:hover .sticker-clip {
+  transform: translateX(141.6242250686px);
+}
+.sticker-3:hover .sticker-front {
+  transform: rotate(35deg) translateX(-116.0117734858px) translateY(81.2323183158px);
+}
+.sticker-3:hover .sticker-back {
+  transform: rotate(145deg) translateX(116.0117734857px) translateY(81.2323183158px);
+}
+.sticker-3 .sticker-front {
+  background-color: #ffffff;
+}
+.sticker-3 .sticker-back {
+  background-color: #666666;
+}
 .sticker-small-white {
   width: 50px;
   height: 50px;
@@ -392,49 +443,49 @@ html, body {
   background-color: #710000;
 }
 .sticker-header-button {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 .sticker-header-button .sticker-container {
-  width: 70.7106781187px;
-  height: 70.7106781187px;
-  top: -10.3553390593px;
-  left: -10.3553390593px;
+  width: 56.5685424949px;
+  height: 56.5685424949px;
+  top: -8.2842712475px;
+  left: -8.2842712475px;
   transform: rotate(0deg);
 }
 .sticker-header-button .sticker-wrapper {
-  width: 70.7106781187px;
-  height: 70.7106781187px;
+  width: 56.5685424949px;
+  height: 56.5685424949px;
   transform: rotate(145deg);
 }
 .sticker-header-button .sticker-clip {
-  width: 70.7106781187px;
-  height: 70.7106781187px;
+  width: 56.5685424949px;
+  height: 56.5685424949px;
 }
 .sticker-header-button .sticker-front, .sticker-header-button .sticker-back {
-  left: 10.3553390593px;
-  top: 10.3553390593px;
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  left: 8.2842712475px;
+  top: 8.2842712475px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
 }
 .sticker-header-button .sticker-clip {
-  transform: translateX(10.2629465559px);
+  transform: translateX(8.2103572447px);
 }
 .sticker-header-button .sticker-front {
-  transform: rotate(-145deg) translateX(8.4069136517px) translateY(-5.886584312px);
+  transform: rotate(-145deg) translateX(6.7255309213px) translateY(-4.7092674496px);
 }
 .sticker-header-button .sticker-back {
-  transform: rotate(325deg) translateX(-49.5178261897px) translateY(-34.6709130301px);
+  transform: rotate(325deg) translateX(-39.6142609517px) translateY(-27.7367304241px);
 }
 .sticker-header-button:hover .sticker-clip {
-  transform: translateX(30.3368605587px);
+  transform: translateX(24.2694884469px);
 }
 .sticker-header-button:hover .sticker-front {
-  transform: rotate(-145deg) translateX(24.8505013439px) translateY(-17.4005083693px);
+  transform: rotate(-145deg) translateX(19.8804010751px) translateY(-13.9204066954px);
 }
 .sticker-header-button:hover .sticker-back {
-  transform: rotate(325deg) translateX(-33.0735931501px) translateY(-23.1571488479px);
+  transform: rotate(325deg) translateX(-26.45887452px) translateY(-18.5257190783px);
 }
 .sticker-header-button .sticker-front {
   background-color: #323232;
@@ -507,15 +558,15 @@ html, body {
   font-size: 100%;
   color: white;
   text-align: center;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
 }
 
 .sticker-text-back-header-button {
   color: white;
   text-align: center;
-  height: 100px;
-  line-height: 50px;
+  height: 80px;
+  line-height: 40px;
   transform: rotate(180deg);
 }
 
