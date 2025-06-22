@@ -15,11 +15,31 @@
     position: absolute;
     top: 25%;
     left: 2%;
-    width: 30%;
+    width: 20%;
+    min-width: 250px;
     height: 46%;
+    min-height: 410px;
     z-index: 100;
     padding: 2%;
     background-color: #ffffffe8;
     box-shadow: 0 2px 5px #1e1e1ed3;
     border-radius: 10px;
+}
+
+@media (max-width: 420px) {
+    .marker-panel {
+        text-align: center;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        width: 20%;
+        min-width: 250px;
+        height: 15%;
+        min-height: 250px;
+        z-index: 100;
+        padding: 5px;
+        background-color: #682f2fe8;
+        box-shadow: 0 2px 5px #1e1e1ed3;
+        border-radius: 10px;
+    }
 }

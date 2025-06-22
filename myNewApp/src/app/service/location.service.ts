@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LatLngLiteral } from 'leaflet';
+import * as L from 'leaflet';
 
 @Injectable({
     providedIn: 'root',
@@ -25,5 +26,14 @@ export class LocationService {
                 (error) => reject(error)
             );
         });
+    }
+
+    async convertToAddress(lat: number, lng: number): Promise<string> {
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch address from OpenStreetMap');
+        }
+        const data = await response.json();
+        return data.display_name || 'Address not found';
     }
 }

@@ -493,6 +493,57 @@ html, body {
 .sticker-header-button .sticker-back {
   background-color: #f2f1e9;
 }
+.sticker-new {
+  width: 100px;
+  height: 100px;
+}
+.sticker-new .sticker-container {
+  width: 141.4215015102px;
+  height: 141.4215015102px;
+  top: -20.7107507551px;
+  left: -20.7107507551px;
+  transform: rotate(0deg);
+}
+.sticker-new .sticker-wrapper {
+  width: 141.4215015102px;
+  height: 141.4215015102px;
+  transform: rotate(145deg);
+}
+.sticker-new .sticker-clip {
+  width: 141.4215015102px;
+  height: 141.4215015102px;
+}
+.sticker-new .sticker-front, .sticker-new .sticker-back {
+  left: 20.7107507551px;
+  top: 20.7107507551px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+.sticker-new .sticker-clip {
+  transform: translateX(20.525894205px);
+}
+.sticker-new .sticker-front {
+  transform: rotate(-145deg) translateX(16.8138281989px) translateY(-11.773169251px);
+}
+.sticker-new .sticker-back {
+  transform: rotate(325deg) translateX(-99.0357704891px) translateY(-69.3419087571px);
+}
+.sticker-new:hover .sticker-clip {
+  transform: translateX(50.636808135px);
+}
+.sticker-new:hover .sticker-front {
+  transform: rotate(-145deg) translateX(41.4792449001px) translateY(-29.0440799583px);
+}
+.sticker-new:hover .sticker-back {
+  transform: rotate(325deg) translateX(-74.3693857654px) translateY(-52.0712378628px);
+}
+.sticker-new .sticker-front {
+  background-color: #e1dfd8;
+}
+.sticker-new .sticker-back {
+  background-color: #1b1b02;
+}
 
 .sticker-text-front-large {
   color: black;
@@ -567,6 +618,22 @@ html, body {
   text-align: center;
   height: 80px;
   line-height: 40px;
+  transform: rotate(180deg);
+}
+
+.sticker-new-front {
+  font-size: 100%;
+  color: #1b1b02;
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+}
+
+.sticker-new-back {
+  color: #f1f1ec;
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
   transform: rotate(180deg);
 }
 

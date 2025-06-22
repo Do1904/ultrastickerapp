@@ -1596,6 +1596,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.21.3.tgz#899c03576c4c28c83228f0e64dfa10edae99c9a2"
   integrity sha512-xRxC0jaJWDLYvcUvjQmHCJSfMrgmUuvsoXgDeU/wTorQ1ngDdUBuFtgY3W1Pc5sprGAvZBtWdJX7RPg/iZZUqA==
 
+"@geoapify/leaflet-address-search-plugin@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@geoapify/leaflet-address-search-plugin/-/leaflet-address-search-plugin-1.0.2.tgz#49c0cda1d1f2d389ee999ece37f41730b5bb101d"
+  integrity sha512-V8k/uZmeBJ8a+UKRRWbbVI9eeSDymzjpD6/IN6FNNFh6mGJgDiVvG8tEF+b215njgpXl7BRxkUId2A1LPXR+Wg==
+
 "@inquirer/figures@^1.0.2":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@inquirer/figures/-/figures-1.0.3.tgz#1227cc980f88e6d6ab85abadbf164f5038041edd"

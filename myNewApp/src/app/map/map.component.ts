@@ -65,8 +65,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     const lng = event.latlng.lng;
     const popupContent = `
       <div style="text-align: center;">
-        <h2>Selected Location</h2>
-        <button mat-raised-button="elevated" >この位置でステッカーを登録する</button>
+        <h4>Selected Location</h4>
+        <p><a href="https://maps.google.com/maps?ll=${lat},${lng}&q=${lat},${lng}" target="_blank">Find this location on Google Map</a></p>
       </div>`; // ピンのポップアップ画面表示を設定
 
     const pin: Pin = {
@@ -77,20 +77,18 @@ export class MapComponent implements OnInit, AfterViewInit {
       isClean: true,
       sticker: '',
       userId: 1, // 仮のユーザーID
-      id: 0 // 仮のID
+      id: -1 // 仮のID
     };
 
     // ここは本来はベつのマーカーを表示する予定。pin も特に必要ないため今後は削除する予定
 
-    this.addMarker(lat, lng, popupContent, pin); // マーカーを追加
-    this.moveToLocation(lat, lng); // 地図を移動
-  }
+    const marker = new this.L.marker([lat, lng]).addTo(this.map);
 
-  onSearch(): void {
-    const addressInput = (document.getElementById('address') as HTMLInputElement).value;
-    if (addressInput) {
-      this.moveToAddress(addressInput);
-    }
+    marker.bindPopup(popupContent).openPopup();
+
+    // this.moveToLocation(lat, lng); // 地図を移動
+
+    this.showMarkerDetail(pin);
   }
 
   showMarkerDetail(pin: Pin) {

@@ -88,7 +88,7 @@ export class StickerFormComponent {
         },
       };
       try {
-        const response = this.putstickerService.uploadImage(this.sticker, formValues);
+        this.putstickerService.uploadImage(this.sticker, formValues);
         alert('You put new sticker!!');
       } catch (error) {
         console.error('There was an error!', error);

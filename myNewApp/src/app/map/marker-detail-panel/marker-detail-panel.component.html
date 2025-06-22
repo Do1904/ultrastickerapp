@@ -1,19 +1,39 @@
 <div class="panel-content">
-    <a [routerLink]="['/details', data?.id]">
-        <div class="sticker sticker-3">
+    <div *ngIf="data?.id !== -1; else newStickerCoordinate">
+        <a [routerLink]="['/details', data?.id]">
+            <div class="sticker sticker-3">
+                <div class="sticker-container">
+                    <div class="sticker-wrapper">
+                        <div class="sticker-clip">
+                            <div class="sticker-front"><img class="listing-photo" [src]="data?.sticker"
+                                    alt="Exterior photo of {{data?.club}}" (error)="onImgError($event)"></div>
+                            <div class="sticker-back" style="text-align: left; color: aliceblue; font-size: 90%;">
+                                &nbsp;&nbsp;{{ data?.club }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <p>userId: {{ data?.userId }}</p>
+    </div>
+    <ng-template #newStickerCoordinate>
+        <!-- ステッカーを新規追加したい時に表示される内容 -->
+        <h3>ステッカー新規登録</h3>
+        <p style="font-size: small;">{{ this.currentAddress }}</p>
+        <div class="sticker sticker-new">
             <div class="sticker-container">
                 <div class="sticker-wrapper">
                     <div class="sticker-clip">
-                        <div class="sticker-front"><img class="listing-photo" [src]="data?.sticker"
-                                alt="Exterior photo of {{data?.club}}" (error)="onImgError($event)"></div>
-                        <div class="sticker-back" style="text-align: left; color: aliceblue; font-size: 90%;">
-                            &nbsp;&nbsp;{{ data?.club }}
+                        <div class="sticker-front">
+                            <div class="sticker-new-front"><b>ADD</b></div>
+                        </div>
+                        <div class=" sticker-back">
+                            <div class="sticker-new-back"><b>ADD</b></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </a>
-    <p>userId: {{ data?.userId }}</p>
-
+    </ng-template>
 </div>

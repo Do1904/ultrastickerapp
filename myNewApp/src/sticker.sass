@@ -319,6 +319,10 @@ html, body
     @include sticker-init(40px, 40px, 20px, 0.4, 145deg, 0deg, true)
     @include sticker-style(#323232, #f2f1e9)
 
+  &-new
+    @include sticker-init(100px, 100px, 50px, 0.3, 145deg, 0deg, true)
+    @include sticker-style(#e1dfd8, #1b1b02)
+
 
 .sticker-text-front-large
   color: black; 
@@ -384,4 +388,18 @@ html, body
   text-align: center; 
   height:80px;
   line-height:40px;
+  transform: rotate(180deg);
+
+.sticker-new-front
+  font-size: 100%;
+  color: #1b1b02; 
+  text-align: center; 
+  height:100px;
+  line-height:100px;
+
+.sticker-new-back
+  color: #f1f1ec;
+  text-align: center; 
+  height:100px;
+  line-height:100px;
   transform: rotate(180deg);
