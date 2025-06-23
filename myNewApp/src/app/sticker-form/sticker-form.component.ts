@@ -9,6 +9,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { StickerDetail } from '../model/stickerdetail';
 import { LocationService } from '../service/location.service';
 import { LatLngLiteral } from 'leaflet';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -52,6 +53,16 @@ export class StickerFormComponent {
 
   locationService: LocationService = inject(LocationService);
 
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    // クエリパラメータを取得
+    this.route.queryParams.subscribe(params => {
+      this.currentCoordinate.lat = Number(params['lat']);
+      this.currentCoordinate.lng = Number(params['lng']);
+    });
+  }
+
 
   fileChoosen(event: any, fileList: FileList | null) {
     if (!fileList || fileList.length <= 0) {
@@ -67,7 +78,6 @@ export class StickerFormComponent {
   async getCurrentLocation(): Promise<any> {
     const coordinate = await this.locationService.getCurrentLocation();
     this.currentCoordinate = coordinate;
-    console.info(this.currentCoordinate)
   }
 
   onSubmit = async (form: NgForm): Promise<void> => {
@@ -83,8 +93,8 @@ export class StickerFormComponent {
         sticker: "sticker",
         userId: 1,
         coordinate: {
-          lat: 0,
-          lng: 0
+          lat: this.currentCoordinate.lat,
+          lng: this.currentCoordinate.lng
         },
       };
       try {

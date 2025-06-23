@@ -24,9 +24,11 @@ router.post('/putNewSticker', upload.single('sticker'), async (req, res) => {
 
     const filePath = `http://localhost:3000/${req.file.path.replace('public/', '')}`;
 
+    console.info("File uploaded successfully:", req.body);
+
     const userId = 1; // 仮のユーザーID
     try {
-        await db.stickers.putNewSticker(userId, filePath, req.body.club, req.body.league, req.body.address, req.body.country);
+        await db.stickers.putNewSticker(userId, filePath, req.body.club, req.body.league, req.body.address, req.body.country, req.body.longitude, req.body.latitude);
         res.status(200).send('Sticker uploaded successfully');
     } catch (error) {
         console.error('Error uploading sticker:', error);

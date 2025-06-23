@@ -29,6 +29,10 @@
     </div>
     <br>
     <div>
+        <p>緯度: {{ currentCoordinate.lat || '未取得' }}</p>
+        <p>経度: {{ currentCoordinate.lng || '未取得' }}</p>
+    </div>
+    <div>
         <mat-form-field class="example-full-width">
             <mat-label>綺麗だった？</mat-label>
             <input matInput placeholder="??" type="text" name="isClean" [(ngModel)]="stickerDetail.isClean">

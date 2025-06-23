@@ -30,14 +30,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router) { }
 
-
-
   async ngOnInit() {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    // this.L = await import('leaflet');
-
     if (typeof window !== 'undefined') {
       const L = await import('leaflet'); // <-- ここをwindowガードの中に移す
       this.L = L;

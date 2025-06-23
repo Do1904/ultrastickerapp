@@ -20,6 +20,11 @@ export class PutstickerService {
       data.append('country', form.country);
       data.append('isClean', 'true');
       data.append('userId', form.userId.toString());
+      data.append('longitude', JSON.stringify(form.coordinate.lng));
+      data.append('latitude', JSON.stringify(form.coordinate.lat));
+
+      console.info(data)
+
 
       const response = await axios.post(this.uploadUrl, data);
 

@@ -74,11 +74,22 @@ async function getStickerLike(club: string) {
     return await selectQuery<IStickerModel[]>(query, [clubWithWildcard]);
 }
 
-async function putNewSticker(userId: number, filePath: string, club: string, league: string, address: string, country: string) {
-    const query = `
-    INSERT INTO stickers (user_id, sticker, club, league, address, country, is_clean) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+async function putNewSticker(userId: number, filePath: string, club: string, league: string, address: string, country: string, longitude: number, latitude: number) {
 
-    const values = [userId, filePath, club, league, address, country, true];
+    console.log({
+        userId,
+        filePath,
+        club,
+        league,
+        address,
+        country,
+        latitude,
+        longitude,
+    });
+    const query = `
+    INSERT INTO stickers (user_id, sticker, club, league, address, country, is_clean, coordinate) VALUES (?, ?, ?, ?, ?, ?, ?, ST_GeomFromText(?))`;
+
+    const values = [userId, filePath, club, league, address, country, true, `POINT(${longitude} ${latitude})`];
 
     return await executeQuery(query, values);
 }

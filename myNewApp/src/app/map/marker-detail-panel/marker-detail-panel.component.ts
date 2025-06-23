@@ -18,13 +18,18 @@ export class MarkerDetailPanelComponent {
 
   public currentAddress: string = '';
 
+  public coodinate: { lat: number | null, lng: number | null } = {
+    lat: null,
+    lng: null
+  };
+
   async ngOnChanges() {
     if (this.data) {
-      console.log('MarkerDetailPanelComponent data changed:', this.data);
+      this.coodinate.lat = this.data.latitude;
+      this.coodinate.lng = this.data.longitude;
 
       if (this.data.id === -1) {
         this.currentAddress = await this.locationService.convertToAddress(this.data.latitude, this.data.longitude)
-        console.info('Converted address:', this.currentAddress);
       }
     }
   }
