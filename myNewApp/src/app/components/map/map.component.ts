@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
-import { LocationService } from '../service/location.service';
-import { MapService } from '../service/map.service';
-import { Pin } from '../model/pin';
+import { LocationService } from '../../service/location.service';
+import { MapService } from '../../service/map.service';
+import { Pin } from '../../model/pin';
 import { Router } from '@angular/router';
 import { MarkerDetailPanelComponent } from './marker-detail-panel/marker-detail-panel.component';
 

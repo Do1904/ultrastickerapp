@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StickerDetail } from '../model/stickerdetail';
+import { StickerDetail } from '../../model/stickerdetail';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   templateUrl: 'sticker-location.component.html',
-  styleUrls: ['./sticker-location.component.css', '../../sticker.css'],
+  styleUrls: ['./sticker-location.component.css', '../../../sticker.css'],
 })
 export class StickerLocationComponent {
   @Input() stickerDetail!: StickerDetail;

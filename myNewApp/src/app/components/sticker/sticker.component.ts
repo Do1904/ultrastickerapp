@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { StickerLocationComponent } from '../sticker-location/sticker-location.component';
 import { CommonModule } from '@angular/common';
-import { StickerDetail } from '../model/stickerdetail';
-import { StickerService } from '../service/sticker.service';
+import { StickerDetail } from '../../model/stickerdetail';
+import { StickerService } from '../../service/sticker.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 

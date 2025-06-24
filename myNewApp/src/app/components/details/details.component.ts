@@ -2,16 +2,16 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { StickerService } from '../service/sticker.service';
-import { PutstickerService } from '../service/putsticker.service';
-import { StickerDetail } from '../model/stickerdetail';
+import { StickerService } from '../../service/sticker.service';
+import { PutstickerService } from '../../service/putsticker.service';
+import { StickerDetail } from '../../model/stickerdetail';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { CheersService } from '../service/cheers.service';
-import { User } from '../model/user';
-import { CommentService } from '../service/comments.service';
-import { Comment } from '../model/comment';
+import { CheersService } from '../../service/cheers.service';
+import { User } from '../../model/user';
+import { CommentService } from '../../service/comments.service';
+import { Comment } from '../../model/comment';
 
 
 @Component({
@@ -25,7 +25,7 @@ import { Comment } from '../model/comment';
   ],
   templateUrl:
     'details.component.html',
-  styleUrls: ['./details.component.css', '../../sticker.css'],
+  styleUrls: ['./details.component.css', '../../../sticker.css'],
 })
 
 export class DetailsComponent implements OnInit {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StickerComponent } from '../sticker/sticker.component';
 import { RouterModule } from '@angular/router';
-import { DataService } from '../service/data.service'; // Import the data service
-import { User } from '../model/user';
+import { DataService } from '../../service/data.service'; // Import the data service
+import { User } from '../../model/user';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component"; // Import the user model
 @Component({
@@ -15,7 +15,7 @@ import { FooterComponent } from "../footer/footer.component"; // Import the user
     FooterComponent
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css', '../../sticker.css'],
+  styleUrls: ['./app.component.css', '../../../sticker.css'],
 })
 export class AppComponent implements OnInit {
   title = 'Stickers';

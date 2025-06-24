@@ -3,11 +3,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { PutstickerService } from '../service/putsticker.service';
+import { PutstickerService } from '../../service/putsticker.service';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, NgForm } from '@angular/forms';
-import { StickerDetail } from '../model/stickerdetail';
-import { LocationService } from '../service/location.service';
+import { StickerDetail } from '../../model/stickerdetail';
+import { LocationService } from '../../service/location.service';
 import { LatLngLiteral } from 'leaflet';
 import { ActivatedRoute } from '@angular/router';
 

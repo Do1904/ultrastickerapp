@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css', '../../sticker.css'],
+  styleUrls: ['./header.component.css', '../../../sticker.css'],
 })
 export class HeaderComponent {
 

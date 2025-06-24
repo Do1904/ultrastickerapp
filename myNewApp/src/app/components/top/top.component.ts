@@ -7,7 +7,7 @@ import { ImageSliderComponent } from '../image-slider/image-slider.component';
   standalone: true,
   imports: [ImageSliderComponent, CommonModule],
   templateUrl: './top.component.html',
-  styleUrls: ['./top.component.scss', '../../sticker.css'],
+  styleUrls: ['./top.component.scss', '../../../sticker.css'],
 })
 export class TopComponent implements AfterViewInit {
 
