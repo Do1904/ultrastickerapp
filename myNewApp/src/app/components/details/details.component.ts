@@ -12,6 +12,7 @@ import { CheersService } from '../../service/cheers.service';
 import { User } from '../../model/user';
 import { CommentService } from '../../service/comments.service';
 import { Comment } from '../../model/comment';
+import { clubMap, leagueMap, countryMap } from '../../const/clubMaps';
 
 
 @Component({
@@ -40,6 +41,10 @@ export class DetailsComponent implements OnInit {
   public comments: Comment[] = [];
   public loginUserId = 1
 
+  public clubName: string = '';
+  public leagueName: string = '';
+  public countryName: string = '';
+
   // cheers総数
   public cheers: number = 0;
   // ログインユーザーがcheerを送ったかどうか
@@ -58,6 +63,8 @@ export class DetailsComponent implements OnInit {
     this.stickerDetailId = Number(this.route.snapshot.params['id']);
     await this.getStickerInit(this.stickerDetailId);
 
+    this.setStickerDetail(this.stickerDetail);
+
     await this.getCheersStatusByStickerId(this.stickerDetailId);
   }
 
@@ -65,7 +72,6 @@ export class DetailsComponent implements OnInit {
     try {
       if (id !== undefined) {
         const response = await this.stickerService.getStickerById(id);
-        console.info(response)
         this.stickerDetail = response.sticker;
         this.comments = response.comments;
         this.users = response.visiters;
@@ -75,6 +81,16 @@ export class DetailsComponent implements OnInit {
       alert(error);
     }
     return undefined;
+  }
+
+  setStickerDetail = (sticker: StickerDetail | undefined) => {
+    if (sticker) {
+      this.clubName = clubMap.get(sticker.clubId)?.clubName || '';
+      this.leagueName = leagueMap.get(sticker.leagueId)?.leagueName || '';
+      this.countryName = countryMap.get(sticker.countryId) || '';
+    } else {
+      console.warn('Sticker detail is undefined');
+    }
   }
 
   sendCheers = async (id: number | undefined) => {

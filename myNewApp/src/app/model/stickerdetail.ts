@@ -2,10 +2,10 @@ import { LatLngLiteral, Point } from "leaflet";
 
 export interface StickerDetail {
   id: number;
-  club: string;
-  league: string;
+  clubId: number;
+  leagueId: number;
   address: string;
-  country: string;
+  countryId: number;
   sticker: string;
   isClean: boolean;
   userId: number;
@@ -17,10 +17,10 @@ export interface StickerDetail {
 
 export interface StickerDetailRequest {
   id: number;
-  club: string;
-  league: string;
+  clubId: number;
+  leagueId: number;
   address: string;
-  country: string;
+  countryId: number;
   sticker: string;
   isClean: boolean;
   userId: number;

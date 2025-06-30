@@ -10,13 +10,18 @@ import { StickerDetail } from '../../model/stickerdetail';
 import { LocationService } from '../../service/location.service';
 import { LatLngLiteral } from 'leaflet';
 import { ActivatedRoute } from '@angular/router';
+import { CLUBS, COUNTRIES, LEAGUES } from '../../const/club';
+import { Club, League } from '../../model/football';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-sticker-form',
   standalone: true,
   imports:
-    [MatFormFieldModule,
+    [
+      CommonModule,
+      MatFormFieldModule,
       MatSelectModule,
       MatInputModule,
       MatButtonModule,
@@ -32,11 +37,11 @@ export class StickerFormComponent {
   putstickerService: PutstickerService = inject(PutstickerService);
   form: NgForm | undefined;
   stickerDetail: StickerDetail = {
-    club: '',
-    league: '',
+    clubId: 0,
+    leagueId: 0,
     id: 0,
     address: '',
-    country: '',
+    countryId: 0,
     sticker: '',
     isClean: true,
     userId: 1,
@@ -45,6 +50,16 @@ export class StickerFormComponent {
       lng: 0
     },
   };
+
+  public countries = COUNTRIES;
+  public leagues = LEAGUES;
+  public clubs = CLUBS;
+
+  selectedCountryId: number | null = null;
+  selectedLeagueId: number | null = null;
+
+  filteredLeagues: League[] = [];
+  filteredClubs: Club[] = [];
 
   public currentCoordinate: LatLngLiteral = {
     lat: 0,
@@ -80,15 +95,28 @@ export class StickerFormComponent {
     this.currentCoordinate = coordinate;
   }
 
+  onCountryChange(countryId: number) {
+    this.filteredLeagues = this.leagues.filter(league => league.countryId === countryId);
+    this.filteredClubs = [];
+    this.selectedLeagueId = 0;
+    this.stickerDetail.leagueId = 0;
+    this.stickerDetail.clubId = 0;
+  }
+
+  onLeagueChange(leagueId: number) {
+    this.filteredClubs = this.clubs.filter(club => club.leagueId === leagueId);
+    this.stickerDetail.clubId = 0;
+  }
+
   onSubmit = async (form: NgForm): Promise<void> => {
     console.info('onSubmit called');
     if (form.value) {
       const formValues: StickerDetail = {
         id: 0,
-        club: form.value.club,
-        league: form.value.league,
+        clubId: form.value.clubId,
+        leagueId: form.value.leagueId,
         address: form.value.address,
-        country: form.value.country,
+        countryId: form.value.countryId,
         isClean: form.value.isClean,
         sticker: "sticker",
         userId: 1,

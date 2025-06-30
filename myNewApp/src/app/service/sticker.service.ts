@@ -28,6 +28,7 @@ export class StickerService {
   getStickerById = async (id: number) => {
     try {
       const response = await axios.get(`${this.dataUrl}/sticker/${id}`);
+      console.info(response.data);
       return response.data;
     } catch (error) {
       console.error('Error uploading sticker:', error);

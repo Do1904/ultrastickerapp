@@ -4,7 +4,6 @@ import * as L from 'leaflet';
 import { LocationService } from '../../service/location.service';
 import { MapService } from '../../service/map.service';
 import { Pin } from '../../model/pin';
-import { Router } from '@angular/router';
 import { MarkerDetailPanelComponent } from './marker-detail-panel/marker-detail-panel.component';
 
 @Component({
@@ -27,8 +26,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   locationService: LocationService = inject(LocationService);
   mapService: MapService = inject(MapService);
-
-  constructor(private router: Router) { }
 
   async ngOnInit() {
   }
@@ -68,15 +65,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     const pin: Pin = {
       latitude: lat,
       longitude: lng,
-      club: 'Unknown',
-      league: 'Unknown',
+      club: { clubId: 0, clubName: 'Unknown' }, // 仮のクラブ情報
+      league: { leagueId: 0, leagueName: 'Unknown' }, // 仮のリーグ情報
       isClean: true,
       sticker: '',
       userId: 1, // 仮のユーザーID
       id: -1 // 仮のID
     };
-
-    // ここは本来はベつのマーカーを表示する予定。pin も特に必要ないため今後は削除する予定
 
     const marker = new this.L.marker([lat, lng]).addTo(this.map);
 
@@ -88,7 +83,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   showMarkerDetail(pin: Pin) {
-    console.info('Selected Pin:', pin);
     this.selectedPin = pin;
     // ここで詳細画面component表示などの処理を行う
     this.showPanel = true;
@@ -98,8 +92,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     pins.forEach((pin: Pin) => {
       const popupContent = `
       <div style="text-align: center;">
-        <h2>${pin.club}</h2>
-        <p>${pin.league}</p>
+        <h2>${pin.club.clubName}</h2>
+        <p>${pin.league.leagueName}</p>
         <p><a href="https://maps.google.com/maps?ll=${pin.latitude},${pin.longitude}&q=${pin.latitude},${pin.longitude}" target="_blank">Find this location on Google Map</a></p>
       </div>`; // ピンのポップアップ画面表示を設定
       this.addMarker(pin.latitude, pin.longitude, popupContent, pin);
@@ -125,9 +119,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.map.flyTo([lat, lng]);
   }
 
-  getPinsInit = async () => {
+  getPinsInit = async (): Promise<Pin[]> => {
     try {
       const response = await this.mapService.getAllPins();
+
       return response;
     } catch (error) {
       console.error('Error uploading sticker:', error);

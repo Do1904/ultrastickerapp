@@ -2,26 +2,43 @@
 <form #form=ngForm (ngSubmit)="onSubmit(form)">
     <div>
         <mat-form-field class="example-full-width">
-            <mat-label>クラブチームは？</mat-label>
-            <input matInput placeholder="??" type="text" name="club" [(ngModel)]="stickerDetail.club">
+            <mat-label>国</mat-label>
+            <mat-select [(ngModel)]="stickerDetail.countryId" name="countryId"
+                (selectionChange)="onCountryChange($event.value)">
+                <mat-option *ngFor="let country of countries" [value]="country.countryId">
+                    {{ country.countryName }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
+
     <div>
-        <mat-form-field class="example-full-width">
-            <mat-label>所属しているリーグは？</mat-label>
-            <input matInput placeholder="??" type="text" name="league" [(ngModel)]="stickerDetail.league">
+        <mat-form-field class="example-full-width" *ngIf="filteredLeagues.length">
+            <mat-label>リーグ</mat-label>
+            <mat-select [(ngModel)]="stickerDetail.leagueId" name="leagueId"
+                (selectionChange)="onLeagueChange($event.value)">
+                <mat-option *ngFor="let league of filteredLeagues" [value]="league.leagueId">
+                    {{ league.leagueName }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
+
+    <div>
+        <mat-form-field class="example-full-width" *ngIf="filteredClubs.length">
+            <mat-label>クラブ</mat-label>
+            <mat-select [(ngModel)]="stickerDetail.clubId" name="clubId">
+                <mat-option *ngFor="let club of filteredClubs" [value]="club.clubId">
+                    {{ club.clubName }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
     <div>
         <mat-form-field class="example-full-width">
             <mat-label>見つけた街はどこ？</mat-label>
             <input matInput placeholder="??" type="text" name="address" [(ngModel)]="stickerDetail.address">
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field class="example-full-width">
-            <mat-label>それはどこの国？</mat-label>
-            <input matInput placeholder="??" type="text" name="country" [(ngModel)]="stickerDetail.country">
         </mat-form-field>
     </div>
     <div>

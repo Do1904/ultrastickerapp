@@ -5,9 +5,9 @@
                 <div class="sticker-wrapper">
                     <div class="sticker-clip">
                         <div class="sticker-front"><img class="listing-photo" [src]="stickerDetail.sticker"
-                                alt="Exterior photo of {{stickerDetail.club}}" (error)="onImgError($event)"></div>
-                        <div class="sticker-back">
-                            &nbsp;&nbsp;{{ stickerDetail.club }}
+                                alt="Exterior photo of {{stickerDetail.clubId}}" (error)="onImgError($event)"></div>
+                        <div class="sticker-back" style="word-break: break-word;">
+                            &nbsp;&nbsp;{{ stickerDetail.clubId }}
                         </div>
                     </div>
                 </div>

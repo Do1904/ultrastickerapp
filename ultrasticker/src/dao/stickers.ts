@@ -7,10 +7,10 @@ async function getStickers() {
     SELECT 
         stickers.id as id,
         stickers.sticker as sticker,
-        stickers.club as club,
-        stickers.league as league,
+        stickers.club_id as clubId,
+        stickers.league_id as leagueId,
         stickers.address as address,
-        stickers.country as country,
+        stickers.country_id as countryId,
         stickers.is_clean as isClean,
         stickers.user_id as userId,
         ST_X(stickers.coordinate) AS longitude,
@@ -24,8 +24,8 @@ async function getStickersForMap() {
     const query = `
     SELECT 
         stickers.id as id,
-        stickers.club as club,
-        stickers.league as league,
+        stickers.club_id as clubId,
+        stickers.league_id as leagueId,
         stickers.is_clean as isClean,
         stickers.user_id as userId,
         stickers.sticker as sticker,
@@ -41,10 +41,10 @@ async function getStickerById(stickerId: number) {
     SELECT 
         stickers.id as id,
         stickers.sticker as sticker,
-        stickers.club as club,
-        stickers.league as league,
+        stickers.club_id as clubId,
+        stickers.league_id as leagueId,
         stickers.address as address,
-        stickers.country as country,
+        stickers.country_id as countryId,
         stickers.is_clean as isClean,
         stickers.user_id as userId,
         ST_X(stickers.coordinate) AS longitude,
@@ -59,10 +59,10 @@ async function getStickerLike(club: string) {
     SELECT
         stickers.id as id,
         stickers.sticker as sticker,
-        stickers.club as club,
-        stickers.league as league,
+        stickers.club_id as clubId,
+        stickers.league_id as leagueId,
         stickers.address as address,
-        stickers.country as country,
+        stickers.country_id as countryId,
         stickers.is_clean as isClean,
         stickers.user_id as userId,
         ST_X(stickers.coordinate) AS longitude,
@@ -74,28 +74,18 @@ async function getStickerLike(club: string) {
     return await selectQuery<IStickerModel[]>(query, [clubWithWildcard]);
 }
 
-async function putNewSticker(userId: number, filePath: string, club: string, league: string, address: string, country: string, longitude: number, latitude: number) {
+async function putNewSticker(userId: number, filePath: string, clubId: string, leagueId: string, address: string, countryId: string, longitude: number, latitude: number) {
 
-    console.log({
-        userId,
-        filePath,
-        club,
-        league,
-        address,
-        country,
-        latitude,
-        longitude,
-    });
     const query = `
-    INSERT INTO stickers (user_id, sticker, club, league, address, country, is_clean, coordinate) VALUES (?, ?, ?, ?, ?, ?, ?, ST_GeomFromText(?))`;
+    INSERT INTO stickers (user_id, sticker, club_id, league_id, address, country_id, is_clean, coordinate) VALUES (?, ?, ?, ?, ?, ?, ?, ST_GeomFromText(?))`;
 
-    const values = [userId, filePath, club, league, address, country, true, `POINT(${longitude} ${latitude})`];
+    const values = [userId, filePath, Number(clubId), Number(leagueId), address, Number(countryId), true, `POINT(${longitude} ${latitude})`];
 
     return await executeQuery(query, values);
 }
 
 async function updateStickerbyId(club: string, league: string, address: string, county: string, isClean: boolean, stickerId: number) {
-    const query = `UPDATE stickers SET club = ?, league = ?, address = ?, country = ?, is_clean = ? WHERE id = ?`;
+    const query = `UPDATE stickers SET club_id = ?, league_id = ?, address = ?, country_id = ?, is_clean = ? WHERE id = ?`;
     const values = [club, league, address, county, isClean, stickerId];
 
     return await executeQuery(query, values);

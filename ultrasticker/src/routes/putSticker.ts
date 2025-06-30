@@ -28,7 +28,7 @@ router.post('/putNewSticker', upload.single('sticker'), async (req, res) => {
 
     const userId = 1; // 仮のユーザーID
     try {
-        await db.stickers.putNewSticker(userId, filePath, req.body.club, req.body.league, req.body.address, req.body.country, req.body.longitude, req.body.latitude);
+        await db.stickers.putNewSticker(userId, filePath, req.body.clubId, req.body.leagueId, req.body.address, req.body.countryId, req.body.longitude, req.body.latitude);
         res.status(200).send('Sticker uploaded successfully');
     } catch (error) {
         console.error('Error uploading sticker:', error);
@@ -43,7 +43,7 @@ router.post('editSticker', async (req, res) => {
     }
 
     try {
-        await db.stickers.updateStickerbyId(req.body.club, req.body.league, req.body.address, req.body.county, req.body.is_clean, req.body.id);
+        await db.stickers.updateStickerbyId(req.body.clubId, req.body.leagueId, req.body.address, req.body.countyId, req.body.is_clean, req.body.id);
         res.status(200).send('Sticker edited successfully');
     } catch (error) {
         console.error('Error editing sticker:', error);
