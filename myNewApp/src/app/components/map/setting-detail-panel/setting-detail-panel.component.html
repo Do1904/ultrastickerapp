@@ -1,1 +1,8 @@
-<p>setting-detail-panel works!</p>
+<div class="setting-content">
+    <div class="layer-toggle">
+        <label>
+            <input type="checkbox" [checked]="showPrefectures" (change)="togglePrefecture.emit()" />
+            都道府県境界を表示
+        </label>
+    </div>
+</div>

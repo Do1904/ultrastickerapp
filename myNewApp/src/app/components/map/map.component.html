@@ -4,4 +4,7 @@
 
     <!-- 詳細パネル -->
     <app-marker-detail-panel *ngIf="showPanel" [data]="selectedPin" class="marker-panel"></app-marker-detail-panel>
+    <!-- 設定パネル -->
+    <app-setting-detail-panel class="setting-panel" [showPrefectures]="showPrefectures"
+        (togglePrefecture)="togglePrefectureLayer()"></app-setting-detail-panel>
 </div>

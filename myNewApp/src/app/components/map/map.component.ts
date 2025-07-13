@@ -6,11 +6,12 @@ import { LocationService } from '../../service/location.service';
 import { MapService } from '../../service/map.service';
 import { Pin } from '../../model/pin';
 import { MarkerDetailPanelComponent } from './marker-detail-panel/marker-detail-panel.component';
+import { SettingDetailPanelComponent } from './setting-detail-panel/setting-detail-panel.component';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [MarkerDetailPanelComponent, CommonModule],
+  imports: [MarkerDetailPanelComponent, SettingDetailPanelComponent, CommonModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
@@ -167,11 +168,11 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   private loadPrefectureGeoJson(): void {
     if (this.prefectureLayer) {
-      this.prefectureLayer.remove(); // すでに追加済みなら削除
+      this.prefectureLayer.remove(); // 重複防止
     }
 
     this.http.get<any>('assets/geos/japan.geojson').subscribe(geojson => {
-      L.geoJSON(geojson, {
+      this.prefectureLayer = L.geoJSON(geojson, {
         style: (feature: any) => ({
           fillColor: this.getColor(feature),
           weight: 1,
@@ -181,24 +182,34 @@ export class MapComponent implements OnInit, AfterViewInit {
         onEachFeature: (feature, layer) => {
           layer.bindPopup(feature.properties.name);
         }
-      }).addTo(this.map);
+      });
+
+      if (this.showPrefectures) {
+        this.prefectureLayer.addTo(this.map);
+      }
     });
   }
 
+
   public togglePrefectureLayer(): void {
     this.showPrefectures = !this.showPrefectures;
+    console.info(this.prefectureLayer)
+
+    console.info('Prefecture layer visibility:', this.showPrefectures);
 
     if (this.prefectureLayer) {
       if (this.showPrefectures) {
+        console.info('Adding prefecture layer to map');
         this.prefectureLayer.addTo(this.map);
       } else {
+        console.info('Removing prefecture layer from map');
         this.prefectureLayer.remove();
       }
     }
   }
 
   private getColor(feature: any): string {
-    console.info(feature)
+    // console.info(feature)
 
     // const colors: { [key: string]: string } = {
     //   '東京都': '#f94144',

@@ -1,8 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
-import { Pin } from '../../../model/pin';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { LocationService } from '../../../service/location.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-setting-detail-panel',
@@ -12,5 +8,7 @@ import { LocationService } from '../../../service/location.service';
   styleUrl: './setting-detail-panel.component.css'
 })
 export class SettingDetailPanelComponent {
+  @Input() showPrefectures: boolean = true;
+  @Output() togglePrefecture = new EventEmitter<void>();
 
 }

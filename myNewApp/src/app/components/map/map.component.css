@@ -26,6 +26,20 @@
     border-radius: 10px;
 }
 
+.setting-panel {
+    text-align: center;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 100px;
+    height: 500px;
+    z-index: 102;
+    padding-top: 20px;
+    background-color: #ffffffe8;
+    box-shadow: 0 2px 5px #1e1e1ed3;
+    border-radius: 10px;
+}
+
 @media (max-width: 420px) {
     .marker-panel {
         text-align: center;
