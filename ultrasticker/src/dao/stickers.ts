@@ -75,9 +75,19 @@ async function getStickerLike(club: string) {
 }
 
 async function putNewSticker(userId: number, filePath: string, clubId: string, leagueId: string, address: string, countryId: string, longitude: number, latitude: number) {
-
-    const query = `
-    INSERT INTO stickers (user_id, sticker, club_id, league_id, address, country_id, is_clean, coordinate) VALUES (?, ?, ?, ?, ?, ?, ?, ST_GeomFromText(?))`;
+    const query =
+        `
+    INSERT INTO stickers (
+      user_id, 
+      sticker, 
+      club_id, 
+      league_id, 
+      address, 
+      country_id, 
+      is_clean, 
+      coordinate
+    ) VALUES 
+      (?, ?, ?, ?, ?, ?, ?, ST_GeomFromText(?))`;
 
     const values = [userId, filePath, Number(clubId), Number(leagueId), address, Number(countryId), true, `POINT(${longitude} ${latitude})`];
 

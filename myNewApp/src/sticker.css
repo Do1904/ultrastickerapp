@@ -138,54 +138,54 @@ html, body {
 }
 .sticker-2 {
   width: 280px;
-  height: 270px;
+  height: 280px;
 }
 .sticker-2 .sticker-container {
-  width: 393.014768476px;
-  height: 393.014768476px;
-  top: -61.507384238px;
-  left: -56.507384238px;
+  width: 400.4984225427px;
+  height: 400.4984225427px;
+  top: -60.2492112714px;
+  left: -60.2492112714px;
   transform: rotate(0deg);
 }
 .sticker-2 .sticker-wrapper {
-  width: 393.014768476px;
-  height: 393.014768476px;
+  width: 400.4984225427px;
+  height: 400.4984225427px;
   transform: rotate(-35deg);
 }
 .sticker-2 .sticker-clip {
-  width: 393.014768476px;
-  height: 393.014768476px;
+  width: 400.4984225427px;
+  height: 400.4984225427px;
 }
 .sticker-2 .sticker-front, .sticker-2 .sticker-back {
-  left: 56.507384238px;
-  top: 61.507384238px;
+  left: 60.2492112714px;
+  top: 60.2492112714px;
   width: 280px;
-  height: 270px;
-  border-radius: 10px;
+  height: 280px;
+  border-radius: 0px;
 }
 .sticker-2 .sticker-clip {
-  transform: translateX(6.2694740069px);
+  transform: translateX(3.0138242788px);
 }
 .sticker-2 .sticker-front {
-  transform: rotate(35deg) translateX(-5.1356524494px) translateY(3.5960225587px);
+  transform: rotate(35deg) translateX(-2.4687803191px) translateY(1.7286585896px);
 }
 .sticker-2 .sticker-back {
-  transform: rotate(145deg) translateX(316.8031985833px) translateY(221.8279877771px);
+  transform: rotate(145deg) translateX(325.600321241px) translateY(227.9877993766px);
 }
 .sticker-2:hover .sticker-clip {
-  transform: translateX(158.4598021918px);
+  transform: translateX(160.8021338729px);
 }
 .sticker-2:hover .sticker-front {
-  transform: rotate(35deg) translateX(-129.802670903px) translateY(90.8888086461px);
+  transform: rotate(35deg) translateX(-131.721396688px) translateY(92.2323149044px);
 }
 .sticker-2:hover .sticker-back {
-  transform: rotate(145deg) translateX(192.1361801297px) translateY(134.5352016897px);
+  transform: rotate(145deg) translateX(196.3477048723px) translateY(137.4841430618px);
 }
 .sticker-2 .sticker-front {
-  background-color: #ffffff;
+  background-color: #1c1b1b;
 }
 .sticker-2 .sticker-back {
-  background-color: #666666;
+  background-color: #1c1b1b;
 }
 .sticker-3 {
   width: 200px;
@@ -212,16 +212,16 @@ html, body {
   top: 41.6242250686px;
   width: 200px;
   height: 200px;
-  border-radius: 10px;
+  border-radius: 0px;
 }
 .sticker-3 .sticker-clip {
-  transform: translateX(6.0238308741px);
+  transform: translateX(2.1314966749px);
 }
 .sticker-3 .sticker-front {
-  transform: rotate(35deg) translateX(-4.934433375px) translateY(3.455127446px);
+  transform: rotate(35deg) translateX(-1.7460198587px) translateY(1.2225762669px);
 }
 .sticker-3 .sticker-back {
-  transform: rotate(145deg) translateX(227.0891135964px) translateY(159.0095091857px);
+  transform: rotate(145deg) translateX(230.2775271127px) translateY(161.2420603647px);
 }
 .sticker-3:hover .sticker-clip {
   transform: translateX(141.6242250686px);

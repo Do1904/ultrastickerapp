@@ -96,6 +96,7 @@ export class StickerFormComponent {
   }
 
   onCountryChange(countryId: number) {
+    console.info('onCountryChange called with countryId:', countryId);
     this.filteredLeagues = this.leagues.filter(league => league.countryId === countryId);
     this.filteredClubs = [];
     this.selectedLeagueId = 0;
@@ -104,6 +105,7 @@ export class StickerFormComponent {
   }
 
   onLeagueChange(leagueId: number) {
+    console.info('onLeagueChange called with leagueId:', leagueId);
     this.filteredClubs = this.clubs.filter(club => club.leagueId === leagueId);
     this.stickerDetail.clubId = 0;
   }
@@ -125,6 +127,7 @@ export class StickerFormComponent {
           lng: this.currentCoordinate.lng
         },
       };
+      console.info('Form values:', formValues);
       try {
         this.putstickerService.uploadImage(this.sticker, formValues);
         alert('You put new sticker!!');

@@ -14,10 +14,10 @@ export class PutstickerService {
     try {
       const data = new FormData();
       data.append('sticker', sticker, sticker.name);
-      data.append('club', form.clubId.toString());
-      data.append('league', form.leagueId.toString());
+      data.append('clubId', form.clubId.toString());
+      data.append('leagueId', form.leagueId.toString());
       data.append('address', form.address);
-      data.append('country', form.countryId.toString());
+      data.append('countryId', form.countryId.toString());
       data.append('isClean', 'true');
       data.append('userId', form.userId.toString());
       data.append('longitude', JSON.stringify(form.coordinate.lng));
@@ -36,10 +36,10 @@ export class PutstickerService {
     try {
       const data = new FormData();
       data.append('id', form.id);
-      data.append('club', form.clubId);
-      data.append('league', form.leagueId);
+      data.append('clubId', form.clubId);
+      data.append('leagueId', form.leagueId);
       data.append('address', form.address);
-      data.append('country', form.countryId);
+      data.append('countryId', form.countryId);
       data.append('isClean', 'true');
 
       const response = await axios.post(this.updateUrl, data);

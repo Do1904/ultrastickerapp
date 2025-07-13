@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StickerDetail } from '../../model/stickerdetail';
 import { RouterModule } from '@angular/router';
+import { clubMap } from '../../const/clubMaps';
 
 @Component({
   selector: 'app-sticker-location',
@@ -16,6 +17,8 @@ import { RouterModule } from '@angular/router';
 export class StickerLocationComponent {
   @Input() stickerDetail!: StickerDetail;
 
+  public clubName = clubMap;
+
   async ngOnInit(): Promise<void> {
     this.stickerDetail.class = this.getRandomStickerClass();
   }
@@ -25,7 +28,8 @@ export class StickerLocationComponent {
   }
 
   getRandomStickerClass(): string {
-    const num = Math.floor(Math.random() * 2) + 1; // 1〜2
+    // const num = Math.floor(Math.random() * 2) + 1; // 1〜2
+    const num = 2 // 1〜2の代わりに2を固定値として使用
     return `sticker-${num}`;
   }
 }
