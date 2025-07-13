@@ -43,7 +43,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.L = L;
 
       this.map = this.L.map('map', { zoomControl: false }).setView([35.681236, 139.767125], 13);
-      this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      this.L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
         attribution: '<a href="https://www.openstreetmap.org/copyright" target="_blank">©OpenStreetMap</a> contributors, Tiles: <a href="http://map.hotosm.org/" target="_blank">©HOT</a>'
       }).addTo(this.map);
 
@@ -110,8 +110,17 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   addMarker(lat: number, lng: number, popUpContent: string, pin: Pin): void {
+    const customIcon = this.L.icon({
+      iconUrl: 'assets/pins/pin-rotweiss.png', // ← ここに画像パス
+      iconSize: [50, 50], // アイコンサイズ
+      iconAnchor: [25, 50], // マーカーの「先端」がどこになるか（真ん中下）
+      popupAnchor: [0, -25] // ポップアップの位置調整（上にずらす）
+    });
+
     try {
-      const marker = new this.L.marker([lat, lng])
+      const marker = new this.L.marker([lat, lng], {
+        icon: customIcon
+      })
         .bindPopup(popUpContent);
 
       marker.on('click', () => {
