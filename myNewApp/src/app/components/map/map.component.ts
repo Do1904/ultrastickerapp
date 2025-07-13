@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import * as L from 'leaflet';
 import { LocationService } from '../../service/location.service';
 import { MapService } from '../../service/map.service';
@@ -27,6 +28,11 @@ export class MapComponent implements OnInit, AfterViewInit {
   locationService: LocationService = inject(LocationService);
   mapService: MapService = inject(MapService);
 
+  private prefectureLayer: L.GeoJSON | null = null;
+  public showPrefectures = true; // ← 初期状態：表示ON
+
+  constructor(private http: HttpClient) { }
+
   async ngOnInit() {
   }
 
@@ -50,6 +56,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       }
 
       this.map.on('click', this.onMapClick.bind(this)); // 地図クリックイベントの設定
+
+      this.loadPrefectureGeoJson();
     }
   }
 
@@ -155,6 +163,51 @@ export class MapComponent implements OnInit, AfterViewInit {
     } catch (error) {
       console.error('エラーが発生しました:', error);
     }
+  }
+
+  private loadPrefectureGeoJson(): void {
+    if (this.prefectureLayer) {
+      this.prefectureLayer.remove(); // すでに追加済みなら削除
+    }
+
+    this.http.get<any>('assets/geos/japan.geojson').subscribe(geojson => {
+      L.geoJSON(geojson, {
+        style: (feature: any) => ({
+          fillColor: this.getColor(feature),
+          weight: 1,
+          color: 'white',
+          fillOpacity: 0.7
+        }),
+        onEachFeature: (feature, layer) => {
+          layer.bindPopup(feature.properties.name);
+        }
+      }).addTo(this.map);
+    });
+  }
+
+  public togglePrefectureLayer(): void {
+    this.showPrefectures = !this.showPrefectures;
+
+    if (this.prefectureLayer) {
+      if (this.showPrefectures) {
+        this.prefectureLayer.addTo(this.map);
+      } else {
+        this.prefectureLayer.remove();
+      }
+    }
+  }
+
+  private getColor(feature: any): string {
+    console.info(feature)
+
+    // const colors: { [key: string]: string } = {
+    //   '東京都': '#f94144',
+    //   '大阪府': '#f3722c',
+    //   '北海道': '#f9c74f',
+    //   '福岡県': '#90be6d'
+    //   // 必要に応じて追加
+    // };
+    return '#577590'; // default color
   }
 
 }
