@@ -7,6 +7,7 @@ import { MapService } from '../../service/map.service';
 import { Pin } from '../../model/pin';
 import { MarkerDetailPanelComponent } from './marker-detail-panel/marker-detail-panel.component';
 import { SettingDetailPanelComponent } from './setting-detail-panel/setting-detail-panel.component';
+import { createColoredFlagSvg } from '../../const/flag';
 
 @Component({
   selector: 'app-map',
@@ -74,7 +75,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     const pin: Pin = {
       latitude: lat,
       longitude: lng,
-      club: { clubId: 0, clubName: 'Unknown' }, // 仮のクラブ情報
+      club: { clubId: 0, clubName: 'Unknown', color1: '#000000', color2: '#000000' }, // 仮のクラブ情報
       league: { leagueId: 0, leagueName: 'Unknown' }, // 仮のリーグ情報
       isClean: true,
       sticker: '',
@@ -110,10 +111,14 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   addMarker(lat: number, lng: number, popUpContent: string, pin: Pin): void {
+    const svg = createColoredFlagSvg(pin.club.color1, pin.club.color2);
+
+    const svgUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+
     const customIcon = this.L.icon({
-      iconUrl: 'assets/pins/pin-rotweiss.png', // ← ここに画像パス
+      iconUrl: svgUrl, // ← ここに画像パス
       iconSize: [50, 50], // アイコンサイズ
-      iconAnchor: [25, 50], // マーカーの「先端」がどこになるか（真ん中下）
+      iconAnchor: [25, 40], // マーカーの「先端」がどこになるか（真ん中下）
       popupAnchor: [0, -25] // ポップアップの位置調整（上にずらす）
     });
 

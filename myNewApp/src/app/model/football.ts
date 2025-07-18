@@ -19,4 +19,6 @@ export interface Club {
     clubId: number;
     clubName: string;
     leagueId: number;
+    color1: string;
+    color2: string;
 }
