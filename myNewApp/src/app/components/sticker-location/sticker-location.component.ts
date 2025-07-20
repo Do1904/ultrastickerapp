@@ -17,7 +17,7 @@ import { clubMap } from '../../const/clubMaps';
 export class StickerLocationComponent {
   @Input() stickerDetail!: StickerDetail;
 
-  public clubName = clubMap;
+  public clubMap = clubMap;
 
   async ngOnInit(): Promise<void> {
     this.stickerDetail.class = this.getRandomStickerClass();

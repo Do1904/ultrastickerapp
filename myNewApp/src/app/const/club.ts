@@ -444,103 +444,83 @@ export const CLUBS: Club[] = [
     // 3. Liga (leagueId: 203)
     {
         clubId: 20301, clubName: 'Jahn Regensburg', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#d1001c", color2: "#ffffff"
     },
     {
         clubId: 20302, clubName: 'Alemannia Aachen', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#ffd500", color2: "#000000"
     },
     {
         clubId: 20303, clubName: 'VFB StuttgartⅡ', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#ffffff", color2: "#e60000"
     },
     {
         clubId: 20304, clubName: 'Energie Cottbus', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#d50032", color2: "#ffffff"
     },
     {
         clubId: 20305, clubName: 'Rot-Weiss Essen', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#ed1c24", color2: "#ffffff"
     },
     {
         clubId: 20306, clubName: 'FC Ingolstadt', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#c8001e", color2: "#000000"
     },
     {
         clubId: 20307, clubName: 'Viktoria Köln', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#000000", color2: "#e00034"
     },
     {
         clubId: 20308, clubName: '1. FC Saarbrücken', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#0000ff", color2: "#ffff00"
     },
     {
         clubId: 20309, clubName: 'Wehen Wiesbaden', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#c20f2f", color2: "#000000"
     },
     {
         clubId: 20310, clubName: 'VfL Osnabrück', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#5a2a82", color2: "#ffffff"
     },
     {
         clubId: 20311, clubName: '1860 München', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#5eb6e4", color2: "#ffffff"
     },
     {
         clubId: 20312, clubName: 'Schweinfurt 05', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#00703c", color2: "#ffffff"
     },
     {
         clubId: 20313, clubName: 'Waldhof Mannheim', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#005bac", color2: "#ffffff"
     },
     {
         clubId: 20314, clubName: 'TSV Havelse', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#ff0000", color2: "#ffffff"
     },
     {
         clubId: 20315, clubName: 'Unterhaching', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#d6001c", color2: "#0033a0"
     },
     {
         clubId: 20316, clubName: 'SSV Ulm', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#000000", color2: "#ffffff"
     },
     {
         clubId: 20317, clubName: 'Hansa Rostock', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#006cb7", color2: "#e3000f"
     },
     {
         clubId: 20318, clubName: 'Erzgebirge Aue', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#5a2a82", color2: "#ffcc00"
     },
     {
         clubId: 20319, clubName: 'MSV Duisburg', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#005bac", color2: "#ffffff"
     },
     {
         clubId: 20320, clubName: 'TSG HoffenheimⅡ', leagueId: 203,
-        color1: "",
-        color2: ""
+        color1: "#0066b3", color2: "#ffffff"
     },
     // La Liga (leagueId: 301)
     {

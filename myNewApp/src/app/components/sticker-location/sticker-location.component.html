@@ -7,7 +7,7 @@
                         <div class="sticker-front"><img class="listing-photo" [src]="stickerDetail.sticker"
                                 alt="Exterior photo of {{stickerDetail.clubId}}" (error)="onImgError($event)"></div>
                         <div class="sticker-back" style="word-break: break-word; color: #f5f2ee;">
-                            &nbsp;&nbsp;{{ clubName.get(stickerDetail.clubId)?.clubName }}
+                            &nbsp;&nbsp;{{ clubMap.get(stickerDetail.clubId)?.clubName }}
                         </div>
                     </div>
                 </div>
