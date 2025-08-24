@@ -65,6 +65,7 @@ export class StickerFormComponent {
     lat: 0,
     lng: 0
   };
+  public currentAddress: string = '';
 
   locationService: LocationService = inject(LocationService);
 
@@ -75,7 +76,10 @@ export class StickerFormComponent {
     this.route.queryParams.subscribe(params => {
       this.currentCoordinate.lat = Number(params['lat']);
       this.currentCoordinate.lng = Number(params['lng']);
+      this.currentAddress = params['address'] || '';
     });
+
+    console.info(this.currentAddress);
   }
 
 

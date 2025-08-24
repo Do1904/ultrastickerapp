@@ -25,6 +25,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   public pins: Pin[] = [];
   public selectedPin: Pin | null = null;
 
+  public baseData: any;
+
   showPanel = false;
 
   locationService: LocationService = inject(LocationService);
@@ -61,6 +63,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       this.loadPrefectureGeoJson();
     }
+
+    this.getPinStatistics();
   }
 
   onMapClick(event: L.LeafletMouseEvent): void {
@@ -144,9 +148,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   getPinsInit = async (): Promise<Pin[]> => {
     try {
-      const response = await this.mapService.getAllPins();
+      this.baseData = await this.mapService.getAllPins();
 
-      return response;
+      return this.baseData;
     } catch (error) {
       console.error('Error uploading sticker:', error);
       throw error;
@@ -202,6 +206,41 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.prefectureLayer.addTo(this.map);
       }
     });
+  }
+
+  // Highlight a country on hover
+  private highlightFeature(e: any) {
+    const layer = e.target;
+    layer.setStyle({
+      weight: 5,
+      color: 'red',
+      fillColor: 'red',
+      dashArray: '',
+      fillOpacity: 0.5
+    });
+
+    // Bring the layer to the front to ensure the highlight is visible
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+      layer.bringToFront();
+    }
+  }
+
+  private getPinStatistics() {
+    const leagues = new Map<string, number>();
+    const clubs = new Map<string, number>();
+
+    this.pins.forEach(pin => {
+      // League statistics
+      const leagueName = pin.league.leagueName;
+      leagues.set(leagueName, (leagues.get(leagueName) || 0) + 1);
+
+      // Club statistics
+      const clubName = pin.club.clubName;
+      clubs.set(clubName, (clubs.get(clubName) || 0) + 1);
+    });
+
+    console.info('League Statistics:', Array.from(leagues.entries()));
+    console.info('Club Statistics:', Array.from(clubs.entries()));
   }
 
 
