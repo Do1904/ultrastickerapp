@@ -1,5 +1,5 @@
 <div class="panel-content">
-    <div *ngIf="data?.id !== -1; else newStickerCoordinate">
+    <div *ngIf="data?.id !== -1; else newStickerCoordinate" id="stickerlink">
         <a [routerLink]="['/details', data?.id]">
             <div class="sticker sticker-3">
                 <div class="sticker-container">
@@ -37,8 +37,7 @@
                 </div>
             </div>
         </div>
-        <a [routerLink]="['/putSticker']"
-            [queryParams]="{ lat: coodinate.lat, lng: coodinate.lng, address: currentAddress }">
+        <a [routerLink]="['/putSticker']" [queryParams]="{ lat: coodinate.lat, lng: coodinate.lng }">
             <header class="brand-name">
                 <h1>put new one!</h1>
             </header>

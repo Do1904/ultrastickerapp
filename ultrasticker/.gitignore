@@ -21,3 +21,6 @@ yarn-error.log*
 .vscode/
 .idea/
 *.swp
+
+# public directory
+public/

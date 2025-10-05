@@ -1,10 +1,10 @@
 import { LatLngLiteral, Point } from "leaflet";
+import { AddressDetail } from "./address";
 
 export interface StickerDetail {
   id: number;
   clubId: number;
   leagueId: number;
-  address: string;
   countryId: number;
   sticker: string;
   isClean: boolean;
@@ -15,16 +15,7 @@ export interface StickerDetail {
   latitude?: number;
 }
 
-export interface StickerDetailRequest {
-  id: number;
-  clubId: number;
-  leagueId: number;
-  address: string;
-  countryId: number;
-  sticker: string;
-  isClean: boolean;
-  userId: number;
-  coordinate: LatLngLiteral;
-  longitude?: number;
-  latitude?: number;
+export interface StickerUploadRequest {
+  sticker: StickerDetail;
+  address: AddressDetail;
 }

@@ -12,12 +12,16 @@ import { createColoredFlagSvg } from '../../const/flag';
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [MarkerDetailPanelComponent, SettingDetailPanelComponent, CommonModule],
+  imports: [
+    MarkerDetailPanelComponent,
+    SettingDetailPanelComponent,
+    CommonModule,
+  ],
   templateUrl: './map.component.html',
-  styleUrl: './map.component.css'
+  styleUrl: './map.component.css',
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  private map!: L.Map
+  private map!: L.Map;
   private L: any;
   public lat: any;
   public lng: any;
@@ -35,20 +39,26 @@ export class MapComponent implements OnInit, AfterViewInit {
   private prefectureLayer: L.GeoJSON | null = null;
   public showPrefectures = true; // ← 初期状態：表示ON
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  async ngOnInit() {
-  }
+  async ngOnInit() {}
 
   async ngAfterViewInit(): Promise<void> {
     if (typeof window !== 'undefined') {
       const L = await import('leaflet'); // <-- ここをwindowガードの中に移す
       this.L = L;
 
-      this.map = this.L.map('map', { zoomControl: false }).setView([35.681236, 139.767125], 13);
-      this.L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-        attribution: '<a href="https://www.openstreetmap.org/copyright" target="_blank">©OpenStreetMap</a> contributors, Tiles: <a href="http://map.hotosm.org/" target="_blank">©HOT</a>'
-      }).addTo(this.map);
+      this.map = this.L.map('map', { zoomControl: false }).setView(
+        [35.681236, 139.767125],
+        13
+      );
+      this.L.tileLayer(
+        'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+        {
+          attribution:
+            '<a href="https://www.openstreetmap.org/copyright" target="_blank">©OpenStreetMap</a> contributors, Tiles: <a href="http://map.hotosm.org/" target="_blank">©HOT</a>',
+        }
+      ).addTo(this.map);
 
       new L.Control.Zoom({ position: 'bottomright' }).addTo(this.map);
 
@@ -79,12 +89,17 @@ export class MapComponent implements OnInit, AfterViewInit {
     const pin: Pin = {
       latitude: lat,
       longitude: lng,
-      club: { clubId: 0, clubName: 'Unknown', color1: '#000000', color2: '#000000' }, // 仮のクラブ情報
+      club: {
+        clubId: 0,
+        clubName: 'Unknown',
+        color1: '#000000',
+        color2: '#000000',
+      }, // 仮のクラブ情報
       league: { leagueId: 0, leagueName: 'Unknown' }, // 仮のリーグ情報
       isClean: true,
       sticker: '',
       userId: 1, // 仮のユーザーID
-      id: -1 // 仮のID
+      id: -1, // 仮のID
     };
 
     const marker = new this.L.marker([lat, lng]).addTo(this.map);
@@ -117,20 +132,20 @@ export class MapComponent implements OnInit, AfterViewInit {
   addMarker(lat: number, lng: number, popUpContent: string, pin: Pin): void {
     const svg = createColoredFlagSvg(pin.club.color1, pin.club.color2);
 
-    const svgUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    const svgUrl =
+      'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 
     const customIcon = this.L.icon({
       iconUrl: svgUrl, // ← ここに画像パス
       iconSize: [50, 50], // アイコンサイズ
       iconAnchor: [25, 40], // マーカーの「先端」がどこになるか（真ん中下）
-      popupAnchor: [0, -25] // ポップアップの位置調整（上にずらす）
+      popupAnchor: [0, -25], // ポップアップの位置調整（上にずらす）
     });
 
     try {
       const marker = new this.L.marker([lat, lng], {
-        icon: customIcon
-      })
-        .bindPopup(popUpContent);
+        icon: customIcon,
+      }).bindPopup(popUpContent);
 
       marker.on('click', () => {
         this.showMarkerDetail(pin);
@@ -155,13 +170,17 @@ export class MapComponent implements OnInit, AfterViewInit {
       console.error('Error uploading sticker:', error);
       throw error;
     }
-  }
+  };
 
   // 住所を指定して地図を移動するメソッド
   async moveToAddress(address: string): Promise<void> {
     try {
       // Nominatim APIを使用して住所を緯度経度に変換
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          address
+        )}`
+      );
       const data = await response.json();
 
       if (data && data.length > 0) {
@@ -173,7 +192,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.map.setView([latitude, longitude], 13);
 
         // マーカーを追加
-        this.L.marker([latitude, longitude]).addTo(this.map)
+        this.L.marker([latitude, longitude])
+          .addTo(this.map)
           .bindPopup(`Address: ${address}`)
           .openPopup();
       } else {
@@ -189,17 +209,17 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.prefectureLayer.remove(); // 重複防止
     }
 
-    this.http.get<any>('assets/geos/japan.geojson').subscribe(geojson => {
+    this.http.get<any>('assets/geos/japan.geojson').subscribe((geojson) => {
       this.prefectureLayer = L.geoJSON(geojson, {
         style: (feature: any) => ({
           fillColor: this.getColor(feature),
           weight: 1,
           color: 'white',
-          fillOpacity: 0.7
+          fillOpacity: 0.7,
         }),
         onEachFeature: (feature, layer) => {
           layer.bindPopup(feature.properties.name);
-        }
+        },
       });
 
       if (this.showPrefectures) {
@@ -216,7 +236,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       color: 'red',
       fillColor: 'red',
       dashArray: '',
-      fillOpacity: 0.5
+      fillOpacity: 0.5,
     });
 
     // Bring the layer to the front to ensure the highlight is visible
@@ -229,7 +249,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     const leagues = new Map<string, number>();
     const clubs = new Map<string, number>();
 
-    this.pins.forEach(pin => {
+    this.pins.forEach((pin) => {
       // League statistics
       const leagueName = pin.league.leagueName;
       leagues.set(leagueName, (leagues.get(leagueName) || 0) + 1);
@@ -238,29 +258,21 @@ export class MapComponent implements OnInit, AfterViewInit {
       const clubName = pin.club.clubName;
       clubs.set(clubName, (clubs.get(clubName) || 0) + 1);
     });
-
-    console.info('League Statistics:', Array.from(leagues.entries()));
-    console.info('Club Statistics:', Array.from(clubs.entries()));
   }
-
 
   public togglePrefectureLayer(): void {
     this.showPrefectures = !this.showPrefectures;
-    console.info(this.prefectureLayer)
-
-    console.info('Prefecture layer visibility:', this.showPrefectures);
 
     if (this.prefectureLayer) {
       if (this.showPrefectures) {
-        console.info('Adding prefecture layer to map');
         this.prefectureLayer.addTo(this.map);
       } else {
-        console.info('Removing prefecture layer from map');
         this.prefectureLayer.remove();
       }
     }
   }
 
+  // TODO 色分けのルールを決める
   private getColor(feature: any): string {
     // console.info(feature)
 
@@ -273,5 +285,4 @@ export class MapComponent implements OnInit, AfterViewInit {
     // };
     return '#577590'; // default color
   }
-
 }

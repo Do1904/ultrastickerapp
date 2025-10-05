@@ -1,27 +1,50 @@
 import { Injectable } from '@angular/core';
-import { StickerDetail } from '../model/stickerdetail';
+import { StickerUploadRequest } from '../model/stickerdetail';
 import axios from 'axios';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PutstickerService {
   private uploadUrl = 'http://localhost:3000/putStickers/putNewSticker';
   private updateUrl = 'http://localhost:3000/putStickers/editSticker';
   private deleteUrl = 'http://localhost:3000/putStickers/deleteSticker';
 
-  uploadImage = async (sticker: File, form: StickerDetail) => {
+  uploadImage = async (sticker: File, form: StickerUploadRequest) => {
     try {
       const data = new FormData();
       data.append('sticker', sticker, sticker.name);
-      data.append('clubId', form.clubId.toString());
-      data.append('leagueId', form.leagueId.toString());
-      data.append('address', form.address);
-      data.append('countryId', form.countryId.toString());
+      data.append('clubId', form.sticker.clubId.toString());
+      data.append('leagueId', form.sticker.leagueId.toString());
+      data.append('countryId', form.sticker.countryId.toString());
       data.append('isClean', 'true');
-      data.append('userId', form.userId.toString());
-      data.append('longitude', JSON.stringify(form.coordinate.lng));
-      data.append('latitude', JSON.stringify(form.coordinate.lat));
+      data.append('userId', form.sticker.userId.toString());
+      data.append('longitude', JSON.stringify(form.sticker.coordinate.lng));
+      data.append('latitude', JSON.stringify(form.sticker.coordinate.lat));
+      data.append(
+        'country',
+        form.address.country ? form.address.country.toString() : ''
+      );
+      data.append(
+        'state',
+        form.address.state ? form.address.state.toString() : ''
+      );
+      data.append(
+        'city',
+        form.address.city ? form.address.city.toString() : ''
+      );
+      data.append(
+        'district',
+        form.address.district ? form.address.district.toString() : ''
+      );
+      data.append(
+        'neighbourhood',
+        form.address.neighbourhood ? form.address.neighbourhood.toString() : ''
+      );
+      data.append(
+        'postcode',
+        form.address.postcode ? form.address.postcode.toString() : ''
+      );
 
       const response = await axios.post(this.uploadUrl, data);
 
@@ -30,7 +53,7 @@ export class PutstickerService {
       console.error('Error uploading sticker:', error);
       throw error;
     }
-  }
+  };
 
   updateSticker = async (form: any) => {
     try {
@@ -38,7 +61,7 @@ export class PutstickerService {
       data.append('id', form.id);
       data.append('clubId', form.clubId);
       data.append('leagueId', form.leagueId);
-      data.append('address', form.address);
+      data.append('addressId', form.addressId);
       data.append('countryId', form.countryId);
       data.append('isClean', 'true');
 
@@ -49,15 +72,15 @@ export class PutstickerService {
       console.error('Error uploading sticker:', error);
       throw error;
     }
-  }
+  };
 
   deleteSticker = async (stickerId: number) => {
     const userId = 1;
     try {
       const body = {
         stickerId: stickerId,
-        userId: userId
-      }
+        userId: userId,
+      };
 
       const response = await axios.post(this.deleteUrl, body);
 
@@ -66,5 +89,5 @@ export class PutstickerService {
       console.error('Error deleting sticker:', error);
       throw error;
     }
-  }
+  };
 }

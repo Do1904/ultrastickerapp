@@ -13,9 +13,9 @@ router.get('/stickers', async (req, res) => {
 router.get('/sticker/:id', async (req, res) => {
     const stickerId = Number(req.params.id);
 
-    const sticker = await db.stickers.getStickerById(stickerId);
+    const stickerWithAddress = await db.stickers.getStickerWithAddressById(stickerId);
 
-    if (sticker.length === 0) {
+    if (stickerWithAddress.length === 0) {
         res.status(404).send('ステッカーが見つかりません');
         return;
     }
@@ -47,9 +47,22 @@ router.get('/sticker/:id', async (req, res) => {
             parentComment.replies.push(reply); // repliesにコメントIDを追加
         }
     });
-
     const resBody = {
-        sticker: sticker[0],
+        sticker: {
+            id: stickerWithAddress[0].id,
+            sticker: stickerWithAddress[0].sticker,
+            clubId: stickerWithAddress[0].clubId,
+            leagueId: stickerWithAddress[0].leagueId,
+            countryId: stickerWithAddress[0].countryId,
+            isClean: stickerWithAddress[0].isClean,
+            userId: stickerWithAddress[0].userId
+        },
+        address: {
+            country: stickerWithAddress[0].country,
+            state: stickerWithAddress[0].state,
+            city: stickerWithAddress[0].city,
+            district: stickerWithAddress[0].district
+        },
         comments: firstComments,
         visiters: visiters,
     }
