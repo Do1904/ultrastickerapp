@@ -2,18 +2,15 @@
   --content-padding: 0px;
 }
 
-
-
 .content {
   padding: var(--content-padding);
 }
-
 
 /* app.component.css または styles.css でもOK */
 
 .header {
   position: fixed;
-  top: -75px;
+  top: -110px;
   /* 最初は画面外に隠す */
   left: 0;
   right: 0;

@@ -1,5 +1,10 @@
 <main>
-  <section class="header" [class.visible]="isHeaderVisible">
+  <section
+    class="header"
+    [class.visible]="isHeaderVisible"
+    (mouseenter)="onHeaderEnter()"
+    (mouseleave)="onHeaderLeave()"
+  >
     <app-header></app-header>
   </section>
 
@@ -12,7 +17,7 @@
               <div class="sticker-front">
                 <div class="sticker-text-front-header-button">☰</div>
               </div>
-              <div class=" sticker-back">
+              <div class="sticker-back">
                 <div class="sticker-text-back-header-button"></div>
               </div>
             </div>
