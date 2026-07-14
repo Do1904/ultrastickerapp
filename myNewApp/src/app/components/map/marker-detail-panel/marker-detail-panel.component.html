@@ -1,4 +1,6 @@
 <div class="panel-content">
+    <button class="close-button" (click)="close()" aria-label="閉じる">✕</button>
+
     <div *ngIf="data?.id !== -1; else newStickerCoordinate" id="stickerlink">
         <a [routerLink]="['/details', data?.id]">
             <div class="sticker sticker-3">
@@ -6,7 +8,7 @@
                     <div class="sticker-wrapper">
                         <div class="sticker-clip">
                             <div class="sticker-front"><img class="listing-photo" [src]="data?.sticker"
-                                    alt="Exterior photo of {{data?.club?.clubName }}" (error)="onImgError($event)">
+                                    alt="Sticker photo of {{ data?.club?.clubName }}" (error)="onImgError($event)">
                             </div>
                             <div class="sticker-back"
                                 style="text-align: left; color: aliceblue; font-size: 90%; word-break: break-word;">
@@ -17,8 +19,19 @@
                 </div>
             </div>
         </a>
-        <p>userId: {{ data?.userId }}</p>
+
+        <div class="detail-info">
+            <h3 class="detail-club">{{ data?.club?.clubName }}</h3>
+            <p class="detail-meta">{{ data?.league?.leagueName }} / {{ data?.country }}</p>
+            <p class="detail-address" *ngIf="data?.addressText">📍 {{ data?.addressText }}</p>
+            <p class="detail-meta" *ngIf="data?.createdAt">投稿日時: {{ data?.createdAt | date: 'yyyy/MM/dd HH:mm' }}</p>
+            <p class="detail-meta" *ngIf="data?.postedBy">投稿者: {{ data?.postedBy }}</p>
+            <p class="detail-comment" *ngIf="data?.comment">💬 {{ data?.comment }}</p>
+        </div>
+
+        <a [routerLink]="['/details', data?.id]" class="detail-link">詳細ページへ →</a>
     </div>
+
     <ng-template #newStickerCoordinate>
         <!-- ステッカーを新規追加したい時に表示される内容 -->
         <h3>ステッカー新規登録</h3>

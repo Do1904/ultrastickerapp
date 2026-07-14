@@ -1,13 +1,22 @@
-<section>
-    <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <mat-label>filter by city</mat-label>
-            <input matInput placeholder="??" #filter>
-        </mat-form-field>
-        <button mat-raised-button type="button" class="primary" (click)="filterResults(filter.value)">Search</button>
-    </form>
-</section>
-<section class="results">
-    <app-sticker-location *ngFor="let stickerDetail of filteredList"
-        [stickerDetail]="stickerDetail"></app-sticker-location>
-</section>
+<div class="collection-page">
+    <section class="collection-hero">
+        <h1>Sticker <span>Collection</span></h1>
+        <p>これまでに記録された、日本の街角のステッカーたち</p>
+
+        <div class="filter-bar">
+            <input type="text" placeholder="クラブ名で検索(例: Arsenal / Schalke)" [(ngModel)]="filterText"
+                (input)="filterResults()" />
+            <button type="button" *ngIf="filterText" (click)="clearFilter()" aria-label="クリア">✕</button>
+        </div>
+        <p class="collection-count">{{ filteredList.length }} 枚のステッカー</p>
+    </section>
+
+    <section class="results">
+        <app-sticker-location *ngFor="let stickerDetail of filteredList"
+            [stickerDetail]="stickerDetail"></app-sticker-location>
+    </section>
+
+    <p class="no-results" *ngIf="filteredList.length === 0">
+        該当するステッカーがありません。
+    </p>
+</div>

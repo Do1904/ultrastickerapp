@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Pin } from '../../../model/pin';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -13,6 +13,7 @@ import { LocationService } from '../../../service/location.service';
 })
 export class MarkerDetailPanelComponent {
   @Input() data: Pin | null = null;
+  @Output() closed = new EventEmitter<void>();
 
   locationService: LocationService = inject(LocationService);
 
@@ -25,7 +26,6 @@ export class MarkerDetailPanelComponent {
   };
 
   async ngOnChanges() {
-    // データが変更されたときに実行される処理
     if (this.data) {
       this.coodinate.lat = this.data.latitude;
       this.coodinate.lng = this.data.longitude;
@@ -36,6 +36,10 @@ export class MarkerDetailPanelComponent {
         this.currentAddress = this.currentAddressObject.addressOverview;
       }
     }
+  }
+
+  close() {
+    this.closed.emit();
   }
 
   onImgError(event: any) {

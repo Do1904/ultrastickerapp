@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
@@ -12,6 +13,7 @@ import putStickerRouter from './src/routes/putSticker.js';
 import sendCheersRouter from './src/routes/cheers.js';
 import commentsRouter from './src/routes/comments.js';
 import mapRouter from './src/routes/map.js';
+import statsRouter from './src/routes/stats.js';
 
 const app = express();
 
@@ -33,19 +35,9 @@ app.use('/putStickers', putStickerRouter);
 app.use('/cheers', sendCheersRouter);
 app.use('/comments', commentsRouter);
 app.use('/maps', mapRouter);
+app.use('/stats', statsRouter);
 
-// 証明書と秘密鍵を読み込む
-// const options = {
-//     key: fs.readFileSync('certs/server.key'),
-//     cert: fs.readFileSync('certs/server.crt'),
-// };
-
-const port = 3000;
+const port = Number(process.env.PORT ?? 3000);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-
-// HTTPSサーバーを作成
-// https.createServer(options, app).listen(port, () => {
-//     console.log(`HTTPS Server running on port ${port}`);
-// });

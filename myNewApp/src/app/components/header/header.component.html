@@ -1,22 +1,14 @@
-<header>
-    <a [routerLink]="['/']">
-        <header class="brand-name">
-            <h1>Top</h1>
-        </header>
+<nav class="topbar">
+    <a class="brand" [routerLink]="['/']">
+        <span class="brand-mark">⚽</span>
+        <span class="brand-text">Football Sticker Map <b>Japan</b></span>
+        <span class="brand-text-short">FSM <b>Japan</b></span>
     </a>
-    <a [routerLink]="['/allStickers']">
-        <header class="brand-name">
-            <h1>Sticker</h1>
-        </header>
-    </a>
-    <a [routerLink]="['/map']">
-        <header class="brand-name">
-            <h1>Map</h1>
-        </header>
-    </a>
-    <a [routerLink]="['/putSticker']" [queryParams]="{ lat: 0, lng: 0 }">
-        <header class="brand-name">
-            <h1>put new one!</h1>
-        </header>
-    </a>
-</header>
+
+    <div class="nav-links">
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Map</a>
+        <a [routerLink]="['/allStickers']" routerLinkActive="active">Stickers</a>
+        <a [routerLink]="['/about']" routerLinkActive="active">About</a>
+        <a class="cta" [routerLink]="['/putSticker']">+ 投稿する</a>
+    </div>
+</nav>

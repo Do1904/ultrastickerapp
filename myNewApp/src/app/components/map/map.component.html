@@ -2,9 +2,168 @@
     <!-- Leaflet 地図 -->
     <div id="map"></div>
 
-    <!-- 詳細パネル -->
-    <app-marker-detail-panel *ngIf="showPanel" [data]="selectedPin" class="marker-panel"></app-marker-detail-panel>
-    <!-- 設定パネル -->
-    <app-setting-detail-panel class="setting-panel" [showPrefectures]="showPrefectures"
-        (togglePrefecture)="togglePrefectureLayer()"></app-setting-detail-panel>
+    <!-- 左パネル開くボタン(折りたたみ時) -->
+    <button class="panel-toggle toggle-left" *ngIf="!leftPanelOpen" (click)="openLeftPanel()"
+        aria-label="検索・フィルターを開く">
+        <mat-icon>tune</mat-icon>
+    </button>
+
+    <!-- 左パネル: 検索 + フィルター -->
+    <aside class="panel panel-left" *ngIf="leftPanelOpen">
+        <div class="panel-head">
+            <span>検索・フィルター</span>
+            <button class="collapse-button" (click)="leftPanelOpen = false" aria-label="折りたたむ">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+        </div>
+
+        <section class="panel-section">
+            <h3>地域検索</h3>
+            <div class="search-row">
+                <input type="text" class="search-input" placeholder="例: 渋谷 / 大阪 / 京都" [(ngModel)]="searchQuery"
+                    (keyup.enter)="onSearch()" />
+                <button mat-icon-button (click)="onSearch()" [disabled]="searching" aria-label="検索">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+            <ul class="search-results" *ngIf="searchResults.length > 0">
+                <li *ngFor="let result of searchResults" (click)="moveToSearchResult(result)">
+                    {{ result.displayName }}
+                </li>
+            </ul>
+        </section>
+
+        <section class="panel-section">
+            <h3>フィルター</h3>
+            <mat-form-field appearance="outline" class="filter-field">
+                <mat-label>国</mat-label>
+                <mat-select [(ngModel)]="selectedCountryId" (selectionChange)="onCountryChange()">
+                    <mat-option [value]="null">すべて</mat-option>
+                    <mat-option *ngFor="let country of countries" [value]="country.countryId">
+                        {{ country.countryName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filter-field">
+                <mat-label>リーグ</mat-label>
+                <mat-select [(ngModel)]="selectedLeagueId" (selectionChange)="onLeagueChange()"
+                    [disabled]="!selectedCountryId">
+                    <mat-option [value]="null">すべて</mat-option>
+                    <mat-option *ngFor="let league of filteredLeagues" [value]="league.leagueId">
+                        {{ league.leagueName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filter-field">
+                <mat-label>クラブ</mat-label>
+                <mat-select [(ngModel)]="selectedClubId" (selectionChange)="onClubChange()"
+                    [disabled]="!selectedLeagueId">
+                    <mat-option [value]="null">すべて</mat-option>
+                    <mat-option *ngFor="let club of filteredClubs" [value]="club.clubId">
+                        {{ club.clubName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-stroked-button class="clear-button" (click)="clearFilters()">クリア</button>
+            <p class="hit-count">{{ pins.length }} 件表示中</p>
+        </section>
+
+        <section class="panel-section">
+            <h3>表示レイヤー</h3>
+            <div class="layer-buttons">
+                <button [class.active]="layerMode === 'markers'" (click)="setLayerMode('markers')">マーカー</button>
+                <button [class.active]="layerMode === 'heat'" (click)="setLayerMode('heat')">ヒートマップ</button>
+                <button [class.active]="layerMode === 'territory'" (click)="setLayerMode('territory')">勢力図</button>
+            </div>
+            <label class="pref-toggle">
+                <input type="checkbox" [checked]="showPrefectures" (change)="togglePrefectureLayer()" />
+                都道府県勢力図
+            </label>
+        </section>
+    </aside>
+
+    <!-- 右パネル開くボタン(折りたたみ時) -->
+    <button class="panel-toggle toggle-right" *ngIf="!rightPanelOpen" (click)="openRightPanel()"
+        aria-label="ランキング・統計を開く">
+        <mat-icon>insights</mat-icon>
+    </button>
+
+    <!-- 右パネル: ランキング + 統計 -->
+    <aside class="panel panel-right" *ngIf="rightPanelOpen">
+        <div class="panel-head">
+            <span>ランキング・統計</span>
+            <button class="collapse-button" (click)="rightPanelOpen = false" aria-label="折りたたむ">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+
+        <nav class="tab-row">
+            <button [class.active]="rightTab === 'ranking'" (click)="rightTab = 'ranking'">エリア</button>
+            <button [class.active]="rightTab === 'clubs'" (click)="rightTab = 'clubs'">クラブ</button>
+            <button [class.active]="rightTab === 'prefectures'" (click)="rightTab = 'prefectures'">都道府県</button>
+        </nav>
+
+        <!-- 表示範囲内ランキング -->
+        <section class="panel-section" *ngIf="rightTab === 'ranking'">
+            <h3>このエリアのランキング</h3>
+            <p class="hint">地図を動かすと更新されます</p>
+            <ol class="ranking-list">
+                <li *ngFor="let entry of ranking; let i = index" (click)="focusClub(entry.clubId)">
+                    <span class="rank">{{ i + 1 }}</span>
+                    <span class="club-dot" [style.background]="clubColor(entry.clubId)"></span>
+                    <span class="club-name">{{ clubName(entry.clubId) }}</span>
+                    <span class="count">{{ entry.count }}件</span>
+                </li>
+            </ol>
+            <p *ngIf="ranking.length === 0" class="hint">このエリアには投稿がありません</p>
+        </section>
+
+        <!-- クラブ別統計 -->
+        <section class="panel-section" *ngIf="rightTab === 'clubs'">
+            <h3>クラブ別統計</h3>
+            <ul class="club-stats-list">
+                <li *ngFor="let stat of clubStats">
+                    <div class="club-stat-header" (click)="focusClub(stat.clubId)">
+                        <span class="club-dot" [style.background]="clubColor(stat.clubId)"></span>
+                        <span class="club-name">{{ clubName(stat.clubId) }}</span>
+                        <span class="count">{{ stat.count }}件</span>
+                    </div>
+                    <div class="club-stat-meta">
+                        <span>{{ leagueNameOfClub(stat.clubId) }} / {{ countryNameOfClub(stat.clubId) }}</span>
+                        <span *ngIf="stat.latestAt">最新: {{ stat.latestAt | date: 'yyyy/MM/dd' }}</span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 都道府県ランキング -->
+        <section class="panel-section" *ngIf="rightTab === 'prefectures'">
+            <h3>都道府県ランキング</h3>
+            <ul class="pref-stats-list">
+                <li *ngFor="let stat of prefectureStats">
+                    <div class="pref-header">
+                        <span class="pref-name">{{ stat.state }}</span>
+                        <span class="stars">{{ stars(stat.total, maxPrefectureTotal) }}</span>
+                        <span class="count">{{ stat.total }}件</span>
+                    </div>
+                    <div class="pref-top-club" *ngIf="stat.clubs.length > 0">
+                        <span class="club-dot" [style.background]="clubColor(stat.clubs[0].clubId)"></span>
+                        {{ clubName(stat.clubs[0].clubId) }} ({{ stat.clubs[0].count }}件)
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <!-- 現在地ボタン -->
+    <button class="locate-button" (click)="locateMe()" aria-label="現在地へ移動" title="現在地へ移動">
+        <mat-icon>my_location</mat-icon>
+    </button>
+
+    <!-- 投稿詳細パネル -->
+    <app-marker-detail-panel *ngIf="showPanel" [data]="selectedPin" (closed)="closeDetail()"
+        class="marker-panel"></app-marker-detail-panel>
 </div>

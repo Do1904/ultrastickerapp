@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FSM Japan</string>
+    <string name="title_activity_main">FSM Japan</string>
+    <string name="package_name">jp.fsmj.app</string>
+    <string name="custom_url_scheme">jp.fsmj.app</string>
+</resources>

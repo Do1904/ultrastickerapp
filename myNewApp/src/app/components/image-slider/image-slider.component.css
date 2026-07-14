@@ -20,7 +20,8 @@
 
 .slider-container {
     display: flex;
-    height: 95.3vh;
+    /* 固定ヘッダー(52px)を除いた高さ */
+    height: calc(100vh - 52px);
     overflow: hidden;
 }
 

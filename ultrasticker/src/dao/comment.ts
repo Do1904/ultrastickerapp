@@ -29,7 +29,7 @@ async function postComment(
     userId: number,
     stickerId: number,
     firstFlag: boolean,
-    replyingCommentId: number,
+    replyingCommentId: number | null,
 ): Promise<any> {
     const query = `
     INSERT INTO comments (

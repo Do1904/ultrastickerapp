@@ -1,0 +1,25 @@
+{
+  "name": "fsmj-mobile",
+  "version": "1.0.0",
+  "description": "Football Sticker Map Japan - Capacitor mobile shell (iOS/Android)",
+  "private": true,
+  "scripts": {
+    "build:web": "yarn --cwd ../myNewApp build",
+    "sync": "npm run build:web && npx cap sync",
+    "add:ios": "npx cap add ios",
+    "add:android": "npx cap add android",
+    "open:ios": "npx cap open ios",
+    "open:android": "npx cap open android",
+    "run:ios": "npm run sync && npx cap run ios",
+    "run:android": "npm run sync && npx cap run android"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.1.0"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.1.0",
+    "@capacitor/cli": "^6.1.0",
+    "@capacitor/ios": "^6.1.0",
+    "typescript": "~5.5.4"
+  }
+}

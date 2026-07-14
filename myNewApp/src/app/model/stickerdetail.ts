@@ -1,4 +1,4 @@
-import { LatLngLiteral, Point } from "leaflet";
+import { LatLngLiteral } from "leaflet";
 import { AddressDetail } from "./address";
 
 export interface StickerDetail {
@@ -18,4 +18,5 @@ export interface StickerDetail {
 export interface StickerUploadRequest {
   sticker: StickerDetail;
   address: AddressDetail;
+  comment?: string;
 }

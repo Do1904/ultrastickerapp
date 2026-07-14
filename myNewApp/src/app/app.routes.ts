@@ -10,8 +10,13 @@ import { MapComponent } from './components/map/map.component';
 export const routeConfig: Routes = [
   {
     path: '',
+    component: MapComponent,
+    title: 'Football Sticker Map Japan'
+  },
+  {
+    path: 'about',
     component: TopComponent,
-    title: 'TOPpage'
+    title: 'About | Football Sticker Map Japan'
   },
   {
     path: 'allStickers',
@@ -35,8 +40,8 @@ export const routeConfig: Routes = [
   },
   {
     path: 'map',
-    component: MapComponent,
-    title: 'map'
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 

@@ -70,11 +70,4 @@ router.get('/sticker/:id', async (req, res) => {
     res.json(resBody);
 });
 
-router.get('/stickerLike/:test', async (req, res) => {
-    const club = req.params.test;
-    const sticker = await db.stickers.getStickerLike(club);
-
-    res.json(sticker);
-});
-
 export default router;

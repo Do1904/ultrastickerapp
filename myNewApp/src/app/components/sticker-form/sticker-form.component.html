@@ -1,58 +1,115 @@
-<p>Put new Sticker!!</p>
-<form #form=ngForm (ngSubmit)="onSubmit(form)">
-    <div>
-        <mat-form-field class="example-full-width">
-            <mat-label>国</mat-label>
-            <mat-select [(ngModel)]="stickerDetail.countryId" name="countryId"
-                (selectionChange)="onCountryChange($event.value)">
-                <mat-option *ngFor="let country of countries" [value]="country.countryId">
-                    {{ country.countryName }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+<div class="form-page">
+    <h2>ステッカーを投稿する</h2>
 
-    <div>
-        <mat-form-field class="example-full-width" *ngIf="filteredLeagues.length">
-            <mat-label>リーグ</mat-label>
-            <mat-select [(ngModel)]="stickerDetail.leagueId" name="leagueId"
-                (selectionChange)="onLeagueChange($event.value)">
-                <mat-option *ngFor="let league of filteredLeagues" [value]="league.leagueId">
-                    {{ league.leagueName }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+    <p class="offline-banner" *ngIf="!online">
+        ⚠ オフラインです。撮影して「下書きに保存」しておけば、オンライン復帰後に投稿できます。
+    </p>
 
-    <div>
-        <mat-form-field class="example-full-width" *ngIf="filteredClubs.length">
-            <mat-label>クラブ</mat-label>
-            <mat-select [(ngModel)]="stickerDetail.clubId" name="clubId">
-                <mat-option *ngFor="let club of filteredClubs" [value]="club.clubId">
-                    {{ club.clubName }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+    <!-- 下書き一覧 -->
+    <section class="form-section" *ngIf="drafts.length > 0">
+        <h3>下書き ({{ drafts.length }})</h3>
+        <ul class="draft-list">
+            <li *ngFor="let view of drafts" (click)="loadDraft(view)">
+                <img [src]="view.previewUrl" alt="draft" />
+                <div class="draft-info">
+                    <span class="draft-club">{{ draftClubName(view.draft) }}</span>
+                    <span class="draft-date">{{ view.draft.createdAt | date: 'yyyy/MM/dd HH:mm' }}</span>
+                </div>
+                <button type="button" class="draft-delete" (click)="removeDraft(view, $event)"
+                    aria-label="下書きを削除">✕</button>
+            </li>
+        </ul>
+        <p class="hint">タップするとフォームに読み込みます</p>
+    </section>
 
-    <div>
-        <button mat-raised-button="elevated" type="button" (click)="getCurrentLocation()">Get Your Location</button>
-    </div>
-    <br>
-    <div>
-        <p>緯度: {{ currentCoordinate.lat || '未取得' }}</p>
-        <p>経度: {{ currentCoordinate.lng || '未取得' }}</p>
-    </div>
-    <div>
-        <mat-form-field class="example-full-width">
-            <mat-label>綺麗だった？</mat-label>
-            <input matInput placeholder="??" type="text" name="isClean" [(ngModel)]="stickerDetail.isClean">
-        </mat-form-field>
-    </div>
-    <input type="file" id="uploadFile" (change)="fileChoosen($event, fileUpload.files)" class="file-input" #fileUpload>
-    <div class="file-upload">
-        {{fileName || "No file uploaded yet."}}
-        <!-- <button type="button" mat-mini-fab (click)="putNewSticker(club.value, fileUpload.files)">upload</button> -->
-        <button type="submit">Submit</button>
-    </div>
-</form>
+    <form (ngSubmit)="onSubmit()">
+        <!-- 1. 写真 -->
+        <section class="form-section">
+            <h3>1. 写真</h3>
+            <div class="photo-buttons">
+                <label class="photo-button camera">
+                    <input type="file" accept="image/*" capture="environment" (change)="fileChoosen($event)" hidden />
+                    📷 カメラで撮影
+                </label>
+                <label class="photo-button">
+                    <input type="file" accept="image/*" (change)="fileChoosen($event)" hidden />
+                    🖼 ライブラリから選択
+                </label>
+            </div>
+            <div class="preview-box" *ngIf="previewUrl">
+                <img [src]="previewUrl" alt="preview" class="preview" />
+            </div>
+            <p class="hint" *ngIf="sticker">{{ sticker.name }}</p>
+        </section>
+
+        <!-- 2. 位置 -->
+        <section class="form-section">
+            <h3>2. 位置</h3>
+            <p class="hint">写真にGPS情報があれば自動で設定されます。なければ地図をクリックして指定してください。</p>
+            <div class="location-row">
+                <button mat-stroked-button type="button" (click)="getCurrentLocation()">
+                    <mat-icon>my_location</mat-icon> 現在地を使う
+                </button>
+                <span class="location-source" [class.ok]="locationSource !== 'none'">
+                    {{ locationSourceLabel }}
+                </span>
+            </div>
+            <div id="pick-map"></div>
+            <p class="hint" *ngIf="coordinate">
+                緯度: {{ coordinate.lat | number: '1.5-5' }} / 経度: {{ coordinate.lng | number: '1.5-5' }}
+                <span *ngIf="currentAddress.addressOverview"> — {{ currentAddress.addressOverview }}</span>
+            </p>
+        </section>
+
+        <!-- 3. クラブ -->
+        <section class="form-section">
+            <h3>3. クラブ</h3>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>国</mat-label>
+                <mat-select [(ngModel)]="selectedCountryId" name="countryId" (selectionChange)="onCountryChange()">
+                    <mat-option *ngFor="let country of countries" [value]="country.countryId">
+                        {{ country.countryName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width" *ngIf="filteredLeagues.length">
+                <mat-label>リーグ</mat-label>
+                <mat-select [(ngModel)]="selectedLeagueId" name="leagueId" (selectionChange)="onLeagueChange()">
+                    <mat-option *ngFor="let league of filteredLeagues" [value]="league.leagueId">
+                        {{ league.leagueName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width" *ngIf="filteredClubs.length">
+                <mat-label>クラブ</mat-label>
+                <mat-select [(ngModel)]="selectedClubId" name="clubId">
+                    <mat-option *ngFor="let club of filteredClubs" [value]="club.clubId">
+                        {{ club.clubName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+
+        <!-- 4. コメント -->
+        <section class="form-section">
+            <h3>4. コメント(任意)</h3>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>コメント</mat-label>
+                <textarea matInput rows="3" name="comment" [(ngModel)]="comment"
+                    placeholder="発見場所の様子など"></textarea>
+            </mat-form-field>
+        </section>
+
+        <div class="action-buttons">
+            <button mat-stroked-button type="button" class="draft-button" [disabled]="!canSaveDraft"
+                (click)="saveAsDraft()">
+                💾 下書きに保存
+            </button>
+            <button mat-raised-button color="primary" type="submit" class="submit-button" [disabled]="!canSubmit">
+                {{ submitting ? '投稿中…' : online ? '投稿する' : '投稿する(オフライン)' }}
+            </button>
+        </div>
+    </form>
+</div>

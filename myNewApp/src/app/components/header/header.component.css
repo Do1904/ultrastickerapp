@@ -1,20 +1,105 @@
-header {
-    display: block;
-    height: 110px;
-}
-
-header {
+.topbar {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    /* background-color: #ffffff86; */
+    justify-content: space-between;
+    height: 52px;
+    padding: 0 16px;
+    background: linear-gradient(180deg, #16161add, #111114ee);
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid #ffffff;
+    box-sizing: border-box;
 }
 
-a {
+/* ---------- ブランド ---------- */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
-    color: black;
+    color: #bbb;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
 }
 
-.brand-name {
-    text-align: center;
+.brand-mark {
+    font-size: 1.2rem;
+}
+
+.brand-text b,
+.brand-text-short b {
+    color: #fff;
+}
+
+.brand-text-short {
+    display: none;
+}
+
+/* ---------- ナビ ---------- */
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: color 0.15s, background-color 0.15s;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: #fff;
+    background-color: #ffffff1a;
+}
+
+.nav-links a.active {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+
+.nav-links a.cta {
+    margin-left: 8px;
+    background-color: #fff;
+    color: #111;
+    font-weight: bold;
+    padding: 7px 14px;
+    border-radius: 6px;
+}
+
+.nav-links a.cta:hover {
+    background-color: #ddd;
+}
+
+/* ---------- モバイル ---------- */
+
+@media (max-width: 700px) {
+    .topbar {
+        padding: 0 10px;
+    }
+
+    .brand-text {
+        display: none;
+    }
+
+    .brand-text-short {
+        display: inline;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+
+    .nav-links a.cta {
+        padding: 6px 10px;
+    }
 }

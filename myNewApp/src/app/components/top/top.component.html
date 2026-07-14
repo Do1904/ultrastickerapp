@@ -3,6 +3,7 @@
         <app-image-slider></app-image-slider>
     </div>
 
+    <!-- コンセプト -->
     <div id="block-eins">
         <div class="sticker sticker-top-1">
             <div class="sticker-container">
@@ -19,14 +20,19 @@
             </div>
         </div>
         <br>
-        <h2>街中にあるステッカーを共有して、世界を旅するUltrasの痕跡を記録しよう</h2>
+        <h2>日本の街角から、世界のフットボールを見つけよう</h2>
         <br>
-        <p>街中に溢れるステッカーたち。</p>
-        <p>その中には、Ultrasが彼らの存在を示すために残していった</p>
-        <p><b style="font-size: 150%;">UltrasSticker&nbsp;</b>&nbsp;が紛れ込んでいる。</p>
-        <p>彼らの支配領域を調査するためにこのサイトは生まれました。</p>
+        <p>電柱、壁、ガードレール、標識——。</p>
+        <p>日本の公共空間には、海外フットボールクラブのステッカーがひっそりと貼られている。</p>
+        <p>それは、世界中を旅するサポーターと日本のファンが残した<b style="font-size: 130%;">&nbsp;ストリートカルチャーの痕跡&nbsp;</b>だ。</p>
+        <br>
+        <p>Football Sticker Map Japan は、そんなステッカーを写真と位置情報で記録し、</p>
+        <p>「この街は Liverpool が多い」「渋谷は Arsenal の聖地」——</p>
+        <p>日本における海外クラブファンの<b style="font-size: 130%;">&nbsp;勢力図&nbsp;</b>を地図上に描くプロジェクトです。</p>
         <br>
     </div>
+
+    <!-- 注意事項 -->
     <div id="block-zwei">
         <div class="sticker sticker-top-warning">
             <div class="sticker-container">
@@ -43,16 +49,19 @@
             </div>
         </div>
         <div>
-            <p>他人の持ち物に無断でステッカーを貼る行為は、軽犯罪法や器物損壊罪に該当する可能性があります。<br>特に、道路標識や電柱など、公的な場所への貼り付けは、一般的に禁止されており、違反となる可能性があります。
+            <p>このサイトは「すでに存在するステッカー」を記録するアーカイブであり、ステッカーを貼る行為を推奨するものではありません。<br>
+                他人の持ち物に無断でステッカーを貼る行為は、軽犯罪法や器物損壊罪に該当する可能性があります。特に、道路標識や電柱など、公的な場所への貼り付けは、一般的に禁止されており、違反となる可能性があります。
             </p>
         </div>
     </div>
+
+    <!-- 使い方 -->
     <div id="block-drei">
-        <h1>何をしようか</h1>
+        <h1>使い方</h1>
         <br>
         <div id="how-to">
             <div id="steps">
-                <div id="step-eins" class="animatable">
+                <div id="step-eins">
                     <div class="sticker sticker-small-white">
                         <div class="sticker-container">
                             <div class="sticker-wrapper">
@@ -68,10 +77,11 @@
                         </div>
                     </div>
                     <div class="explaination">
-                        <h3>Effect 2</h3>
+                        <h3>見つける</h3>
+                        <p>街を歩いて、海外クラブのステッカーを探そう。電柱・壁・標識の裏——意外なところに貼られている。</p>
                     </div>
                 </div>
-                <div id="step-zwei wrapper">
+                <div id="step-zwei">
                     <div class="sticker sticker-small-white">
                         <div class="sticker-container">
                             <div class="sticker-wrapper">
@@ -86,8 +96,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="explaination animatable moveUp">
-                        <h3>Effect 2</h3>
+                    <div class="explaination">
+                        <h3>撮って投稿</h3>
+                        <p>写真を撮って投稿。GPS付き写真なら位置は自動で登録。クラブを選んでコメントを添えるだけ。</p>
+                        <a class="step-link" [routerLink]="['/putSticker']">投稿してみる →</a>
                     </div>
                 </div>
                 <div id="step-drei">
@@ -106,18 +118,21 @@
                         </div>
                     </div>
                     <div class="explaination">
-                        <h3>Effect 2</h3>
-                        <p><br></p><br><br><br><br><br><br>
+                        <h3>勢力図を見る</h3>
+                        <p>データが集まるほど、街ごとのクラブ勢力図が見えてくる。あなたの街はどのクラブの縄張り?</p>
+                        <a class="step-link" [routerLink]="['/']">地図を見る →</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="block-drei">
-        <div id="user">
-            <div class="box effect2">
-                <h3>Effect 2</h3>
-            </div>
+
+    <!-- CTA -->
+    <div id="block-cta">
+        <h2>さあ、あなたの街の勢力図を確かめよう</h2>
+        <div class="cta-buttons">
+            <a class="cta-button primary" [routerLink]="['/']">🗺 地図を見る</a>
+            <a class="cta-button" [routerLink]="['/putSticker']">📷 ステッカーを投稿する</a>
         </div>
     </div>
 </div>

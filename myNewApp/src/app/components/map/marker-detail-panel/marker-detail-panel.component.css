@@ -8,3 +8,66 @@
     border-radius: 0px;
     object-fit: cover;
 }
+
+.panel-content {
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    z-index: 10;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.detail-info {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.detail-club {
+    margin: 4px 0;
+    font-size: 1.1rem;
+}
+
+.detail-meta {
+    margin: 3px 0;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.detail-address {
+    margin: 3px 0;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.detail-comment {
+    margin: 8px 0 4px;
+    padding: 8px;
+    font-size: 0.85rem;
+    background: #f4f4f4;
+    border-radius: 6px;
+    word-break: break-word;
+}
+
+.detail-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #1a56a0;
+    text-decoration: none;
+}
+
+.detail-link:hover {
+    text-decoration: underline;
+}

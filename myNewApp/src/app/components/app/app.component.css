@@ -1,38 +1,12 @@
-:host {
-  --content-padding: 0px;
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1100;
 }
 
 .content {
-  padding: var(--content-padding);
-}
-
-/* app.component.css または styles.css でもOK */
-
-.header {
-  position: fixed;
-  top: -110px;
-  /* 最初は画面外に隠す */
-  left: 0;
-  right: 0;
-  z-index: 999;
-  background-color: #ffffffe8;
-  transition: top 0.3s ease;
-  box-shadow: 0 2px 5px #1e1e1ed3;
-}
-
-.header.visible {
-  top: 0;
-  /* スライドインで画面上部に表示 */
-}
-
-/* divでボタンを囲む：div自体を固定 */
-.menu-toggle-container {
-  position: fixed;
-  top: 4px;
-  left: 15px;
-  z-index: 1000;
-  /* 任意で背景・角丸など */
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 6px;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0); */
+  /* 固定ヘッダー(52px)の下にコンテンツを配置 */
+  padding-top: 52px;
 }

@@ -1,9 +1,45 @@
 #footermenu {
+    position: relative;
     background-image: url('/assets/ravenna.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     color: white;
-    padding: 10px;
+}
+
+#footermenu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #000000cc, #000000e6);
+}
+
+.footer-inner {
+    position: relative;
+    text-align: center;
+    padding: 28px 16px;
+}
+
+.footer-brand {
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px;
+    color: #bbb;
+}
+
+.footer-brand b {
+    color: #fff;
+}
+
+.footer-note {
+    font-size: 0.8rem;
+    color: #ccc;
+    line-height: 1.7;
+    margin: 0 0 12px;
+}
+
+.footer-copy {
+    font-size: 0.7rem;
+    color: #888;
+    margin: 0;
 }

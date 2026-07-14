@@ -1,46 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { StickerComponent } from '../sticker/sticker.component';
-import { RouterModule } from '@angular/router';
-import { DataService } from '../../service/data.service'; // Import the data service
-import { User } from '../../model/user';
+import { Component } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { filter } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
-import { FooterComponent } from '../footer/footer.component'; // Import the user model
+import { FooterComponent } from '../footer/footer.component';
+
+/** フッターを表示しないルート(全画面レイアウトのページ) */
+const FULLSCREEN_ROUTES = ['/'];
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [StickerComponent, RouterModule, HeaderComponent, FooterComponent],
+  imports: [RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css', '../../../sticker.css'],
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
-  title = 'Stickers';
-  data: User[] = []; // Property to store the data
+export class AppComponent {
+  title = 'Football Sticker Map Japan';
+  showFooter = false; // 初期ルートは地図(/)なので非表示から開始
 
-  constructor(private dataService: DataService) {} // Inject the data service
-
-  ngOnInit(): void {
-    this.dataService.getData().subscribe(
-      (data) => {
-        this.data = data; // Assign the received data to the property
-      },
-      (error) => {
-        console.error('There was an error retrieving data:', error);
-      }
-    );
-  }
-
-  public isHeaderVisible = false;
-
-  toggleHeader() {
-    this.isHeaderVisible = !this.isHeaderVisible;
-  }
-
-  onHeaderEnter() {
-    // カーソルがヘッダー領域に入ったら何もしない（開いたまま）
-  }
-
-  onHeaderLeave() {
-    // カーソルが115px領域を離れたら閉じる
-    this.isHeaderVisible = false;
+  constructor(router: Router) {
+    router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        const path = event.urlAfterRedirects.split('?')[0].split('#')[0];
+        this.showFooter = !FULLSCREEN_ROUTES.includes(path);
+      });
   }
 }

@@ -1,0 +1,187 @@
+.form-page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+}
+
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-section h3 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 4px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: #777;
+    margin: 4px 0;
+}
+
+/* ---------- オフライン ---------- */
+
+.offline-banner {
+    background: #f0f0f0;
+    border: 1px solid #111;
+    border-left: 4px solid #111;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: #111;
+}
+
+/* ---------- 下書き ---------- */
+
+.draft-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.draft-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    background: #fff;
+}
+
+.draft-list li:hover {
+    background: #f5f5f5;
+}
+
+.draft-list img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.draft-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.draft-club {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.draft-date {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.draft-delete {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #eee;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.draft-delete:hover {
+    background: #e88;
+    color: #fff;
+}
+
+/* ---------- 写真 ---------- */
+
+.photo-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.photo-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 8px;
+    border: 2px dashed #aaa;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fafafa;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.photo-button:hover {
+    background: #f0f0f0;
+}
+
+.photo-button.camera {
+    border-color: #111;
+    border-style: solid;
+    background: #f5f5f5;
+}
+
+.preview-box {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.preview {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* ---------- 位置 ---------- */
+
+.location-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.location-source {
+    font-size: 0.8rem;
+    color: #a33;
+}
+
+.location-source.ok {
+    color: #2a7a2a;
+}
+
+#pick-map {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    z-index: 0;
+}
+
+/* ---------- 送信 ---------- */
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.draft-button {
+    flex: 1;
+    padding: 12px;
+}
+
+.submit-button {
+    flex: 2;
+    padding: 12px;
+    font-size: 1rem;
+}
