@@ -1,16 +1,28 @@
 import express from 'express';
 import db from '../db/index.js';
 import { ICommentModel } from '../models/commentModel.js';
+import { requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/postComment', async (req, res) => {
-    const userId = 1; // 仮のユーザーID
+/** コメント1件の最大文字数 */
+const MAX_COMMENT_LENGTH = 1000;
+
+router.post('/postComment', requireAuth, async (req, res) => {
+    const userId = req.user!.id;
 
     const { stickerId, comment, firstFlag, replyingCommentId } = req.body;
 
     if (!stickerId) {
         res.status(400).json({ error: 'Sticker ID is required.' });
+        return;
+    }
+    if (typeof comment !== 'string' || comment.trim().length === 0) {
+        res.status(400).json({ error: 'コメントを入力してください' });
+        return;
+    }
+    if (comment.length > MAX_COMMENT_LENGTH) {
+        res.status(400).json({ error: `コメントは${MAX_COMMENT_LENGTH}文字以内にしてください` });
         return;
     }
 
@@ -81,7 +93,7 @@ router.get('/comments/:stickerId', async (req, res) => {
     }
 });
 
-router.post('/deleteComment', async (req, res) => {
+router.post('/deleteComment', requireAuth, async (req, res) => {
     const { commentId } = req.body;
 
     if (!commentId) {
@@ -90,7 +102,17 @@ router.post('/deleteComment', async (req, res) => {
     }
 
     try {
-        await db.comments.deleteCommentById(commentId);
+        // 本人のコメントかどうかはSQLのWHERE句で担保する
+        const deleted = await db.comments.deleteCommentByIdForUser(
+            Number(commentId),
+            req.user!.id
+        );
+
+        if (deleted === 0) {
+            res.status(403).json({ error: '自分のコメントのみ削除できます' });
+            return;
+        }
+
         res.status(200).json({ message: 'Comment deleted successfully.' });
     } catch (error) {
         console.error('Error deleting comment:', error);

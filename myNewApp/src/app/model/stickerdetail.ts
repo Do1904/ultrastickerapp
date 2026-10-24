@@ -13,6 +13,7 @@ export interface StickerDetail {
   class?: string;
   longitude?: number;
   latitude?: number;
+  createdAt?: string;
 }
 
 export interface StickerUploadRequest {

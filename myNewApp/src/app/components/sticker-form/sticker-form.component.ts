@@ -340,7 +340,8 @@ export class StickerFormComponent implements AfterViewInit, OnDestroy {
           countryId: this.selectedCountryId!,
           isClean: true,
           sticker: 'sticker',
-          userId: 1,
+          // 投稿者はサーバーがIDトークンから決めるため、この値は送信されない
+          userId: 0,
           coordinate: this.coordinate,
         },
         address: this.currentAddress,

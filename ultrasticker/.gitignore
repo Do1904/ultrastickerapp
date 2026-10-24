@@ -3,6 +3,13 @@ node_modules/
 
 # Environment variables
 .env
+.env.local
+.env.*.local
+
+# Firebase サービスアカウントの秘密鍵(絶対にコミットしない)
+firebase-adminsdk-*.json
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
 
 # Build output
 dist/

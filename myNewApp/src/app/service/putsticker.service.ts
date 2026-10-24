@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { StickerUploadRequest } from '../model/stickerdetail';
-import { apiPost } from './api-client';
+import { apiPost, apiPostForm } from './api-client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PutstickerService {
+  /**
+   * 投稿者・削除者はサーバー側がIDトークンから判定する。
+   * クライアントからuserIdを送っても無視されるため、ここでは一切送らない。
+   */
   uploadImage(sticker: File, form: StickerUploadRequest): Promise<any> {
     const data = new FormData();
     data.append('sticker', sticker, sticker.name);
@@ -13,7 +17,6 @@ export class PutstickerService {
     data.append('leagueId', String(form.sticker.leagueId));
     data.append('countryId', String(form.sticker.countryId));
     data.append('isClean', 'true');
-    data.append('userId', String(form.sticker.userId));
     data.append('longitude', String(form.sticker.coordinate.lng));
     data.append('latitude', String(form.sticker.coordinate.lat));
     data.append('country', form.address.country ?? '');
@@ -26,7 +29,7 @@ export class PutstickerService {
       data.append('comment', form.comment);
     }
 
-    return apiPost('/putStickers/putNewSticker', data);
+    return apiPostForm('/putStickers/putNewSticker', data);
   }
 
   updateSticker(form: any): Promise<any> {
@@ -41,9 +44,6 @@ export class PutstickerService {
   }
 
   deleteSticker(stickerId: number): Promise<any> {
-    return apiPost('/putStickers/deleteSticker', {
-      stickerId,
-      userId: 1, // TODO: 認証実装後にログインユーザーIDへ置換
-    });
+    return apiPost('/putStickers/deleteSticker', { stickerId });
   }
 }

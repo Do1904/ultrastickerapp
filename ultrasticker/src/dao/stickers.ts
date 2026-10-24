@@ -167,25 +167,37 @@ async function putNewSticker(
   return result.insertId;
 }
 
+/**
+ * 本人の投稿のみ更新する。
+ * WHERE句にuser_idを含めることで、他人のステッカーIDを渡されても書き換わらない。
+ * 更新できた件数を返す(0なら他人の投稿 or 存在しない)。
+ */
 async function updateStickerbyId(
   clubId: number,
   leagueId: number,
   addressId: number,
   countryId: number,
   isClean: boolean,
-  stickerId: number
-) {
-  const query = `UPDATE stickers SET club_id = ?, league_id = ?, address_id = ?, country_id = ?, is_clean = ? WHERE id = ?`;
-  const values = [clubId, leagueId, addressId, countryId, isClean, stickerId];
+  stickerId: number,
+  userId: number
+): Promise<number> {
+  const query = `
+    UPDATE stickers
+    SET club_id = ?, league_id = ?, address_id = ?, country_id = ?, is_clean = ?
+    WHERE id = ? AND user_id = ?`;
+  const values = [clubId, leagueId, addressId, countryId, isClean, stickerId, userId];
 
-  return await executeQuery(query, values);
+  const result = await executeQuery(query, values);
+  return result.affectedRows;
 }
 
-async function deleteStickerbyId(stickerId: number, userId: number) {
+/** 本人の投稿のみ削除する。削除できた件数を返す。 */
+async function deleteStickerbyId(stickerId: number, userId: number): Promise<number> {
   const query = `DELETE FROM stickers WHERE id = ? AND user_id = ?`;
   const values = [stickerId, userId];
 
-  return await executeQuery(query, values);
+  const result = await executeQuery(query, values);
+  return result.affectedRows;
 }
 
 export {

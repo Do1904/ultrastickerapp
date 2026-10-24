@@ -5,6 +5,8 @@ import { StickerFormComponent } from './components/sticker-form/sticker-form.com
 import { EditStickerComponent } from './components/edit-sticker/edit-sticker.component';
 import { TopComponent } from './components/top/top.component';
 import { MapComponent } from './components/map/map.component';
+import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './guard/auth.guard';
 
 
 export const routeConfig: Routes = [
@@ -29,14 +31,21 @@ export const routeConfig: Routes = [
     title: 'sticker details'
   },
   {
+    path: 'login',
+    component: LoginComponent,
+    title: 'ログイン | Football Sticker Map Japan'
+  },
+  {
     path: 'putSticker',
     component: StickerFormComponent,
-    title: 'put new Sticker'
+    title: 'put new Sticker',
+    canActivate: [authGuard]
   },
   {
     path: 'editSticker/:id',
     component: EditStickerComponent,
-    title: 'edit Sticker'
+    title: 'edit Sticker',
+    canActivate: [authGuard]
   },
   {
     path: 'map',

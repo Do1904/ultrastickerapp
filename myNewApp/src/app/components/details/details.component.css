@@ -1,150 +1,388 @@
-article {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  /* 任意：左右の間隔 */
-  align-items: flex-start;
-  margin: 2rem;
+:host {
+  --dp-ink: #111114;
+  --dp-muted: #767676;
+  --dp-border: #e8e6e2;
+  --dp-surface: #ffffff;
+  --dp-accent: #2563eb;
+  --dp-accent-soft: #eef3ff;
+  --dp-danger: #c1440e;
+  --dp-radius: 18px;
+  --dp-shadow: 0 10px 30px rgba(17, 17, 20, 0.06);
 }
 
-#right {
+.detail-page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: var(--dp-ink);
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-count {
+  font-weight: 500;
+  color: var(--dp-muted);
+  font-size: 0.9rem;
+}
+
+/* ===== ヒーロー ===== */
+
+.hero-card {
+  background: var(--dp-surface);
+  border-radius: var(--dp-radius);
+  box-shadow: var(--dp-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 480px;
+  background: #f1efeb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-info {
+  padding: 20px 22px 24px;
+}
+
+.badge-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-league {
+  background: var(--dp-accent-soft);
+  color: var(--dp-accent);
+}
+
+.badge-country {
+  background: #f1efeb;
+  color: var(--dp-muted);
+}
+
+.club-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.meta-line {
+  font-size: 0.85rem;
+  color: var(--dp-muted);
+  margin: 0 0 16px;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cheer-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--dp-border);
+  background: var(--dp-surface);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+  color: var(--dp-ink);
+}
+
+.cheer-button:hover {
+  transform: translateY(-1px);
+}
+
+.cheer-button.active {
+  background: #fff4ec;
+  border-color: #ffd9bd;
+  color: #b5490a;
+}
+
+.cheer-icon {
+  font-size: 1.05rem;
+}
+
+.text-action {
+  border: none;
+  background: none;
+  padding: 6px 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dp-muted);
+  cursor: pointer;
+}
+
+.text-action:hover {
+  color: var(--dp-ink);
+  text-decoration: underline;
+}
+
+.text-action.danger {
+  color: var(--dp-danger);
+}
+
+.text-action.danger:hover {
+  color: #8f3308;
+}
+
+/* ===== 場所 ===== */
+
+.location-card,
+.comments-card {
+  background: var(--dp-surface);
+  border-radius: var(--dp-radius);
+  box-shadow: var(--dp-shadow);
+  padding: 20px 22px 24px;
+}
+
+.address-text {
+  font-size: 0.95rem;
+  margin: 0 0 14px;
+}
+
+.address-text.muted {
+  color: var(--dp-muted);
+}
+
+.location-map {
+  width: 100%;
+  height: 260px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--dp-border);
+}
+
+/* ===== コメント ===== */
+
+.comment-composer {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.composer-avatar,
+.comment-avatar {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.comment-avatar.small {
+  width: 30px;
+  height: 30px;
+  font-size: 0.75rem;
+}
+
+.composer-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: #f5f4f1;
+  border-radius: 20px;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--dp-border);
+}
+
+.composer-input-wrap textarea {
+  flex: 1;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  padding: 6px 0;
+  max-height: 120px;
+  outline: none;
+  color: var(--dp-ink);
+}
+
+.send-button {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--dp-accent);
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.send-button:hover {
+  background: #1d4fc4;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.comment {
+  display: flex;
+  gap: 12px;
+}
+
+.comment-body {
   flex: 1;
   min-width: 0;
 }
 
-#left {
-  position: sticky;
-  top: 40px;
-  /* 固定開始位置（ヘッダーなどの高さがあれば調整） */
-  flex: 0 0 30%;
-  /* 幅を固定（例: 300px） */
-  height: fit-content;
+.comment-bubble {
+  background: #f5f4f1;
+  border-radius: 14px;
+  padding: 10px 14px;
 }
 
-.listing-photo {
-  width: 100%;
-  height: auto;
-  border-radius: 0px;
-  object-fit: cover;
-}
-
-.listing-heading {
-  font-size: 48pt;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-
-.listing-location {
-  font-size: 24pt;
-  margin-bottom: 15px;
-}
-
-.listing-features>.section-heading {
-  color: var(--secondary-color);
-  font-size: 24pt;
-  margin-bottom: 15px;
-}
-
-.listing-features {
-  margin-bottom: 20px;
-}
-
-.listing-features li {
-  font-size: 14pt;
-}
-
-li {
-  list-style-type: none;
-}
-
-.listing-apply .section-heading {
-  font-size: 18pt;
-  margin-bottom: 15px;
-}
-
-label,
-input {
-  display: block;
-}
-
-label {
-  color: var(--secondary-color);
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 12pt;
-}
-
-input {
-  font-size: 16pt;
-  margin-bottom: 15px;
-  padding: 10px;
-  width: 400px;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-bottom: solid .3px;
-}
-
-.comment-box {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 10px;
-  background-color: #fff;
-}
-
-.reply-box {
-  margin-left: 30px;
-  background-color: #f9f9f9;
+.reply-bubble {
+  background: #eeeeee;
 }
 
 .comment-header {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 5px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 0.85rem;
 }
 
 .timestamp {
-  font-size: 0.75rem;
-  color: #999;
+  font-size: 0.72rem;
+  color: var(--dp-muted);
 }
 
 .comment-content {
-  font-size: 1rem;
-  margin-bottom: 10px;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  word-break: break-word;
 }
 
 .comment-actions {
   display: flex;
-  gap: 8px;
+  gap: 4px;
+  margin-top: 4px;
+  padding-left: 4px;
 }
 
+.reply {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  margin-left: 22px;
+  padding-left: 12px;
+  border-left: 2px solid var(--dp-border);
+}
 
-@media (max-width: 768px) {
-  article {
+.empty-comments {
+  color: var(--dp-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.login-prompt {
+  background: #f5f4f1;
+  border: 1px dashed var(--dp-border);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--dp-muted);
+  margin: 0 0 22px;
+}
+
+.login-prompt a {
+  color: var(--dp-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+/* ===== レスポンシブ ===== */
+
+@media (min-width: 640px) {
+  .hero-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .hero-photo {
+    width: 42%;
+    aspect-ratio: auto;
+    max-height: none;
+  }
+
+  .hero-info {
+    flex: 1;
+    display: flex;
     flex-direction: column;
-  }
-
-  #right {
-    width: 100%;
-    margin-bottom: 1rem;
+    justify-content: center;
   }
 }
 
-.sticker {
-  width: 180px;
-  height: 180px;
-}
+@media (max-width: 480px) {
+  .club-title {
+    font-size: 1.5rem;
+  }
 
-.example-1 .sticker-img {
-  background-color: #272f66;
-}
-
-.example-2 .sticker-img {
-  background-color: #ff4a85;
-}
-
-.example-2 .sticker-shadow {
-  opacity: 0.6;
+  .hero-photo {
+    aspect-ratio: 4 / 3;
+  }
 }

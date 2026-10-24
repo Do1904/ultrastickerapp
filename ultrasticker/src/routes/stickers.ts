@@ -55,13 +55,18 @@ router.get('/sticker/:id', async (req, res) => {
             leagueId: stickerWithAddress[0].leagueId,
             countryId: stickerWithAddress[0].countryId,
             isClean: stickerWithAddress[0].isClean,
-            userId: stickerWithAddress[0].userId
+            userId: stickerWithAddress[0].userId,
+            createdAt: stickerWithAddress[0].createdAt,
+            longitude: stickerWithAddress[0].longitude,
+            latitude: stickerWithAddress[0].latitude
         },
         address: {
             country: stickerWithAddress[0].country,
             state: stickerWithAddress[0].state,
             city: stickerWithAddress[0].city,
-            district: stickerWithAddress[0].district
+            district: stickerWithAddress[0].district,
+            neighbourhood: stickerWithAddress[0].neighbourhood,
+            postcode: stickerWithAddress[0].postcode
         },
         comments: firstComments,
         visiters: visiters,

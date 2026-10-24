@@ -10,5 +10,23 @@
         <a [routerLink]="['/allStickers']" routerLinkActive="active">Stickers</a>
         <a [routerLink]="['/about']" routerLinkActive="active">About</a>
         <a class="cta" [routerLink]="['/putSticker']">+ 投稿する</a>
+
+        <!-- 未ログイン -->
+        <a class="login-link" *ngIf="auth.ready() && !auth.isLoggedIn()" [routerLink]="['/login']">
+            ログイン
+        </a>
+
+        <!-- ログイン済み -->
+        <div class="user-menu" *ngIf="auth.isLoggedIn()">
+            <button class="avatar-button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()"
+                aria-label="アカウントメニュー">
+                {{ initial() }}
+            </button>
+
+            <div class="dropdown" *ngIf="menuOpen()">
+                <p class="dropdown-name">{{ displayName() }}</p>
+                <button class="dropdown-item" (click)="signOut()">ログアウト</button>
+            </div>
+        </div>
     </div>
 </nav>

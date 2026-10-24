@@ -80,9 +80,20 @@ async function getCommentById(commentId: number): Promise<ICommentModel | null> 
     return result ? result[0] : null;
 }
 
-async function deleteCommentById(commentId: number): Promise<void> {
-    const query = `DELETE FROM comments WHERE id = ?;`;
-    await executeQuery(query, [commentId]);
+/**
+ * 本人のコメントのみ削除する。
+ * WHERE句にuser_idを含めることで、他人のコメントIDを指定されても消えない。
+ * 削除できた件数を返すので、0なら「他人のコメント or 存在しない」と判断できる。
+ */
+async function deleteCommentByIdForUser(commentId: number, userId: number): Promise<number> {
+    const query = `DELETE FROM comments WHERE id = ? AND user_id = ?;`;
+    const result = await executeQuery(query, [commentId, userId]);
+    return result.affectedRows;
 }
 
-export { getCommentsByStickerId, postComment, getCommentById, deleteCommentById };
+export {
+    getCommentsByStickerId,
+    postComment,
+    getCommentById,
+    deleteCommentByIdForUser,
+};

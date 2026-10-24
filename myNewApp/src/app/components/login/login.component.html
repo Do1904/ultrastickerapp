@@ -1,1 +1,83 @@
-<p>login works!</p>
+<div class="auth-page">
+  <div class="auth-card">
+
+    <header class="auth-header">
+      <span class="auth-mark">🏴</span>
+      <h1 class="auth-title">
+        {{ mode() === 'signin' ? 'ログイン' : mode() === 'signup' ? 'アカウント作成' : 'パスワード再設定' }}
+      </h1>
+      <p class="auth-subtitle">
+        {{ mode() === 'reset'
+            ? '登録したメールアドレスに再設定用のリンクを送ります'
+            : 'Football Sticker Map Japan' }}
+      </p>
+    </header>
+
+    <div class="alert error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
+    <div class="alert info" *ngIf="infoMessage()">{{ infoMessage() }}</div>
+
+    <form [formGroup]="form" (submit)="submit()" novalidate>
+      <label class="field">
+        <span class="field-label">メールアドレス</span>
+        <input
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+        />
+        <span class="field-error" *ngIf="emailControl.touched && emailControl.invalid">
+          有効なメールアドレスを入力してください
+        </span>
+      </label>
+
+      <label class="field" *ngIf="mode() !== 'reset'">
+        <span class="field-label">パスワード</span>
+        <input
+          type="password"
+          formControlName="password"
+          [attr.autocomplete]="mode() === 'signup' ? 'new-password' : 'current-password'"
+          placeholder="8文字以上"
+        />
+        <span class="field-error" *ngIf="passwordControl.touched && passwordControl.invalid">
+          パスワードは8文字以上で入力してください
+        </span>
+      </label>
+
+      <button type="submit" class="primary-button" [disabled]="loading()">
+        {{ loading()
+            ? '処理中...'
+            : mode() === 'signin' ? 'ログイン'
+            : mode() === 'signup' ? '登録する'
+            : '再設定メールを送る' }}
+      </button>
+    </form>
+
+    <ng-container *ngIf="mode() !== 'reset'">
+      <div class="divider"><span>または</span></div>
+
+      <button type="button" class="google-button" (click)="signInWithGoogle()" [disabled]="loading()">
+        <span class="google-mark">G</span>
+        Googleでログイン
+      </button>
+    </ng-container>
+
+    <footer class="auth-footer">
+      <ng-container *ngIf="mode() === 'signin'">
+        <button type="button" class="link-button" (click)="setMode('signup')">
+          アカウントを作成
+        </button>
+        <span class="dot">・</span>
+        <button type="button" class="link-button" (click)="setMode('reset')">
+          パスワードを忘れた
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="mode() !== 'signin'">
+        <button type="button" class="link-button" (click)="setMode('signin')">
+          ← ログインに戻る
+        </button>
+      </ng-container>
+    </footer>
+
+  </div>
+</div>

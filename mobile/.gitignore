@@ -12,3 +12,9 @@ android/app/build/
 android/build/
 android/local.properties
 android/.idea/
+
+# Firebase の設定ファイル。
+# 秘密鍵ではないがプロジェクト固有の識別子を含むため、公開リポジトリでは除外する。
+# チーム内で共有する運用にするなら、この2行を消してコミットしてもよい。
+android/app/google-services.json
+ios/App/App/GoogleService-Info.plist

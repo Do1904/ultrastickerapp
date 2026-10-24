@@ -1,0 +1,221 @@
+:host {
+  --auth-ink: #111114;
+  --auth-muted: #767676;
+  --auth-border: #e0ddd8;
+  --auth-accent: #111114;
+  --auth-danger: #c1440e;
+}
+
+.auth-page {
+  min-height: calc(100vh - 52px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px 64px;
+  box-sizing: border-box;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(17, 17, 20, 0.08);
+  padding: 32px 28px;
+  box-sizing: border-box;
+}
+
+/* ---------- ヘッダー ---------- */
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-mark {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.auth-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: var(--auth-ink);
+}
+
+.auth-subtitle {
+  font-size: 0.82rem;
+  color: var(--auth-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---------- 通知 ---------- */
+
+.alert {
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.alert.error {
+  background: #fdecec;
+  color: var(--auth-danger);
+}
+
+.alert.info {
+  background: #eef5ff;
+  color: #1a4fa0;
+}
+
+/* ---------- フォーム ---------- */
+
+.field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--auth-muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  border: 1px solid var(--auth-border);
+  border-radius: 10px;
+  background: #fafafa;
+  color: var(--auth-ink);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--auth-ink);
+  background: #fff;
+}
+
+.field-error {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--auth-danger);
+  margin-top: 5px;
+}
+
+/* ---------- ボタン ---------- */
+
+.primary-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: var(--auth-accent);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.primary-button:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.primary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.google-button {
+  width: 100%;
+  padding: 11px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--auth-ink);
+  background: #fff;
+  border: 1px solid var(--auth-border);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s;
+}
+
+.google-button:hover:not(:disabled) {
+  background: #f6f5f3;
+}
+
+.google-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.google-mark {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #4285f4;
+}
+
+/* ---------- 区切り ---------- */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--auth-muted);
+  font-size: 0.75rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--auth-border);
+}
+
+/* ---------- フッター ---------- */
+
+.auth-footer {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 0.82rem;
+}
+
+.link-button {
+  border: none;
+  background: none;
+  padding: 4px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: var(--auth-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link-button:hover {
+  color: var(--auth-ink);
+}
+
+.dot {
+  color: var(--auth-border);
+  margin: 0 2px;
+}

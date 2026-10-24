@@ -261,7 +261,8 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       country: '',
       isClean: true,
       sticker: '',
-      userId: 1,
+      // 新規投稿導線のプレースホルダー。実際の投稿者はサーバーが決める。
+      userId: 0,
       id: -1,
     };
     this.showMarkerDetail(pin);

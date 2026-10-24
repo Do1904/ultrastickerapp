@@ -1,71 +1,131 @@
-<article>
-    <div id="left">
-        <img class="listing-photo" [src]="stickerDetail?.sticker" alt="Exterior photo of {{stickerDetail?.clubId}}" />
+<article class="detail-page" *ngIf="stickerDetail">
+
+  <!-- ===== ヒーロー: ステッカーをメインに表示 ===== -->
+  <section class="hero-card">
+    <div class="hero-photo">
+      <img [src]="stickerDetail.sticker" alt="{{ clubName }} のステッカー" />
     </div>
-    <div id="right">
-        <section class="listing-description">
-            <h2 class="listing-heading">{{clubName}}</h2>
-            <div *ngIf="!isCheerSentByLoginUser; else alreadyCheered">
-                <span>Cheers: {{ cheers }}</span><button mat-button
-                    (click)="sendCheers(stickerDetail?.id)">Cheers!</button>
-            </div>
-            <ng-template #alreadyCheered>
-                <span>Cheers: {{ cheers }}</span><button mat-button (click)="deleteCheers(stickerDetail?.id)">Delete
-                    Cheers!</button>
-            </ng-template>
-            <p class="listing-location">hey not yet</p>
-        </section>
-        <section class="listing-features">
-            <ul>
-                <li>{{clubName}}</li>
-                <li>{{leagueName}}</li>
-            </ul>
-            <div *ngIf="stickerDetail?.userId === loginUserId">
-                <button mat-button (click)="deleteSticker(stickerDetail?.id)">Delete</button>
-            </div>
-        </section>
-        <section class="listing-apply">
-            <form class="comment-form" [formGroup]="commentForm" (submit)="postComment(true, null)">
-                <mat-form-field class="comment-full-width">
-                    <mat-label for="comment">Leave a comment</mat-label>
-                    <textarea formControlName="comment" matInput placeholder="Ex. It makes me feel..."></textarea>
-                </mat-form-field>
-                <button mat-raised-button type="submit" class="primary">Submit</button>
-            </form>
-            <section class="comment-list">
-                <div class="comment" *ngFor="let comment of comments">
-                    <div class="comment-box">
-                        <p class="comment-header">
-                            <strong>{{ comment.userId }}</strong>・<span class="timestamp">{{ comment.createdAt |
-                                date:'short' }}</span>
-                        </p>
-                        <p class="comment-content">{{ comment.comment }}</p>
 
-                        <div class="comment-actions">
-                            <button mat-button (click)="postComment(false, comment.id)">Reply</button>
-                            <button mat-button *ngIf="comment.userId === loginUserId"
-                                (click)="deleteComment(comment.id, true, null)">Delete</button>
-                        </div>
-                    </div>
+    <div class="hero-info">
+      <div class="badge-row">
+        <span class="badge badge-league" *ngIf="leagueName">{{ leagueName }}</span>
+        <span class="badge badge-country" *ngIf="countryName">{{ countryName }}</span>
+      </div>
 
-                    <div class="reply" *ngFor="let reply of comment.replies">
-                        <div class="comment-box reply-box">
-                            <p class="comment-header">
-                                <strong>{{ reply.userId }}</strong>・<span class="timestamp">{{ reply.createdAt |
-                                    date:'short' }}</span>
-                            </p>
-                            <p class="comment-content">{{ reply.comment }}</p>
+      <h1 class="club-title">{{ clubName }}</h1>
 
-                            <div class="comment-actions">
-                                <button mat-button (click)="postComment(false, comment.id)">Reply</button>
-                                <button mat-button *ngIf="reply.userId === loginUserId"
-                                    (click)="deleteComment(reply.id, false, comment.id)">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <p class="meta-line" *ngIf="stickerDetail.createdAt">
+        投稿日: {{ stickerDetail.createdAt | date: 'yyyy/MM/dd HH:mm' }}
+      </p>
 
-            </section>
-        </section>
+      <div class="action-row">
+        <button
+          class="cheer-button"
+          [class.active]="isCheerSentByLoginUser"
+          (click)="isCheerSentByLoginUser ? deleteCheers(stickerDetail.id) : sendCheers(stickerDetail.id)"
+        >
+          <span class="cheer-icon">{{ isCheerSentByLoginUser ? '🔥' : '🤍' }}</span>
+          <span>{{ cheers }}</span>
+        </button>
+
+        <button
+          class="text-action danger"
+          *ngIf="stickerDetail.userId === loginUserId"
+          (click)="deleteSticker(stickerDetail.id)"
+        >
+          削除
+        </button>
+      </div>
     </div>
+  </section>
+
+  <!-- ===== 場所 ===== -->
+  <section class="location-card">
+    <h2 class="section-title">📍 場所</h2>
+    <p class="address-text" *ngIf="formattedAddress; else noAddress">{{ formattedAddress }}</p>
+    <ng-template #noAddress>
+      <p class="address-text muted">住所情報がありません</p>
+    </ng-template>
+
+    <div id="detailMap" class="location-map" *ngIf="hasLocation"></div>
+    <p class="address-text muted" *ngIf="!hasLocation">地図を表示できる位置情報がありません</p>
+  </section>
+
+  <!-- ===== コメント ===== -->
+  <section class="comments-card">
+    <h2 class="section-title">💬 コメント <span class="comment-count">{{ comments.length }}</span></h2>
+
+    <form
+      class="comment-composer"
+      *ngIf="isLoggedIn; else loginPrompt"
+      [formGroup]="commentForm"
+      (submit)="postComment(true, null)"
+    >
+      <div class="composer-avatar" [style.background]="userColor(loginUserId ?? undefined)">
+        {{ userInitial(loginUserId ?? undefined) }}
+      </div>
+      <div class="composer-input-wrap">
+        <textarea
+          formControlName="comment"
+          placeholder="コメントを書く..."
+          rows="1"
+        ></textarea>
+        <button type="submit" class="send-button" aria-label="送信">➤</button>
+      </div>
+    </form>
+
+    <ng-template #loginPrompt>
+      <p class="login-prompt">
+        <a [routerLink]="['/login']" [queryParams]="{ returnUrl: '/details/' + stickerDetailId }">ログイン</a>
+        するとコメントできます
+      </p>
+    </ng-template>
+
+    <div class="comment-list" *ngIf="comments.length > 0; else emptyComments">
+      <div class="comment" *ngFor="let comment of comments">
+        <div class="comment-avatar" [style.background]="userColor(comment.userId)">{{ userInitial(comment.userId) }}</div>
+
+        <div class="comment-body">
+          <div class="comment-bubble">
+            <p class="comment-header">
+              <strong>{{ userName(comment.userId) }}</strong>
+              <span class="timestamp">{{ comment.createdAt | date:'short' }}</span>
+            </p>
+            <p class="comment-content">{{ comment.comment }}</p>
+          </div>
+
+          <div class="comment-actions">
+            <button class="text-action" (click)="postComment(false, comment.id)">返信</button>
+            <button class="text-action danger" *ngIf="comment.userId === loginUserId"
+              (click)="deleteComment(comment.id, true, null)">削除</button>
+          </div>
+
+          <div class="reply" *ngFor="let reply of comment.replies">
+            <div class="comment-avatar small" [style.background]="userColor(reply.userId)">{{ userInitial(reply.userId) }}</div>
+
+            <div class="comment-body">
+              <div class="comment-bubble reply-bubble">
+                <p class="comment-header">
+                  <strong>{{ userName(reply.userId) }}</strong>
+                  <span class="timestamp">{{ reply.createdAt | date:'short' }}</span>
+                </p>
+                <p class="comment-content">{{ reply.comment }}</p>
+              </div>
+
+              <div class="comment-actions">
+                <button class="text-action" (click)="postComment(false, comment.id)">返信</button>
+                <button class="text-action danger" *ngIf="reply.userId === loginUserId"
+                  (click)="deleteComment(reply.id, false, comment.id)">削除</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyComments>
+      <p class="empty-comments">まだコメントがありません。最初のコメントを書いてみましょう。</p>
+    </ng-template>
+  </section>
+
 </article>

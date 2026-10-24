@@ -9,6 +9,14 @@ export interface IStickerModel extends RowDataPacket {
     sticker: string;
     isClean: boolean;
     userId: number;
+    createdAt?: string;
     longitude?: number;
     latitude?: number;
+    addressId?: number;
+    country?: string;
+    state?: string;
+    city?: string;
+    district?: string;
+    neighbourhood?: string;
+    postcode?: string;
 }

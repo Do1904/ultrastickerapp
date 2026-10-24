@@ -1,18 +1,20 @@
 import express from 'express';
 import db from '../db/index.js';
+import { requireAuth, optionalAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/sendCheers', async (req, res) => {
-    const userId = 1; // 仮のユーザーID
-    const stickerId = req.body.id; // `id` を明示的に取得
-
-    const cheerStatus: number = await db.cheers.getCheersCountSentByLoginUserToThisSticker(stickerId, userId);
+router.post('/sendCheers', requireAuth, async (req, res) => {
+    const userId = req.user!.id;
+    const stickerId = Number(req.body.id);
 
     if (!stickerId) {
         res.status(400).json({ error: 'Sticker ID is required.' });
         return;
     }
+
+    const cheerStatus: number = await db.cheers.getCheersCountSentByLoginUserToThisSticker(stickerId, userId);
+
     if (cheerStatus > 0) {
         res.status(400).json({ error: 'You have already cheered for this sticker.' });
         return;
@@ -27,16 +29,17 @@ router.post('/sendCheers', async (req, res) => {
     }
 });
 
-router.post('/deleteCheers', async (req, res) => {
-    const userId = 1; // 仮のユーザーID
-    const stickerId = req.body.id; // `id` を明示的に取得
-
-    const cheerStatus: number = await db.cheers.getCheersCountSentByLoginUserToThisSticker(stickerId, userId);
+router.post('/deleteCheers', requireAuth, async (req, res) => {
+    const userId = req.user!.id;
+    const stickerId = Number(req.body.id);
 
     if (!stickerId) {
         res.status(400).json({ error: 'Sticker ID is required.' });
         return;
     }
+
+    const cheerStatus: number = await db.cheers.getCheersCountSentByLoginUserToThisSticker(stickerId, userId);
+
     if (cheerStatus === 0) {
         res.status(400).json({ error: 'You have not cheered for this sticker yet.' });
         return;
@@ -51,10 +54,10 @@ router.post('/deleteCheers', async (req, res) => {
     }
 });
 
-router.get('/getCheers/:id', async (req, res) => {
+// 未ログインでも総数は見せる。自分がcheer済みかはログイン時のみ判定する。
+router.get('/getCheers/:id', optionalAuth, async (req, res) => {
     const stickerId = Number(req.params.id);
-
-    const userId = 1; // 仮のユーザーID
+    const userId = req.user?.id ?? null;
 
     try {
         const totalCheers = await db.cheers.getTotalCheersCountById(stickerId);
@@ -64,17 +67,17 @@ router.get('/getCheers/:id', async (req, res) => {
             return;
         }
 
-        // ログインユーザがこのステッカーに対してCheerを送ったかどうかを確認
-        const isCheerSentByLoginUser = totalCheers.some((cheer) => cheer.userId === userId);
+        const isCheerSentByLoginUser =
+            userId !== null && totalCheers.some((cheer) => cheer.userId === userId);
 
-        const resBody = {
-            isCheerSentByLoginUser: isCheerSentByLoginUser,
+        res.json({
+            isCheerSentByLoginUser,
             totalCheers: totalCheers.length,
-        };
-        res.json(resBody);
+        });
     }
     catch (error) {
         console.error('❌ Error fetching cheers:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
