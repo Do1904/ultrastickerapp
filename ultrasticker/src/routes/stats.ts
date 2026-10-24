@@ -108,6 +108,11 @@ router.get("/prefectures", handle(async (req, res) => {
 router.get("/heatmap", handle(async (req, res) => {
   const clubId = req.query["clubId"] ? Number(req.query["clubId"]) : undefined;
 
+  if (clubId !== undefined && !Number.isFinite(clubId)) {
+    res.status(400).json({ error: "clubId must be a number." });
+    return;
+  }
+
   const points = await stats.getHeatPoints(clubId);
   const prefectures = clubId ? await stats.getPrefectureDensityByClub(clubId) : [];
   res.json({ points, prefectures });

@@ -1,28 +1,20 @@
 import express from "express";
 import multer from "multer";
-import path from "path";
 import db from "../db/index.js";
 import { requireAuth } from "../middleware/auth.js";
+import { saveStickerImage, InvalidImageError } from "../util/imageUpload.js";
 
 const router = express.Router();
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:3000";
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-
+/**
+ * いったんメモリで受け取り、saveStickerImage() で検証・再エンコードしてから書き出す。
+ * ディスクへ直接保存すると、検証前の生ファイルが一瞬でも公開ディレクトリに置かれてしまう。
+ */
 const upload = multer({
-  storage: storage,
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
-  fileFilter: (req, file, cb) => {
-    cb(null, file.mimetype.startsWith("image/"));
-  },
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 20 * 1024 * 1024, files: 1 }, // 20MB
 });
 
 /**
@@ -52,8 +44,8 @@ router.post("/putNewSticker", requireAuth, upload.single("sticker"), async (req,
     !clubId ||
     !leagueId ||
     !countryId ||
-    Number.isNaN(latitude) ||
-    Number.isNaN(longitude)
+    !Number.isFinite(latitude) ||
+    !Number.isFinite(longitude)
   ) {
     res.status(400).json({
       error: "clubId, leagueId, countryId, latitude, longitude are required.",
@@ -61,10 +53,31 @@ router.post("/putNewSticker", requireAuth, upload.single("sticker"), async (req,
     return;
   }
 
+  // 座標として成立しない値を弾く(Infinityや範囲外の値がDBに入るのを防ぐ)
+  if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+    res.status(400).json({ error: "latitude/longitude の値が範囲外です。" });
+    return;
+  }
+
   // 投稿者はトークンから決める。クライアントから送られてくるuserIdは信用しない。
   const userId = req.user!.id;
 
-  const filePath = `${BASE_URL}/uploads/${req.file.filename}`;
+  // 画像の検証・再エンコード(EXIF除去)を先に済ませる。
+  // ここで弾かれたリクエストはDBに一切触れない。
+  let filename: string;
+  try {
+    filename = await saveStickerImage(req.file.buffer);
+  } catch (error) {
+    if (error instanceof InvalidImageError) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    console.error("Error processing image:", error);
+    res.status(500).json({ error: "Internal server error" });
+    return;
+  }
+
+  const filePath = `${BASE_URL}/uploads/${filename}`;
 
   try {
     const addressId = await db.addresses.findOrCreateAddress({

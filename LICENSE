@@ -1,0 +1,23 @@
+Copyright (c) 2026 Ryota Kondo. All rights reserved.
+
+このリポジトリに含まれるソースコード、ドキュメント、その他の著作物の
+著作権は、著作者に帰属します。
+
+著作権者による書面での事前の許可なく、本リポジトリの内容の全部または一部を
+複製、改変、頒布、公衆送信、再利用、または二次的著作物の作成に用いることを
+禁じます。
+
+本リポジトリの閲覧は、上記の権利を一切移転するものではありません。
+
+---
+
+Copyright (c) 2026 Ryota Kondo. All rights reserved.
+
+No part of this repository may be copied, modified, distributed, published,
+or used to create derivative works without the prior written permission of
+the copyright holder.
+
+Viewing this repository does not grant any rights to its contents.
+
+Third-party dependencies listed in each package.json remain subject to their
+own respective licenses.

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Football Sticker Map Japan - Capacitor mobile shell (iOS/Android)",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "build:web": "yarn --cwd ../myNewApp build",
     "sync": "npm run build:web && npx cap sync",

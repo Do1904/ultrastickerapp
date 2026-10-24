@@ -28,11 +28,14 @@
             <h3>1. 写真</h3>
             <div class="photo-buttons">
                 <label class="photo-button camera">
-                    <input type="file" accept="image/*" capture="environment" (change)="fileChoosen($event)" hidden />
+                    <input type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+                        capture="environment" (change)="fileChoosen($event)" hidden />
                     📷 カメラで撮影
                 </label>
                 <label class="photo-button">
-                    <input type="file" accept="image/*" (change)="fileChoosen($event)" hidden />
+                    <!-- SVGはスクリプトを埋め込めるためサーバー側で拒否される。選択肢から外しておく。 -->
+                    <input type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+                        (change)="fileChoosen($event)" hidden />
                     🖼 ライブラリから選択
                 </label>
             </div>
@@ -58,6 +61,10 @@
             <p class="hint" *ngIf="coordinate">
                 緯度: {{ coordinate.lat | number: '1.5-5' }} / 経度: {{ coordinate.lng | number: '1.5-5' }}
                 <span *ngIf="currentAddress.addressOverview"> — {{ currentAddress.addressOverview }}</span>
+            </p>
+            <p class="privacy-note">
+                ⚠️ ここで指定した位置は地図上で誰でも見られます。自宅や職場など、
+                知られたくない場所の近くで撮影した場合はご注意ください。
             </p>
         </section>
 

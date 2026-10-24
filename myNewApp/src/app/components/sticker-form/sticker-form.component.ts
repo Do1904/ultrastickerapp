@@ -358,9 +358,27 @@ export class StickerFormComponent implements AfterViewInit, OnDestroy {
       this.router.navigate(['/']);
     } catch (error) {
       console.error('There was an error!', error);
-      alert('投稿に失敗しました。下書きに保存しておくこともできます。');
+      alert(`投稿に失敗しました: ${this.describeError(error)}\n\n下書きに保存しておくこともできます。`);
     } finally {
       this.submitting = false;
     }
+  }
+
+  /**
+   * サーバーが返したエラー内容を人が読める形にする。
+   * 原因が分からないまま「失敗しました」とだけ出ると調査できないため。
+   */
+  private describeError(error: any): string {
+    const status = error?.response?.status;
+    const serverMessage = error?.response?.data?.error;
+
+    if (serverMessage) {
+      return status ? `${serverMessage} (HTTP ${status})` : serverMessage;
+    }
+    if (status === 401) return 'ログインが必要です (HTTP 401)';
+    if (status === 413) return 'ファイルサイズが大きすぎます (HTTP 413)';
+    if (status) return `サーバーエラー (HTTP ${status})`;
+    if (error?.message) return error.message;
+    return '原因不明のエラー';
   }
 }

@@ -66,14 +66,27 @@ const writeLimiter = rateLimit({
     message: { error: 'リクエストが多すぎます。しばらく待ってから再試行してください。' },
 });
 
+/**
+ * 読み取り系APIのレート制限。
+ * /stats と /maps は無認証で重い集計クエリを実行するため、連打でDBが詰まる。
+ * 通常利用(地図の移動に伴う再取得など)を妨げない程度に緩く設定する。
+ */
+const readLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 120,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: { error: 'リクエストが多すぎます。しばらく待ってから再試行してください。' },
+});
+
 app.use('/allStickers', indexRouter);
 app.use('/users', usersRouter);
 app.use('/stickers', stickersRouter);
 app.use('/putStickers', writeLimiter, putStickerRouter);
 app.use('/cheers', writeLimiter, sendCheersRouter);
 app.use('/comments', writeLimiter, commentsRouter);
-app.use('/maps', mapRouter);
-app.use('/stats', statsRouter);
+app.use('/maps', readLimiter, mapRouter);
+app.use('/stats', readLimiter, statsRouter);
 
 // CORS拒否など、ここまでで処理されなかったエラーの共通ハンドラ。
 // 内部の詳細はクライアントへ返さない。

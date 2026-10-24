@@ -23,6 +23,18 @@
     margin: 4px 0;
 }
 
+/* 位置情報が公開されることの注意書き。見落とされないよう hint より目立たせる。 */
+.privacy-note {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #8a5300;
+    background: #fff7e6;
+    border: 1px solid #ffe0a3;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 10px 0 0;
+}
+
 /* ---------- オフライン ---------- */
 
 .offline-banner {
